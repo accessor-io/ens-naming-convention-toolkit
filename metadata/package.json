@@ -1,0 +1,54 @@
+{
+  "name": "ens-metadata-tools",
+  "version": "1.0.0",
+  "description": "Comprehensive toolkit for ENS contract metadata management, security analysis, and subdomain planning",
+  "main": "index.js",
+  "type": "module",
+  "bin": {
+    "ens-metadata": "./bin/cli.js",
+    "ens-prober": "./prober/probe-multicall.js",
+    "ens-validator": "./bin/naming-validator.js"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "metadata": "node bin/metadata-generator.js",
+    "validate": "node bin/naming-validator.js",
+    "probe": "node prober/probe-multicall.js",
+    "lookup": "node prober/lookup-resolver-names.js",
+    "plan": "node bin/subdomain-planner.js",
+    "security": "node bin/security-analyzer.js",
+    "test": "node test-metadata.json"
+  },
+  "keywords": [
+    "ens",
+    "ethereum",
+    "metadata",
+    "security",
+    "subdomain",
+    "blockchain",
+    "web3"
+  ],
+  "author": "ENS Contracts Team",
+  "license": "MIT",
+  "dependencies": {
+    "ethers": "^5.7.2",
+    "node-fetch": "^3.3.2",
+    "commander": "^10.0.0",
+    "chalk": "^5.0.0",
+    "inquirer": "^9.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ens-contracts/metadata-tools.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ens-contracts/metadata-tools/issues"
+  },
+  "homepage": "https://github.com/ens-contracts/metadata-tools#readme"
+}

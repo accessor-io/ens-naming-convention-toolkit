@@ -1,0 +1,743 @@
+{
+  "protocol": "axie",
+  "category": "gaming",
+  "type": "nft",
+  "variables": {
+    "gameName": "Axie",
+    "genre": "battle-arena"
+  },
+  "subdomains": [
+    {
+      "pattern": "<game>.gaming.eth",
+      "subdomain": "<game>.gaming.eth",
+      "metadata": {
+        "subdomain": "<game>.gaming",
+        "category": "gaming",
+        "type": "nft-game",
+        "variables": {
+          "gameName": "Axie",
+          "genre": "battle-arena"
+        },
+        "generatedAt": "2025-09-26T20:52:42.659Z",
+        "relationships": {
+          "parent": "gaming",
+          "children": [],
+          "siblings": [],
+          "dependencies": []
+        }
+      }
+    },
+    {
+      "pattern": "├── assets.<game>.gaming.eth",
+      "subdomain": "├── assets.<game>.gaming.eth",
+      "metadata": {
+        "subdomain": "├── assets.<game>.gaming",
+        "variables": {
+          "gameName": "Axie",
+          "genre": "battle-arena"
+        },
+        "generatedAt": "2025-09-26T20:52:42.660Z",
+        "relationships": {
+          "parent": "<game>.gaming",
+          "children": [],
+          "siblings": [],
+          "dependencies": []
+        }
+      }
+    },
+    {
+      "pattern": "│   ├── collection.assets.<game>.gaming.eth",
+      "subdomain": "│   ├── collection.assets.<game>.gaming.eth",
+      "metadata": {
+        "subdomain": "│   ├── collection.assets.<game>.gaming",
+        "variables": {
+          "gameName": "Axie",
+          "genre": "battle-arena"
+        },
+        "generatedAt": "2025-09-26T20:52:42.660Z",
+        "relationships": {
+          "parent": "assets.<game>.gaming",
+          "children": [],
+          "siblings": [],
+          "dependencies": []
+        }
+      }
+    },
+    {
+      "pattern": "│   ├── marketplace.assets.<game>.gaming.eth",
+      "subdomain": "│   ├── marketplace.assets.<game>.gaming.eth",
+      "metadata": {
+        "subdomain": "│   ├── marketplace.assets.<game>.gaming",
+        "variables": {
+          "gameName": "Axie",
+          "genre": "battle-arena"
+        },
+        "generatedAt": "2025-09-26T20:52:42.660Z",
+        "relationships": {
+          "parent": "assets.<game>.gaming",
+          "children": [],
+          "siblings": [],
+          "dependencies": []
+        }
+      }
+    },
+    {
+      "pattern": "│   └── staking.assets.<game>.gaming.eth",
+      "subdomain": "│   └── staking.assets.<game>.gaming.eth",
+      "metadata": {
+        "subdomain": "│   └── staking.assets.<game>.gaming",
+        "variables": {
+          "gameName": "Axie",
+          "genre": "battle-arena"
+        },
+        "generatedAt": "2025-09-26T20:52:42.660Z",
+        "relationships": {
+          "parent": "assets.<game>.gaming",
+          "children": [],
+          "siblings": [],
+          "dependencies": []
+        }
+      }
+    },
+    {
+      "pattern": "├── gameplay.<game>.gaming.eth",
+      "subdomain": "├── gameplay.<game>.gaming.eth",
+      "metadata": {
+        "subdomain": "├── gameplay.<game>.gaming",
+        "variables": {
+          "gameName": "Axie",
+          "genre": "battle-arena"
+        },
+        "generatedAt": "2025-09-26T20:52:42.661Z",
+        "relationships": {
+          "parent": "<game>.gaming",
+          "children": [],
+          "siblings": [],
+          "dependencies": []
+        }
+      }
+    },
+    {
+      "pattern": "│   ├── mechanics.gameplay.<game>.gaming.eth",
+      "subdomain": "│   ├── mechanics.gameplay.<game>.gaming.eth",
+      "metadata": {
+        "subdomain": "│   ├── mechanics.gameplay.<game>.gaming",
+        "variables": {
+          "gameName": "Axie",
+          "genre": "battle-arena"
+        },
+        "generatedAt": "2025-09-26T20:52:42.661Z",
+        "relationships": {
+          "parent": "gameplay.<game>.gaming",
+          "children": [],
+          "siblings": [],
+          "dependencies": []
+        }
+      }
+    },
+    {
+      "pattern": "│   ├── rewards.gameplay.<game>.gaming.eth",
+      "subdomain": "│   ├── rewards.gameplay.<game>.gaming.eth",
+      "metadata": {
+        "subdomain": "│   ├── rewards.gameplay.<game>.gaming",
+        "variables": {
+          "gameName": "Axie",
+          "genre": "battle-arena"
+        },
+        "generatedAt": "2025-09-26T20:52:42.661Z",
+        "relationships": {
+          "parent": "gameplay.<game>.gaming",
+          "children": [],
+          "siblings": [],
+          "dependencies": []
+        }
+      }
+    },
+    {
+      "pattern": "│   └── achievements.gameplay.<game>.gaming.eth",
+      "subdomain": "│   └── achievements.gameplay.<game>.gaming.eth",
+      "metadata": {
+        "subdomain": "│   └── achievements.gameplay.<game>.gaming",
+        "variables": {
+          "gameName": "Axie",
+          "genre": "battle-arena"
+        },
+        "generatedAt": "2025-09-26T20:52:42.661Z",
+        "relationships": {
+          "parent": "gameplay.<game>.gaming",
+          "children": [],
+          "siblings": [],
+          "dependencies": []
+        }
+      }
+    },
+    {
+      "pattern": "└── social.<game>.gaming.eth",
+      "subdomain": "└── social.<game>.gaming.eth",
+      "metadata": {
+        "subdomain": "└── social.<game>.gaming",
+        "variables": {
+          "gameName": "Axie",
+          "genre": "battle-arena"
+        },
+        "generatedAt": "2025-09-26T20:52:42.661Z",
+        "relationships": {
+          "parent": "<game>.gaming",
+          "children": [],
+          "siblings": [],
+          "dependencies": []
+        }
+      }
+    },
+    {
+      "pattern": "    ├── guilds.social.<game>.gaming.eth",
+      "subdomain": "    ├── guilds.social.<game>.gaming.eth",
+      "metadata": {
+        "subdomain": "    ├── guilds.social.<game>.gaming",
+        "variables": {
+          "gameName": "Axie",
+          "genre": "battle-arena"
+        },
+        "generatedAt": "2025-09-26T20:52:42.661Z",
+        "relationships": {
+          "parent": "social.<game>.gaming",
+          "children": [],
+          "siblings": [],
+          "dependencies": []
+        }
+      }
+    },
+    {
+      "pattern": "    ├── tournaments.social.<game>.gaming.eth",
+      "subdomain": "    ├── tournaments.social.<game>.gaming.eth",
+      "metadata": {
+        "subdomain": "    ├── tournaments.social.<game>.gaming",
+        "variables": {
+          "gameName": "Axie",
+          "genre": "battle-arena"
+        },
+        "generatedAt": "2025-09-26T20:52:42.661Z",
+        "relationships": {
+          "parent": "social.<game>.gaming",
+          "children": [],
+          "siblings": [],
+          "dependencies": []
+        }
+      }
+    },
+    {
+      "pattern": "    └── chat.social.<game>.gaming.eth",
+      "subdomain": "    └── chat.social.<game>.gaming.eth",
+      "metadata": {
+        "subdomain": "    └── chat.social.<game>.gaming",
+        "variables": {
+          "gameName": "Axie",
+          "genre": "battle-arena"
+        },
+        "generatedAt": "2025-09-26T20:52:42.662Z",
+        "relationships": {
+          "parent": "social.<game>.gaming",
+          "children": [],
+          "siblings": [],
+          "dependencies": []
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "<game>.gaming.eth": {
+      "game": {
+        "name": "Axie",
+        "genre": "battle-arena",
+        "platform": "{{platform}}",
+        "playerCount": "{{playerCount}}",
+        "activeUsers": "{{activeUsers}}"
+      },
+      "collection": {
+        "name": "{{collectionName}}",
+        "theme": "{{theme}}",
+        "rarity": "{{rarity}}",
+        "totalSupply": "{{totalSupply}}",
+        "maxSupply": "{{maxSupply}}"
+      },
+      "contract": {
+        "type": "nft-game",
+        "interfaces": [
+          "IERC721",
+          "IERC721Enumerable",
+          "IGameAssets"
+        ],
+        "deploymentBlock": "0",
+        "upgradeable": "{{upgradeable}}",
+        "crossChain": "{{crossChain}}"
+      },
+      "economy": {
+        "tokenSymbol": "{{tokenSymbol}}",
+        "staking": "{{staking}}",
+        "rewards": "{{rewards}}",
+        "marketplace": "{{marketplace}}"
+      }
+    },
+    "├── assets.<game>.gaming.eth": {
+      "game": {
+        "name": "Axie",
+        "genre": "battle-arena",
+        "platform": "{{platform}}",
+        "playerCount": "{{playerCount}}",
+        "activeUsers": "{{activeUsers}}"
+      },
+      "collection": {
+        "name": "{{collectionName}}",
+        "theme": "{{theme}}",
+        "rarity": "{{rarity}}",
+        "totalSupply": "{{totalSupply}}",
+        "maxSupply": "{{maxSupply}}"
+      },
+      "contract": {
+        "type": "nft-game",
+        "interfaces": [
+          "IERC721",
+          "IERC721Enumerable",
+          "IGameAssets"
+        ],
+        "deploymentBlock": "0",
+        "upgradeable": "{{upgradeable}}",
+        "crossChain": "{{crossChain}}"
+      },
+      "economy": {
+        "tokenSymbol": "{{tokenSymbol}}",
+        "staking": "{{staking}}",
+        "rewards": "{{rewards}}",
+        "marketplace": "{{marketplace}}"
+      }
+    },
+    "│   ├── collection.assets.<game>.gaming.eth": {
+      "game": {
+        "name": "Axie",
+        "genre": "battle-arena",
+        "platform": "{{platform}}",
+        "playerCount": "{{playerCount}}",
+        "activeUsers": "{{activeUsers}}"
+      },
+      "collection": {
+        "name": "{{collectionName}}",
+        "theme": "{{theme}}",
+        "rarity": "{{rarity}}",
+        "totalSupply": "{{totalSupply}}",
+        "maxSupply": "{{maxSupply}}"
+      },
+      "contract": {
+        "type": "nft-game",
+        "interfaces": [
+          "IERC721",
+          "IERC721Enumerable",
+          "IGameAssets"
+        ],
+        "deploymentBlock": "0",
+        "upgradeable": "{{upgradeable}}",
+        "crossChain": "{{crossChain}}"
+      },
+      "economy": {
+        "tokenSymbol": "{{tokenSymbol}}",
+        "staking": "{{staking}}",
+        "rewards": "{{rewards}}",
+        "marketplace": "{{marketplace}}"
+      }
+    },
+    "│   ├── marketplace.assets.<game>.gaming.eth": {
+      "game": {
+        "name": "Axie",
+        "genre": "battle-arena",
+        "platform": "{{platform}}",
+        "playerCount": "{{playerCount}}",
+        "activeUsers": "{{activeUsers}}"
+      },
+      "collection": {
+        "name": "{{collectionName}}",
+        "theme": "{{theme}}",
+        "rarity": "{{rarity}}",
+        "totalSupply": "{{totalSupply}}",
+        "maxSupply": "{{maxSupply}}"
+      },
+      "contract": {
+        "type": "nft-game",
+        "interfaces": [
+          "IERC721",
+          "IERC721Enumerable",
+          "IGameAssets"
+        ],
+        "deploymentBlock": "0",
+        "upgradeable": "{{upgradeable}}",
+        "crossChain": "{{crossChain}}"
+      },
+      "economy": {
+        "tokenSymbol": "{{tokenSymbol}}",
+        "staking": "{{staking}}",
+        "rewards": "{{rewards}}",
+        "marketplace": "{{marketplace}}"
+      }
+    },
+    "│   └── staking.assets.<game>.gaming.eth": {
+      "game": {
+        "name": "Axie",
+        "genre": "battle-arena",
+        "platform": "{{platform}}",
+        "playerCount": "{{playerCount}}",
+        "activeUsers": "{{activeUsers}}"
+      },
+      "collection": {
+        "name": "{{collectionName}}",
+        "theme": "{{theme}}",
+        "rarity": "{{rarity}}",
+        "totalSupply": "{{totalSupply}}",
+        "maxSupply": "{{maxSupply}}"
+      },
+      "contract": {
+        "type": "nft-game",
+        "interfaces": [
+          "IERC721",
+          "IERC721Enumerable",
+          "IGameAssets"
+        ],
+        "deploymentBlock": "0",
+        "upgradeable": "{{upgradeable}}",
+        "crossChain": "{{crossChain}}"
+      },
+      "economy": {
+        "tokenSymbol": "{{tokenSymbol}}",
+        "staking": "{{staking}}",
+        "rewards": "{{rewards}}",
+        "marketplace": "{{marketplace}}"
+      }
+    },
+    "├── gameplay.<game>.gaming.eth": {
+      "game": {
+        "name": "Axie",
+        "genre": "battle-arena",
+        "platform": "{{platform}}",
+        "playerCount": "{{playerCount}}",
+        "activeUsers": "{{activeUsers}}"
+      },
+      "collection": {
+        "name": "{{collectionName}}",
+        "theme": "{{theme}}",
+        "rarity": "{{rarity}}",
+        "totalSupply": "{{totalSupply}}",
+        "maxSupply": "{{maxSupply}}"
+      },
+      "contract": {
+        "type": "nft-game",
+        "interfaces": [
+          "IERC721",
+          "IERC721Enumerable",
+          "IGameAssets"
+        ],
+        "deploymentBlock": "0",
+        "upgradeable": "{{upgradeable}}",
+        "crossChain": "{{crossChain}}"
+      },
+      "economy": {
+        "tokenSymbol": "{{tokenSymbol}}",
+        "staking": "{{staking}}",
+        "rewards": "{{rewards}}",
+        "marketplace": "{{marketplace}}"
+      }
+    },
+    "│   ├── mechanics.gameplay.<game>.gaming.eth": {
+      "game": {
+        "name": "Axie",
+        "genre": "battle-arena",
+        "platform": "{{platform}}",
+        "playerCount": "{{playerCount}}",
+        "activeUsers": "{{activeUsers}}"
+      },
+      "collection": {
+        "name": "{{collectionName}}",
+        "theme": "{{theme}}",
+        "rarity": "{{rarity}}",
+        "totalSupply": "{{totalSupply}}",
+        "maxSupply": "{{maxSupply}}"
+      },
+      "contract": {
+        "type": "nft-game",
+        "interfaces": [
+          "IERC721",
+          "IERC721Enumerable",
+          "IGameAssets"
+        ],
+        "deploymentBlock": "0",
+        "upgradeable": "{{upgradeable}}",
+        "crossChain": "{{crossChain}}"
+      },
+      "economy": {
+        "tokenSymbol": "{{tokenSymbol}}",
+        "staking": "{{staking}}",
+        "rewards": "{{rewards}}",
+        "marketplace": "{{marketplace}}"
+      }
+    },
+    "│   ├── rewards.gameplay.<game>.gaming.eth": {
+      "game": {
+        "name": "Axie",
+        "genre": "battle-arena",
+        "platform": "{{platform}}",
+        "playerCount": "{{playerCount}}",
+        "activeUsers": "{{activeUsers}}"
+      },
+      "collection": {
+        "name": "{{collectionName}}",
+        "theme": "{{theme}}",
+        "rarity": "{{rarity}}",
+        "totalSupply": "{{totalSupply}}",
+        "maxSupply": "{{maxSupply}}"
+      },
+      "contract": {
+        "type": "nft-game",
+        "interfaces": [
+          "IERC721",
+          "IERC721Enumerable",
+          "IGameAssets"
+        ],
+        "deploymentBlock": "0",
+        "upgradeable": "{{upgradeable}}",
+        "crossChain": "{{crossChain}}"
+      },
+      "economy": {
+        "tokenSymbol": "{{tokenSymbol}}",
+        "staking": "{{staking}}",
+        "rewards": "{{rewards}}",
+        "marketplace": "{{marketplace}}"
+      }
+    },
+    "│   └── achievements.gameplay.<game>.gaming.eth": {
+      "game": {
+        "name": "Axie",
+        "genre": "battle-arena",
+        "platform": "{{platform}}",
+        "playerCount": "{{playerCount}}",
+        "activeUsers": "{{activeUsers}}"
+      },
+      "collection": {
+        "name": "{{collectionName}}",
+        "theme": "{{theme}}",
+        "rarity": "{{rarity}}",
+        "totalSupply": "{{totalSupply}}",
+        "maxSupply": "{{maxSupply}}"
+      },
+      "contract": {
+        "type": "nft-game",
+        "interfaces": [
+          "IERC721",
+          "IERC721Enumerable",
+          "IGameAssets"
+        ],
+        "deploymentBlock": "0",
+        "upgradeable": "{{upgradeable}}",
+        "crossChain": "{{crossChain}}"
+      },
+      "economy": {
+        "tokenSymbol": "{{tokenSymbol}}",
+        "staking": "{{staking}}",
+        "rewards": "{{rewards}}",
+        "marketplace": "{{marketplace}}"
+      }
+    },
+    "└── social.<game>.gaming.eth": {
+      "game": {
+        "name": "Axie",
+        "genre": "battle-arena",
+        "platform": "{{platform}}",
+        "playerCount": "{{playerCount}}",
+        "activeUsers": "{{activeUsers}}"
+      },
+      "collection": {
+        "name": "{{collectionName}}",
+        "theme": "{{theme}}",
+        "rarity": "{{rarity}}",
+        "totalSupply": "{{totalSupply}}",
+        "maxSupply": "{{maxSupply}}"
+      },
+      "contract": {
+        "type": "nft-game",
+        "interfaces": [
+          "IERC721",
+          "IERC721Enumerable",
+          "IGameAssets"
+        ],
+        "deploymentBlock": "0",
+        "upgradeable": "{{upgradeable}}",
+        "crossChain": "{{crossChain}}"
+      },
+      "economy": {
+        "tokenSymbol": "{{tokenSymbol}}",
+        "staking": "{{staking}}",
+        "rewards": "{{rewards}}",
+        "marketplace": "{{marketplace}}"
+      }
+    },
+    "    ├── guilds.social.<game>.gaming.eth": {
+      "game": {
+        "name": "Axie",
+        "genre": "battle-arena",
+        "platform": "{{platform}}",
+        "playerCount": "{{playerCount}}",
+        "activeUsers": "{{activeUsers}}"
+      },
+      "collection": {
+        "name": "{{collectionName}}",
+        "theme": "{{theme}}",
+        "rarity": "{{rarity}}",
+        "totalSupply": "{{totalSupply}}",
+        "maxSupply": "{{maxSupply}}"
+      },
+      "contract": {
+        "type": "nft-game",
+        "interfaces": [
+          "IERC721",
+          "IERC721Enumerable",
+          "IGameAssets"
+        ],
+        "deploymentBlock": "0",
+        "upgradeable": "{{upgradeable}}",
+        "crossChain": "{{crossChain}}"
+      },
+      "economy": {
+        "tokenSymbol": "{{tokenSymbol}}",
+        "staking": "{{staking}}",
+        "rewards": "{{rewards}}",
+        "marketplace": "{{marketplace}}"
+      }
+    },
+    "    ├── tournaments.social.<game>.gaming.eth": {
+      "game": {
+        "name": "Axie",
+        "genre": "battle-arena",
+        "platform": "{{platform}}",
+        "playerCount": "{{playerCount}}",
+        "activeUsers": "{{activeUsers}}"
+      },
+      "collection": {
+        "name": "{{collectionName}}",
+        "theme": "{{theme}}",
+        "rarity": "{{rarity}}",
+        "totalSupply": "{{totalSupply}}",
+        "maxSupply": "{{maxSupply}}"
+      },
+      "contract": {
+        "type": "nft-game",
+        "interfaces": [
+          "IERC721",
+          "IERC721Enumerable",
+          "IGameAssets"
+        ],
+        "deploymentBlock": "0",
+        "upgradeable": "{{upgradeable}}",
+        "crossChain": "{{crossChain}}"
+      },
+      "economy": {
+        "tokenSymbol": "{{tokenSymbol}}",
+        "staking": "{{staking}}",
+        "rewards": "{{rewards}}",
+        "marketplace": "{{marketplace}}"
+      }
+    },
+    "    └── chat.social.<game>.gaming.eth": {
+      "game": {
+        "name": "Axie",
+        "genre": "battle-arena",
+        "platform": "{{platform}}",
+        "playerCount": "{{playerCount}}",
+        "activeUsers": "{{activeUsers}}"
+      },
+      "collection": {
+        "name": "{{collectionName}}",
+        "theme": "{{theme}}",
+        "rarity": "{{rarity}}",
+        "totalSupply": "{{totalSupply}}",
+        "maxSupply": "{{maxSupply}}"
+      },
+      "contract": {
+        "type": "nft-game",
+        "interfaces": [
+          "IERC721",
+          "IERC721Enumerable",
+          "IGameAssets"
+        ],
+        "deploymentBlock": "0",
+        "upgradeable": "{{upgradeable}}",
+        "crossChain": "{{crossChain}}"
+      },
+      "economy": {
+        "tokenSymbol": "{{tokenSymbol}}",
+        "staking": "{{staking}}",
+        "rewards": "{{rewards}}",
+        "marketplace": "{{marketplace}}"
+      }
+    }
+  },
+  "registrationScript": [
+    "#!/bin/bash",
+    "# Subdomain Registration Script for axie",
+    "# Generated on 2025-09-26T20:52:42.662Z",
+    "# Category: gaming, Type: nft",
+    "",
+    "# Register primary domain",
+    "ens-contract register axie.gaming.eth --type nft",
+    "",
+    "# Register subdomain: <game>.gaming.eth",
+    "ens-contract register <game>.gaming.eth --parent axie.gaming.eth",
+    "",
+    "# Register subdomain: ├── assets.<game>.gaming.eth",
+    "ens-contract register ├── assets.<game>.gaming.eth --parent axie.gaming.eth",
+    "",
+    "# Register subdomain: │   ├── collection.assets.<game>.gaming.eth",
+    "ens-contract register │   ├── collection.assets.<game>.gaming.eth --parent axie.gaming.eth",
+    "",
+    "# Register subdomain: │   ├── marketplace.assets.<game>.gaming.eth",
+    "ens-contract register │   ├── marketplace.assets.<game>.gaming.eth --parent axie.gaming.eth",
+    "",
+    "# Register subdomain: │   └── staking.assets.<game>.gaming.eth",
+    "ens-contract register │   └── staking.assets.<game>.gaming.eth --parent axie.gaming.eth",
+    "",
+    "# Register subdomain: ├── gameplay.<game>.gaming.eth",
+    "ens-contract register ├── gameplay.<game>.gaming.eth --parent axie.gaming.eth",
+    "",
+    "# Register subdomain: │   ├── mechanics.gameplay.<game>.gaming.eth",
+    "ens-contract register │   ├── mechanics.gameplay.<game>.gaming.eth --parent axie.gaming.eth",
+    "",
+    "# Register subdomain: │   ├── rewards.gameplay.<game>.gaming.eth",
+    "ens-contract register │   ├── rewards.gameplay.<game>.gaming.eth --parent axie.gaming.eth",
+    "",
+    "# Register subdomain: │   └── achievements.gameplay.<game>.gaming.eth",
+    "ens-contract register │   └── achievements.gameplay.<game>.gaming.eth --parent axie.gaming.eth",
+    "",
+    "# Register subdomain: └── social.<game>.gaming.eth",
+    "ens-contract register └── social.<game>.gaming.eth --parent axie.gaming.eth",
+    "",
+    "# Register subdomain:     ├── guilds.social.<game>.gaming.eth",
+    "ens-contract register     ├── guilds.social.<game>.gaming.eth --parent axie.gaming.eth",
+    "",
+    "# Register subdomain:     ├── tournaments.social.<game>.gaming.eth",
+    "ens-contract register     ├── tournaments.social.<game>.gaming.eth --parent axie.gaming.eth",
+    "",
+    "# Register subdomain:     └── chat.social.<game>.gaming.eth",
+    "ens-contract register     └── chat.social.<game>.gaming.eth --parent axie.gaming.eth",
+    "",
+    "# Set cross-references"
+  ],
+  "crossReferences": {
+    "<game>.gaming.eth": {},
+    "├── assets.<game>.gaming.eth": {},
+    "│   ├── collection.assets.<game>.gaming.eth": {},
+    "│   ├── marketplace.assets.<game>.gaming.eth": {},
+    "│   └── staking.assets.<game>.gaming.eth": {},
+    "├── gameplay.<game>.gaming.eth": {},
+    "│   ├── mechanics.gameplay.<game>.gaming.eth": {},
+    "│   ├── rewards.gameplay.<game>.gaming.eth": {},
+    "│   └── achievements.gameplay.<game>.gaming.eth": {},
+    "└── social.<game>.gaming.eth": {},
+    "    ├── guilds.social.<game>.gaming.eth": {},
+    "    ├── tournaments.social.<game>.gaming.eth": {},
+    "    └── chat.social.<game>.gaming.eth": {}
+  }
+}

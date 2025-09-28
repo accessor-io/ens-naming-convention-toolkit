@@ -1,0 +1,18 @@
+{
+  "name": "ens-multicall-prober",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "probe": "node probe-multicall.js",
+    "probe-address": "node probe-address.js",
+    "tenderly-exploit": "node tenderly-exploit-cnbank.js",
+    "lookup": "node lookup-resolver-names.js"
+  },
+  "dependencies": {
+    "ethers": "^5.7.2",
+    "node-fetch": "^3.3.2",
+    "solc": "^0.7.6"
+  }
+}
+

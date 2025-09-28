@@ -1,0 +1,680 @@
+{
+  "protocol": "manhattan",
+  "category": "rwa",
+  "type": "realestate",
+  "variables": {
+    "assetName": "Manhattan Office Building",
+    "assetType": "commercial",
+    "value": "250000000",
+    "ownership": "fractional"
+  },
+  "subdomains": [
+    {
+      "pattern": "<property>.rwa.eth",
+      "subdomain": "<property>.rwa.eth",
+      "metadata": {
+        "subdomain": "<property>.rwa",
+        "category": "rwa",
+        "type": "real-estate",
+        "variables": {
+          "assetName": "Manhattan Office Building",
+          "assetType": "commercial",
+          "value": "250000000",
+          "ownership": "fractional"
+        },
+        "generatedAt": "2025-09-26T20:58:55.307Z",
+        "relationships": {
+          "parent": "rwa",
+          "children": [],
+          "siblings": [],
+          "dependencies": []
+        }
+      }
+    },
+    {
+      "pattern": "├── ownership.<property>.rwa.eth",
+      "subdomain": "├── ownership.<property>.rwa.eth",
+      "metadata": {
+        "subdomain": "├── ownership.<property>.rwa",
+        "variables": {
+          "assetName": "Manhattan Office Building",
+          "assetType": "commercial",
+          "value": "250000000",
+          "ownership": "fractional"
+        },
+        "generatedAt": "2025-09-26T20:58:55.308Z",
+        "relationships": {
+          "parent": "<property>.rwa",
+          "children": [],
+          "siblings": [],
+          "dependencies": []
+        }
+      }
+    },
+    {
+      "pattern": "│   ├── registry.ownership.<property>.rwa.eth",
+      "subdomain": "│   ├── registry.ownership.<property>.rwa.eth",
+      "metadata": {
+        "subdomain": "│   ├── registry.ownership.<property>.rwa",
+        "variables": {
+          "assetName": "Manhattan Office Building",
+          "assetType": "commercial",
+          "value": "250000000",
+          "ownership": "fractional"
+        },
+        "generatedAt": "2025-09-26T20:58:55.308Z",
+        "relationships": {
+          "parent": "ownership.<property>.rwa",
+          "children": [],
+          "siblings": [],
+          "dependencies": []
+        }
+      }
+    },
+    {
+      "pattern": "│   ├── transfer.ownership.<property>.rwa.eth",
+      "subdomain": "│   ├── transfer.ownership.<property>.rwa.eth",
+      "metadata": {
+        "subdomain": "│   ├── transfer.ownership.<property>.rwa",
+        "variables": {
+          "assetName": "Manhattan Office Building",
+          "assetType": "commercial",
+          "value": "250000000",
+          "ownership": "fractional"
+        },
+        "generatedAt": "2025-09-26T20:58:55.308Z",
+        "relationships": {
+          "parent": "ownership.<property>.rwa",
+          "children": [],
+          "siblings": [],
+          "dependencies": []
+        }
+      }
+    },
+    {
+      "pattern": "│   └── voting.ownership.<property>.rwa.eth",
+      "subdomain": "│   └── voting.ownership.<property>.rwa.eth",
+      "metadata": {
+        "subdomain": "│   └── voting.ownership.<property>.rwa",
+        "variables": {
+          "assetName": "Manhattan Office Building",
+          "assetType": "commercial",
+          "value": "250000000",
+          "ownership": "fractional"
+        },
+        "generatedAt": "2025-09-26T20:58:55.308Z",
+        "relationships": {
+          "parent": "ownership.<property>.rwa",
+          "children": [],
+          "siblings": [],
+          "dependencies": []
+        }
+      }
+    },
+    {
+      "pattern": "├── finance.<property>.rwa.eth",
+      "subdomain": "├── finance.<property>.rwa.eth",
+      "metadata": {
+        "subdomain": "├── finance.<property>.rwa",
+        "variables": {
+          "assetName": "Manhattan Office Building",
+          "assetType": "commercial",
+          "value": "250000000",
+          "ownership": "fractional"
+        },
+        "generatedAt": "2025-09-26T20:58:55.308Z",
+        "relationships": {
+          "parent": "<property>.rwa",
+          "children": [],
+          "siblings": [],
+          "dependencies": []
+        }
+      }
+    },
+    {
+      "pattern": "│   ├── mortgage.finance.<property>.rwa.eth",
+      "subdomain": "│   ├── mortgage.finance.<property>.rwa.eth",
+      "metadata": {
+        "subdomain": "│   ├── mortgage.finance.<property>.rwa",
+        "variables": {
+          "assetName": "Manhattan Office Building",
+          "assetType": "commercial",
+          "value": "250000000",
+          "ownership": "fractional"
+        },
+        "generatedAt": "2025-09-26T20:58:55.309Z",
+        "relationships": {
+          "parent": "finance.<property>.rwa",
+          "children": [],
+          "siblings": [],
+          "dependencies": []
+        }
+      }
+    },
+    {
+      "pattern": "│   ├── insurance.finance.<property>.rwa.eth",
+      "subdomain": "│   ├── insurance.finance.<property>.rwa.eth",
+      "metadata": {
+        "subdomain": "│   ├── insurance.finance.<property>.rwa",
+        "variables": {
+          "assetName": "Manhattan Office Building",
+          "assetType": "commercial",
+          "value": "250000000",
+          "ownership": "fractional"
+        },
+        "generatedAt": "2025-09-26T20:58:55.309Z",
+        "relationships": {
+          "parent": "finance.<property>.rwa",
+          "children": [],
+          "siblings": [],
+          "dependencies": []
+        }
+      }
+    },
+    {
+      "pattern": "│   └── dividends.finance.<property>.rwa.eth",
+      "subdomain": "│   └── dividends.finance.<property>.rwa.eth",
+      "metadata": {
+        "subdomain": "│   └── dividends.finance.<property>.rwa",
+        "variables": {
+          "assetName": "Manhattan Office Building",
+          "assetType": "commercial",
+          "value": "250000000",
+          "ownership": "fractional"
+        },
+        "generatedAt": "2025-09-26T20:58:55.309Z",
+        "relationships": {
+          "parent": "finance.<property>.rwa",
+          "children": [],
+          "siblings": [],
+          "dependencies": []
+        }
+      }
+    },
+    {
+      "pattern": "└── compliance.<property>.rwa.eth",
+      "subdomain": "└── compliance.<property>.rwa.eth",
+      "metadata": {
+        "subdomain": "└── compliance.<property>.rwa",
+        "variables": {
+          "assetName": "Manhattan Office Building",
+          "assetType": "commercial",
+          "value": "250000000",
+          "ownership": "fractional"
+        },
+        "generatedAt": "2025-09-26T20:58:55.309Z",
+        "relationships": {
+          "parent": "<property>.rwa",
+          "children": [],
+          "siblings": [],
+          "dependencies": []
+        }
+      }
+    },
+    {
+      "pattern": "    ├── legal.compliance.<property>.rwa.eth",
+      "subdomain": "    ├── legal.compliance.<property>.rwa.eth",
+      "metadata": {
+        "subdomain": "    ├── legal.compliance.<property>.rwa",
+        "variables": {
+          "assetName": "Manhattan Office Building",
+          "assetType": "commercial",
+          "value": "250000000",
+          "ownership": "fractional"
+        },
+        "generatedAt": "2025-09-26T20:58:55.309Z",
+        "relationships": {
+          "parent": "compliance.<property>.rwa",
+          "children": [],
+          "siblings": [],
+          "dependencies": []
+        }
+      }
+    },
+    {
+      "pattern": "    ├── regulatory.compliance.<property>.rwa.eth",
+      "subdomain": "    ├── regulatory.compliance.<property>.rwa.eth",
+      "metadata": {
+        "subdomain": "    ├── regulatory.compliance.<property>.rwa",
+        "variables": {
+          "assetName": "Manhattan Office Building",
+          "assetType": "commercial",
+          "value": "250000000",
+          "ownership": "fractional"
+        },
+        "generatedAt": "2025-09-26T20:58:55.309Z",
+        "relationships": {
+          "parent": "compliance.<property>.rwa",
+          "children": [],
+          "siblings": [],
+          "dependencies": []
+        }
+      }
+    },
+    {
+      "pattern": "    └── audit.compliance.<property>.rwa.eth",
+      "subdomain": "    └── audit.compliance.<property>.rwa.eth",
+      "metadata": {
+        "subdomain": "    └── audit.compliance.<property>.rwa",
+        "variables": {
+          "assetName": "Manhattan Office Building",
+          "assetType": "commercial",
+          "value": "250000000",
+          "ownership": "fractional"
+        },
+        "generatedAt": "2025-09-26T20:58:55.309Z",
+        "relationships": {
+          "parent": "compliance.<property>.rwa",
+          "children": [],
+          "siblings": [],
+          "dependencies": []
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "<property>.rwa.eth": {
+      "asset": {
+        "name": "Manhattan Office Building",
+        "type": "commercial",
+        "location": "{{location}}",
+        "value": "250000000",
+        "ownership": "fractional"
+      },
+      "tokenization": {
+        "tokenStandard": "{{tokenStandard}}",
+        "fractional": "{{fractional}}",
+        "governance": "{{governance}}",
+        "dividends": "{{dividends}}"
+      },
+      "contract": {
+        "type": "rwa-real-estate",
+        "interfaces": [
+          "IERC20",
+          "IERC721",
+          "IRWA"
+        ],
+        "deploymentBlock": "0",
+        "legal": "{{legal}}",
+        "compliance": "{{compliance}}"
+      }
+    },
+    "├── ownership.<property>.rwa.eth": {
+      "asset": {
+        "name": "Manhattan Office Building",
+        "type": "commercial",
+        "location": "{{location}}",
+        "value": "250000000",
+        "ownership": "fractional"
+      },
+      "tokenization": {
+        "tokenStandard": "{{tokenStandard}}",
+        "fractional": "{{fractional}}",
+        "governance": "{{governance}}",
+        "dividends": "{{dividends}}"
+      },
+      "contract": {
+        "type": "rwa-real-estate",
+        "interfaces": [
+          "IERC20",
+          "IERC721",
+          "IRWA"
+        ],
+        "deploymentBlock": "0",
+        "legal": "{{legal}}",
+        "compliance": "{{compliance}}"
+      }
+    },
+    "│   ├── registry.ownership.<property>.rwa.eth": {
+      "asset": {
+        "name": "Manhattan Office Building",
+        "type": "commercial",
+        "location": "{{location}}",
+        "value": "250000000",
+        "ownership": "fractional"
+      },
+      "tokenization": {
+        "tokenStandard": "{{tokenStandard}}",
+        "fractional": "{{fractional}}",
+        "governance": "{{governance}}",
+        "dividends": "{{dividends}}"
+      },
+      "contract": {
+        "type": "rwa-real-estate",
+        "interfaces": [
+          "IERC20",
+          "IERC721",
+          "IRWA"
+        ],
+        "deploymentBlock": "0",
+        "legal": "{{legal}}",
+        "compliance": "{{compliance}}"
+      }
+    },
+    "│   ├── transfer.ownership.<property>.rwa.eth": {
+      "asset": {
+        "name": "Manhattan Office Building",
+        "type": "commercial",
+        "location": "{{location}}",
+        "value": "250000000",
+        "ownership": "fractional"
+      },
+      "tokenization": {
+        "tokenStandard": "{{tokenStandard}}",
+        "fractional": "{{fractional}}",
+        "governance": "{{governance}}",
+        "dividends": "{{dividends}}"
+      },
+      "contract": {
+        "type": "rwa-real-estate",
+        "interfaces": [
+          "IERC20",
+          "IERC721",
+          "IRWA"
+        ],
+        "deploymentBlock": "0",
+        "legal": "{{legal}}",
+        "compliance": "{{compliance}}"
+      }
+    },
+    "│   └── voting.ownership.<property>.rwa.eth": {
+      "asset": {
+        "name": "Manhattan Office Building",
+        "type": "commercial",
+        "location": "{{location}}",
+        "value": "250000000",
+        "ownership": "fractional"
+      },
+      "tokenization": {
+        "tokenStandard": "{{tokenStandard}}",
+        "fractional": "{{fractional}}",
+        "governance": "{{governance}}",
+        "dividends": "{{dividends}}"
+      },
+      "contract": {
+        "type": "rwa-real-estate",
+        "interfaces": [
+          "IERC20",
+          "IERC721",
+          "IRWA"
+        ],
+        "deploymentBlock": "0",
+        "legal": "{{legal}}",
+        "compliance": "{{compliance}}"
+      }
+    },
+    "├── finance.<property>.rwa.eth": {
+      "asset": {
+        "name": "Manhattan Office Building",
+        "type": "commercial",
+        "location": "{{location}}",
+        "value": "250000000",
+        "ownership": "fractional"
+      },
+      "tokenization": {
+        "tokenStandard": "{{tokenStandard}}",
+        "fractional": "{{fractional}}",
+        "governance": "{{governance}}",
+        "dividends": "{{dividends}}"
+      },
+      "contract": {
+        "type": "rwa-real-estate",
+        "interfaces": [
+          "IERC20",
+          "IERC721",
+          "IRWA"
+        ],
+        "deploymentBlock": "0",
+        "legal": "{{legal}}",
+        "compliance": "{{compliance}}"
+      }
+    },
+    "│   ├── mortgage.finance.<property>.rwa.eth": {
+      "asset": {
+        "name": "Manhattan Office Building",
+        "type": "commercial",
+        "location": "{{location}}",
+        "value": "250000000",
+        "ownership": "fractional"
+      },
+      "tokenization": {
+        "tokenStandard": "{{tokenStandard}}",
+        "fractional": "{{fractional}}",
+        "governance": "{{governance}}",
+        "dividends": "{{dividends}}"
+      },
+      "contract": {
+        "type": "rwa-real-estate",
+        "interfaces": [
+          "IERC20",
+          "IERC721",
+          "IRWA"
+        ],
+        "deploymentBlock": "0",
+        "legal": "{{legal}}",
+        "compliance": "{{compliance}}"
+      }
+    },
+    "│   ├── insurance.finance.<property>.rwa.eth": {
+      "asset": {
+        "name": "Manhattan Office Building",
+        "type": "commercial",
+        "location": "{{location}}",
+        "value": "250000000",
+        "ownership": "fractional"
+      },
+      "tokenization": {
+        "tokenStandard": "{{tokenStandard}}",
+        "fractional": "{{fractional}}",
+        "governance": "{{governance}}",
+        "dividends": "{{dividends}}"
+      },
+      "contract": {
+        "type": "rwa-real-estate",
+        "interfaces": [
+          "IERC20",
+          "IERC721",
+          "IRWA"
+        ],
+        "deploymentBlock": "0",
+        "legal": "{{legal}}",
+        "compliance": "{{compliance}}"
+      }
+    },
+    "│   └── dividends.finance.<property>.rwa.eth": {
+      "asset": {
+        "name": "Manhattan Office Building",
+        "type": "commercial",
+        "location": "{{location}}",
+        "value": "250000000",
+        "ownership": "fractional"
+      },
+      "tokenization": {
+        "tokenStandard": "{{tokenStandard}}",
+        "fractional": "{{fractional}}",
+        "governance": "{{governance}}",
+        "dividends": "{{dividends}}"
+      },
+      "contract": {
+        "type": "rwa-real-estate",
+        "interfaces": [
+          "IERC20",
+          "IERC721",
+          "IRWA"
+        ],
+        "deploymentBlock": "0",
+        "legal": "{{legal}}",
+        "compliance": "{{compliance}}"
+      }
+    },
+    "└── compliance.<property>.rwa.eth": {
+      "asset": {
+        "name": "Manhattan Office Building",
+        "type": "commercial",
+        "location": "{{location}}",
+        "value": "250000000",
+        "ownership": "fractional"
+      },
+      "tokenization": {
+        "tokenStandard": "{{tokenStandard}}",
+        "fractional": "{{fractional}}",
+        "governance": "{{governance}}",
+        "dividends": "{{dividends}}"
+      },
+      "contract": {
+        "type": "rwa-real-estate",
+        "interfaces": [
+          "IERC20",
+          "IERC721",
+          "IRWA"
+        ],
+        "deploymentBlock": "0",
+        "legal": "{{legal}}",
+        "compliance": "{{compliance}}"
+      }
+    },
+    "    ├── legal.compliance.<property>.rwa.eth": {
+      "asset": {
+        "name": "Manhattan Office Building",
+        "type": "commercial",
+        "location": "{{location}}",
+        "value": "250000000",
+        "ownership": "fractional"
+      },
+      "tokenization": {
+        "tokenStandard": "{{tokenStandard}}",
+        "fractional": "{{fractional}}",
+        "governance": "{{governance}}",
+        "dividends": "{{dividends}}"
+      },
+      "contract": {
+        "type": "rwa-real-estate",
+        "interfaces": [
+          "IERC20",
+          "IERC721",
+          "IRWA"
+        ],
+        "deploymentBlock": "0",
+        "legal": "{{legal}}",
+        "compliance": "{{compliance}}"
+      }
+    },
+    "    ├── regulatory.compliance.<property>.rwa.eth": {
+      "asset": {
+        "name": "Manhattan Office Building",
+        "type": "commercial",
+        "location": "{{location}}",
+        "value": "250000000",
+        "ownership": "fractional"
+      },
+      "tokenization": {
+        "tokenStandard": "{{tokenStandard}}",
+        "fractional": "{{fractional}}",
+        "governance": "{{governance}}",
+        "dividends": "{{dividends}}"
+      },
+      "contract": {
+        "type": "rwa-real-estate",
+        "interfaces": [
+          "IERC20",
+          "IERC721",
+          "IRWA"
+        ],
+        "deploymentBlock": "0",
+        "legal": "{{legal}}",
+        "compliance": "{{compliance}}"
+      }
+    },
+    "    └── audit.compliance.<property>.rwa.eth": {
+      "asset": {
+        "name": "Manhattan Office Building",
+        "type": "commercial",
+        "location": "{{location}}",
+        "value": "250000000",
+        "ownership": "fractional"
+      },
+      "tokenization": {
+        "tokenStandard": "{{tokenStandard}}",
+        "fractional": "{{fractional}}",
+        "governance": "{{governance}}",
+        "dividends": "{{dividends}}"
+      },
+      "contract": {
+        "type": "rwa-real-estate",
+        "interfaces": [
+          "IERC20",
+          "IERC721",
+          "IRWA"
+        ],
+        "deploymentBlock": "0",
+        "legal": "{{legal}}",
+        "compliance": "{{compliance}}"
+      }
+    }
+  },
+  "registrationScript": [
+    "#!/bin/bash",
+    "# Subdomain Registration Script for manhattan",
+    "# Generated on 2025-09-26T20:58:55.310Z",
+    "# Category: rwa, Type: realestate",
+    "",
+    "# Register primary domain",
+    "ens-contract register manhattan.rwa.eth --type realestate",
+    "",
+    "# Register subdomain: <property>.rwa.eth",
+    "ens-contract register <property>.rwa.eth --parent manhattan.rwa.eth",
+    "",
+    "# Register subdomain: ├── ownership.<property>.rwa.eth",
+    "ens-contract register ├── ownership.<property>.rwa.eth --parent manhattan.rwa.eth",
+    "",
+    "# Register subdomain: │   ├── registry.ownership.<property>.rwa.eth",
+    "ens-contract register │   ├── registry.ownership.<property>.rwa.eth --parent manhattan.rwa.eth",
+    "",
+    "# Register subdomain: │   ├── transfer.ownership.<property>.rwa.eth",
+    "ens-contract register │   ├── transfer.ownership.<property>.rwa.eth --parent manhattan.rwa.eth",
+    "",
+    "# Register subdomain: │   └── voting.ownership.<property>.rwa.eth",
+    "ens-contract register │   └── voting.ownership.<property>.rwa.eth --parent manhattan.rwa.eth",
+    "",
+    "# Register subdomain: ├── finance.<property>.rwa.eth",
+    "ens-contract register ├── finance.<property>.rwa.eth --parent manhattan.rwa.eth",
+    "",
+    "# Register subdomain: │   ├── mortgage.finance.<property>.rwa.eth",
+    "ens-contract register │   ├── mortgage.finance.<property>.rwa.eth --parent manhattan.rwa.eth",
+    "",
+    "# Register subdomain: │   ├── insurance.finance.<property>.rwa.eth",
+    "ens-contract register │   ├── insurance.finance.<property>.rwa.eth --parent manhattan.rwa.eth",
+    "",
+    "# Register subdomain: │   └── dividends.finance.<property>.rwa.eth",
+    "ens-contract register │   └── dividends.finance.<property>.rwa.eth --parent manhattan.rwa.eth",
+    "",
+    "# Register subdomain: └── compliance.<property>.rwa.eth",
+    "ens-contract register └── compliance.<property>.rwa.eth --parent manhattan.rwa.eth",
+    "",
+    "# Register subdomain:     ├── legal.compliance.<property>.rwa.eth",
+    "ens-contract register     ├── legal.compliance.<property>.rwa.eth --parent manhattan.rwa.eth",
+    "",
+    "# Register subdomain:     ├── regulatory.compliance.<property>.rwa.eth",
+    "ens-contract register     ├── regulatory.compliance.<property>.rwa.eth --parent manhattan.rwa.eth",
+    "",
+    "# Register subdomain:     └── audit.compliance.<property>.rwa.eth",
+    "ens-contract register     └── audit.compliance.<property>.rwa.eth --parent manhattan.rwa.eth",
+    "",
+    "# Set cross-references"
+  ],
+  "crossReferences": {
+    "<property>.rwa.eth": {},
+    "├── ownership.<property>.rwa.eth": {},
+    "│   ├── registry.ownership.<property>.rwa.eth": {},
+    "│   ├── transfer.ownership.<property>.rwa.eth": {},
+    "│   └── voting.ownership.<property>.rwa.eth": {},
+    "├── finance.<property>.rwa.eth": {},
+    "│   ├── mortgage.finance.<property>.rwa.eth": {},
+    "│   ├── insurance.finance.<property>.rwa.eth": {},
+    "│   └── dividends.finance.<property>.rwa.eth": {},
+    "└── compliance.<property>.rwa.eth": {},
+    "    ├── legal.compliance.<property>.rwa.eth": {},
+    "    ├── regulatory.compliance.<property>.rwa.eth": {},
+    "    └── audit.compliance.<property>.rwa.eth": {}
+  }
+}

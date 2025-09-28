@@ -1,0 +1,33 @@
+{
+  "game": {
+    "name": "{{gameName}}",
+    "genre": "battle-arena",
+    "platform": "ronin",
+    "playerCount": "2000000",
+    "activeUsers": "{{activeUsers}}"
+  },
+  "collection": {
+    "name": "{{collectionName}}",
+    "theme": "{{theme}}",
+    "rarity": "{{rarity}}",
+    "totalSupply": "{{totalSupply}}",
+    "maxSupply": "{{maxSupply}}"
+  },
+  "contract": {
+    "type": "nft-game",
+    "interfaces": [
+      "IERC721",
+      "IERC721Enumerable",
+      "IGameAssets"
+    ],
+    "deploymentBlock": "0",
+    "upgradeable": "{{upgradeable}}",
+    "crossChain": "{{crossChain}}"
+  },
+  "economy": {
+    "tokenSymbol": "{{tokenSymbol}}",
+    "staking": "{{staking}}",
+    "rewards": "{{rewards}}",
+    "marketplace": "{{marketplace}}"
+  }
+}
