@@ -403,8 +403,14 @@ if (process.argv.length > 2) {
       case 'list':
         browser.listEntries(args[0] ? parseInt(args[0]) : 1);
         break;
+      case 'filter':
+        browser.filterByType(args[0]);
+        break;
+      case 'view':
+        browser.viewEntry(args[0]);
+        break;
       default:
-        console.log('Available quick commands: search, stats, list');
+        console.log('Available quick commands: search, stats, list, filter, view');
         console.log('For interactive mode, run without arguments');
     }
   }
