@@ -169,7 +169,7 @@ class ENSecurityAnalyzer {
 
   // Main security analysis function
   async analyzeSecurity(domain, options = {}) {
-    console.log(chalk.blue(`🔍 Analyzing security for domain: ${domain}`));
+    console.log(chalk.blue(`Analyzing security for domain: ${domain}`));
     console.log('═'.repeat(60));
 
     const results = {
@@ -589,15 +589,15 @@ class ENSecurityAnalyzer {
                       overall.grade === 'C' ? chalk.yellow :
                       overall.grade === 'D' ? chalk.red : chalk.red;
 
-    console.log(chalk.bold(`\n📊 Security Report for ${domain}`));
+    console.log(chalk.bold(`\nSecurity Report for ${domain}`));
     console.log('═'.repeat(60));
     console.log(`Overall Grade: ${gradeColor.bold(overall.grade)} (${overall.score}/100)`);
 
     // Individual checks
-    console.log(chalk.bold('\n🔍 Security Checks:'));
+    console.log(chalk.bold('\nSecurity Checks:'));
     Object.entries(checks).forEach(([checkName, check]) => {
       const statusIcon = check.status === 'PASS' ? '✅' :
-                        check.status === 'WARN' ? '⚠️' :
+                        check.status === 'WARN' ? '[WARN]' :
                         check.status === 'FAIL' ? '❌' : '❓';
 
       const statusColor = check.status === 'PASS' ? chalk.green :
@@ -608,8 +608,8 @@ class ENSecurityAnalyzer {
 
       if (check.issues && check.issues.length > 0) {
         check.issues.forEach(issue => {
-          const severityIcon = issue.severity === 'CRITICAL' ? '🚨' :
-                              issue.severity === 'HIGH' ? '🔴' :
+          const severityIcon = issue.severity === 'CRITICAL' ? '[CRITICAL]' :
+                              issue.severity === 'HIGH' ? '[HIGH]' :
                               issue.severity === 'MEDIUM' ? '🟡' :
                               issue.severity === 'LOW' ? '🟢' : 'ℹ️';
 

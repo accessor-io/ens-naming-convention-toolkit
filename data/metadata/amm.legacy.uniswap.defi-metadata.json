@@ -1,0 +1,43 @@
+{
+  "protocol": {
+    "name": "ProtocolName V3",
+    "version": "3",
+    "category": "automated-market-maker",
+    "description": "ProtocolName automated market maker protocol",
+    "ecosystem": "ethereum",
+    "launchDate": "2025-09-29",
+    "feeTiers": [
+      500,
+      3000,
+      10000
+    ],
+    "supportedNetworks": [
+      "mainnet",
+      "polygon",
+      "arbitrum",
+      "optimism"
+    ]
+  },
+  "contract": {
+    "type": "amm",
+    "interfaces": [],
+    "deploymentBlock": "0",
+    "auditReports": [],
+    "security": {
+      "audits": [],
+      "bugBounty": "{{bugBounty}}",
+      "insurance": "{{insurance}}"
+    }
+  },
+  "liquidity": {
+    "totalValueLocked": "{{tvl}}",
+    "activePairs": "{{activePairs}}",
+    "dailyVolume": "{{dailyVolume}}",
+    "uniqueUsers": "{{uniqueUsers}}"
+  },
+  "tokenomics": {
+    "governanceToken": "{{govToken}}",
+    "rewards": "{{rewards}}",
+    "staking": "{{staking}}"
+  }
+}

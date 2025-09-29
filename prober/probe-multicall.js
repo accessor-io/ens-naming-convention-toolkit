@@ -82,6 +82,13 @@ async function tryMulticall(address, calls) {
     const res = await contract.callStatic.multicall(calls);
     return { ok: true, res };
   } catch (e) {
+    console.error(`[DEBUG] tryMulticall failed for ${address}:`, {
+      error: e.message || e,
+      code: e.code,
+      data: e.data,
+      reason: e.reason,
+      stack: e.stack
+    });
     return { ok: false, err: e };
   }
 }
@@ -89,24 +96,66 @@ async function tryMulticall(address, calls) {
 async function getOwnerAndResolver(name) {
   const node = namehash(name);
   const ens = new ethers.Contract(ENS_REGISTRY_ADDR, ENS_IFACE, provider);
-  const [owner, resolver] = await Promise.all([
-    ens.owner(node).catch(() => ethers.constants.AddressZero),
-    ens.resolver(node).catch(() => ethers.constants.AddressZero),
-  ]);
-  return { node, owner, resolver };
+  try {
+    const [owner, resolver] = await Promise.all([
+      ens.owner(node).catch((e) => {
+        console.error(`[DEBUG] Failed to get owner for ${name}:`, e.message || e);
+        return ethers.constants.AddressZero;
+      }),
+      ens.resolver(node).catch((e) => {
+        console.error(`[DEBUG] Failed to get resolver for ${name}:`, e.message || e);
+        return ethers.constants.AddressZero;
+      }),
+    ]);
+    return { node, owner, resolver };
+  } catch (e) {
+    console.error(`[DEBUG] getOwnerAndResolver failed for ${name}:`, e.message || e);
+    return { node, owner: ethers.constants.AddressZero, resolver: ethers.constants.AddressZero };
+  }
 }
 
 async function impersonateAndFund(address) {
   // Try multiple RPCs for compatibility
   const oneEthHex = ethers.utils.hexStripZeros(ethers.utils.parseEther("10").toHexString()) || "0x0";
-  try { await provider.send("tenderly_setBalance", [[address], oneEthHex]); } catch (_) {}
-  try { await provider.send("hardhat_setBalance", [address, ethers.utils.hexlify(ethers.utils.parseEther("10"))]); } catch (_) {}
-  try { await provider.send("anvil_setBalance", [address, ethers.utils.hexlify(ethers.utils.parseEther("10"))]); } catch (_) {}
+  try { 
+    await provider.send("tenderly_setBalance", [[address], oneEthHex]); 
+  } catch (e) {
+    console.error(`[DEBUG] tenderly_setBalance failed for ${address}:`, e.message || e);
+  }
+  try { 
+    await provider.send("hardhat_setBalance", [address, ethers.utils.hexlify(ethers.utils.parseEther("10"))]); 
+  } catch (e) {
+    console.error(`[DEBUG] hardhat_setBalance failed for ${address}:`, e.message || e);
+  }
+  try { 
+    await provider.send("anvil_setBalance", [address, ethers.utils.hexlify(ethers.utils.parseEther("10"))]); 
+  } catch (e) {
+    console.error(`[DEBUG] anvil_setBalance failed for ${address}:`, e.message || e);
+  }
 
   let impersonated = false;
-  try { await provider.send("tenderly_impersonateAccount", [address]); impersonated = true; } catch (_) {}
-  if (!impersonated) { try { await provider.send("hardhat_impersonateAccount", [address]); impersonated = true; } catch (_) {} }
-  if (!impersonated) { try { await provider.send("anvil_impersonateAccount", [address]); impersonated = true; } catch (_) {} }
+  try { 
+    await provider.send("tenderly_impersonateAccount", [address]); 
+    impersonated = true; 
+  } catch (e) {
+    console.error(`[DEBUG] tenderly_impersonateAccount failed for ${address}:`, e.message || e);
+  }
+  if (!impersonated) { 
+    try { 
+      await provider.send("hardhat_impersonateAccount", [address]); 
+      impersonated = true; 
+    } catch (e) {
+      console.error(`[DEBUG] hardhat_impersonateAccount failed for ${address}:`, e.message || e);
+    } 
+  }
+  if (!impersonated) { 
+    try { 
+      await provider.send("anvil_impersonateAccount", [address]); 
+      impersonated = true; 
+    } catch (e) {
+      console.error(`[DEBUG] anvil_impersonateAccount failed for ${address}:`, e.message || e);
+    } 
+  }
   return impersonated;
 }
 
@@ -131,6 +180,7 @@ function encodeMulticallData(darray) {
 }
 
 async function probe(target) {
+  console.log(`[DEBUG] Starting probe for ${target.label} (${target.addr})`);
   const node = namehash("resolver.eth");
   const calls = encodeCalls(node);
 
@@ -139,7 +189,10 @@ async function probe(target) {
   try {
     const empty = await new ethers.Contract(target.addr, MULTICALL_IFACE, provider).callStatic.multicall([]);
     hasMulticall = Array.isArray(empty);
-  } catch (_) {}
+    console.log(`[DEBUG] Multicall detection for ${target.label}: ${hasMulticall}`);
+  } catch (e) {
+    console.error(`[DEBUG] Multicall detection failed for ${target.label}:`, e.message || e);
+  }
 
   const out = { label: target.label, addr: target.addr, multicall: hasMulticall, vulnerableSignals: [] };
   if (!hasMulticall) return out;
@@ -162,12 +215,14 @@ async function probe(target) {
     try {
       [ethAddr] = RESOLVER_IFACE.decodeFunctionResult("addr(bytes32)", addrEncoded);
     } catch (e) {
+      console.error(`[DEBUG] addr(bytes32) decode failure for ${target.label}:`, e.message || e);
       out.vulnerableSignals.push("addr(bytes32)-decode-failure");
     }
     let ethBytes;
     try {
       [ethBytes] = RESOLVER_IFACE.decodeFunctionResult("addr(bytes32,uint256)", bytesEncoded);
     } catch (e) {
+      console.error(`[DEBUG] addr(bytes32,uint256) decode failure for ${target.label}:`, e.message || e);
       out.vulnerableSignals.push("addr(bytes32,uint256)-decode-failure");
     }
     if (ethAddr && ethBytes && typeof ethBytes === "string" && ethBytes.length >= 42) {
@@ -177,11 +232,13 @@ async function probe(target) {
         if (ethAddr.toLowerCase() !== norm.toLowerCase()) {
           out.vulnerableSignals.push("divergence-addr-vs-addr60");
         }
-      } catch (_) {
+      } catch (e) {
+        console.error(`[DEBUG] addr60 address normalization failed for ${target.label}:`, e.message || e);
         out.vulnerableSignals.push("addr60-invalid-bytes");
       }
     }
   } catch (e) {
+    console.error(`[DEBUG] Main decode error for ${target.label}:`, e.message || e);
     out.vulnerableSignals.push(`decode-error:${String(e.message || e)}`);
   }
 
@@ -199,7 +256,9 @@ async function probe(target) {
         out.vulnerableSignals.push("addr(largeCoinType)-unexpected-length");
       }
     }
-  } catch (_) {}
+  } catch (e) {
+    console.error(`[DEBUG] Extended coinType test failed for ${target.label}:`, e.message || e);
+  }
 
   // Try resolve(bytes,bytes) path for addr(node)
   try {
@@ -221,11 +280,14 @@ async function probe(target) {
       try {
         const decoded = RESOLVER_IFACE.decodeFunctionResult("addr(bytes32)", res3[0])[0];
         if (!decoded) out.vulnerableSignals.push("resolve-empty");
-      } catch (_) {
+      } catch (e) {
+        console.error(`[DEBUG] Resolve decode failure for ${target.label}:`, e.message || e);
         out.vulnerableSignals.push("resolve-decode-failure");
       }
     }
-  } catch (_) {}
+  } catch (e) {
+    console.error(`[DEBUG] Resolve test failed for ${target.label}:`, e.message || e);
+  }
 
   // Try direct-callback attempts (will revert if not present)
   try {
@@ -256,7 +318,9 @@ async function probe(target) {
         out.vulnerableSignals.push(`callback-reachable:${c.name}`);
       }
     }
-  } catch (_) {}
+  } catch (e) {
+    console.error(`[DEBUG] Callback test failed for ${target.label}:`, e.message || e);
+  }
 
   return out;
 }
@@ -265,8 +329,12 @@ async function main() {
   const names = (process.env.NAMES || "resolver.eth,ens.eth,opensea.eth").split(",").map(s => s.trim()).filter(Boolean);
   const results = [];
   const unauthorized = [];
+  
+  console.log(`[DEBUG] Starting unauthorized write tests for ${targets.length} targets`);
+  
   // Unauthorized write test per resolver (random node, random from)
   for (const t of targets) {
+    console.log(`[DEBUG] Testing unauthorized writes for ${t.label}`);
     const randNode = ethers.utils.hexlify(ethers.utils.randomBytes(32));
     const p32 = "0x" + "00".repeat(12) + "11".repeat(20);
     const w = RESOLVER_IFACE.encodeFunctionData("setAddr(bytes32,uint256,bytes)", [randNode, 60, p32]);
@@ -287,16 +355,22 @@ async function main() {
       try {
         const from = ethers.utils.getAddress("0x" + "33".repeat(20));
         const txHash = await provider.send("eth_sendTransaction", [{ from, to: t.addr, data: b.data, gas: "0x2DC6C0", value: "0x0" }]);
+        console.log(`[DEBUG] Unauthorized write accepted for ${t.label}, kind: ${b.kind}, txHash: ${txHash}`);
         unauthorized.push({ label: t.label, addr: t.addr, kind: b.kind, txHash, result: "accepted-unauthorized-write" });
       } catch (e) {
+        console.error(`[DEBUG] Unauthorized write reverted for ${t.label}, kind: ${b.kind}:`, e.message || e);
         unauthorized.push({ label: t.label, addr: t.addr, kind: b.kind, error: "unauthorized-write-reverted" });
       }
     }
   }
+  
+  console.log(`[DEBUG] Starting main probing for ${targets.length} targets with names: ${names.join(', ')}`);
+  
   for (const t of targets) {
     const r = await probe(t);
     r.nameResults = [];
     for (const nm of names) {
+      console.log(`[DEBUG] Testing name ${nm} for ${t.label}`);
       const node = namehash(nm);
       const d1 = RESOLVER_IFACE.encodeFunctionData("addr(bytes32)", [node]);
       const d2 = RESOLVER_IFACE.encodeFunctionData("addr(bytes32,uint256)", [node, 60]);
@@ -305,13 +379,22 @@ async function main() {
           const { ok, res } = await tryMulticall(t.addr, [d1, d2]);
           if (ok) {
             let addrv = null, bytesv = null;
-            try { [addrv] = RESOLVER_IFACE.decodeFunctionResult("addr(bytes32)", res[0]); } catch {}
-            try { [bytesv] = RESOLVER_IFACE.decodeFunctionResult("addr(bytes32,uint256)", res[1]); } catch {}
+            try { 
+              [addrv] = RESOLVER_IFACE.decodeFunctionResult("addr(bytes32)", res[0]); 
+            } catch (e) {
+              console.error(`[DEBUG] Failed to decode addr(bytes32) for ${nm} on ${t.label}:`, e.message || e);
+            }
+            try { 
+              [bytesv] = RESOLVER_IFACE.decodeFunctionResult("addr(bytes32,uint256)", res[1]); 
+            } catch (e) {
+              console.error(`[DEBUG] Failed to decode addr(bytes32,uint256) for ${nm} on ${t.label}:`, e.message || e);
+            }
             r.nameResults.push({ name: nm, addr: addrv, addr60: bytesv });
           } else {
             r.nameResults.push({ name: nm, error: "multicall-revert" });
           }
         } catch (e) {
+          console.error(`[DEBUG] Name test failed for ${nm} on ${t.label}:`, e.message || e);
           r.nameResults.push({ name: nm, error: String(e.message || e) });
         }
         // attempt write+read hijack variants if resolver matches
@@ -323,13 +406,20 @@ async function main() {
               const setResData = ENS_IFACE.encodeFunctionData("setResolver", [nodeHash, t.addr]);
               try {
                 await provider.send("eth_sendTransaction", [{ from: owner, to: ENS_REGISTRY_ADDR, data: setResData, gas: "0x186A00", value: "0x0" }]);
-              } catch (_) {}
+                console.log(`[DEBUG] Successfully set resolver for ${nm} to ${t.addr}`);
+              } catch (e) {
+                console.error(`[DEBUG] Failed to set resolver for ${nm} to ${t.addr}:`, e.message || e);
+              }
             }
           }
           if (owner && owner !== ethers.constants.AddressZero && t.addr && r.multicall) {
             // re-read resolver
             let curResolver = resolver;
-            try { curResolver = await new ethers.Contract(ENS_REGISTRY_ADDR, ENS_IFACE, provider).resolver(nodeHash); } catch {}
+            try { 
+              curResolver = await new ethers.Contract(ENS_REGISTRY_ADDR, ENS_IFACE, provider).resolver(nodeHash); 
+            } catch (e) {
+              console.error(`[DEBUG] Failed to re-read resolver for ${nm}:`, e.message || e);
+            }
             if (!curResolver || curResolver.toLowerCase() !== t.addr.toLowerCase()) {
               r.nameResults.push({ name: nm, note: "resolver-not-updated", target: t.addr });
               continue;
@@ -363,27 +453,48 @@ async function main() {
             for (const v of variants) {
               try {
                 const txHash = await provider.send("eth_sendTransaction", [{ from: owner, to: t.addr, data: v.data, gas: "0x2DC6C0", value: "0x0" }]);
+                console.log(`[DEBUG] Write+read variant ${v.kind} succeeded for ${nm} on ${t.label}, txHash: ${txHash}`);
                 const { ok: okAfter, res: resAfter } = await tryMulticall(t.addr, [d1, d2]);
                 let postAddr=null, postBytes=null;
                 if (okAfter) {
-                  try { [postAddr] = RESOLVER_IFACE.decodeFunctionResult("addr(bytes32)", resAfter[0]); } catch {}
-                  try { [postBytes] = RESOLVER_IFACE.decodeFunctionResult("addr(bytes32,uint256)", resAfter[1]); } catch {}
+                  try { 
+                    [postAddr] = RESOLVER_IFACE.decodeFunctionResult("addr(bytes32)", resAfter[0]); 
+                  } catch (e) {
+                    console.error(`[DEBUG] Failed to decode post-write addr(bytes32) for ${nm} on ${t.label}:`, e.message || e);
+                  }
+                  try { 
+                    [postBytes] = RESOLVER_IFACE.decodeFunctionResult("addr(bytes32,uint256)", resAfter[1]); 
+                  } catch (e) {
+                    console.error(`[DEBUG] Failed to decode post-write addr(bytes32,uint256) for ${nm} on ${t.label}:`, e.message || e);
+                  }
                 }
                 r.nameResults.push({ name: nm, writeRead: true, variant: v.kind, txHash, postAddr, postAddr60: postBytes });
               } catch (e) {
+                console.error(`[DEBUG] Write+read variant ${v.kind} failed for ${nm} on ${t.label}:`, e.message || e);
                 r.nameResults.push({ name: nm, writeRead: true, variant: v.kind, error: `eth_sendTransaction-failed:${String(e.message || e)}` });
               }
             }
           }
-        } catch (_) {}
+        } catch (e) {
+          console.error(`[DEBUG] Write+read hijack test failed for ${nm} on ${t.label}:`, e.message || e);
+        }
       } else {
         try {
           const c = new ethers.Contract(t.addr, RESOLVER_IFACE, provider);
           let addrv = null, bytesv = null;
-          try { addrv = await c.addr(node); } catch {}
-          try { bytesv = await c["addr(bytes32,uint256)"](node, 60); } catch {}
+          try { 
+            addrv = await c.addr(node); 
+          } catch (e) {
+            console.error(`[DEBUG] Direct addr() call failed for ${nm} on ${t.label}:`, e.message || e);
+          }
+          try { 
+            bytesv = await c["addr(bytes32,uint256)"](node, 60); 
+          } catch (e) {
+            console.error(`[DEBUG] Direct addr(bytes32,uint256) call failed for ${nm} on ${t.label}:`, e.message || e);
+          }
           r.nameResults.push({ name: nm, addr: addrv, addr60: bytesv });
         } catch (e) {
+          console.error(`[DEBUG] Direct resolver calls failed for ${nm} on ${t.label}:`, e.message || e);
           r.nameResults.push({ name: nm, error: String(e.message || e) });
         }
       }
@@ -394,8 +505,11 @@ async function main() {
 }
 
 main().catch((e) => {
-  console.error(e);
+  console.error("[DEBUG] Main function failed:", {
+    error: e.message || e,
+    stack: e.stack,
+    code: e.code,
+    data: e.data
+  });
   process.exit(1);
 });
-
-

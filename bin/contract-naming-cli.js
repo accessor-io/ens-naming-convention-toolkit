@@ -7,10 +7,14 @@
  * subdomain generation, and ENS metadata management across the Ethereum ecosystem.
  */
 
-const { Command } = require('commander');
+import { Command } from 'commander';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const program = new Command();
-const fs = require('fs');
-const path = require('path');
 
 // Naming convention configurations
 const NAMING_CONVENTIONS = {
@@ -182,7 +186,7 @@ class ContractNamingTool {
     }
 
     if (verbose) {
-      console.log('\n📋 Generated Subdomain Suggestions:');
+      console.log('\nGenerated Subdomain Suggestions:');
       console.log('=' .repeat(50));
       suggestions.forEach((s, i) => {
         console.log(`${i + 1}. ${s.contract.padEnd(12)} → ${s.subdomain}`);
@@ -332,7 +336,7 @@ program
     const tool = new ContractNamingTool();
     const suggestions = tool.generateSubdomains(protocol, category, options);
 
-    console.log(`\n🔍 Subdomain suggestions for ${protocol} (${category}):`);
+    console.log(`\nSubdomain suggestions for ${protocol} (${category}):`);
     console.log('=' .repeat(50));
 
     suggestions.forEach((s, i) => {
@@ -344,7 +348,7 @@ program
     // Save suggestions to file
     const filename = `${protocol}-${category}-suggestions.json`;
     fs.writeFileSync(filename, JSON.stringify(suggestions, null, 2));
-    console.log(`💾 Suggestions saved to ${filename}`);
+    console.log(`Suggestions saved to ${filename}`);
   });
 
 program
@@ -356,7 +360,7 @@ program
     const tool = new ContractNamingTool();
     const result = tool.validateNaming(domain, category);
 
-    console.log(`\n🔍 Validation Results for: ${domain}`);
+    console.log(`\nValidation Results for: ${domain}`);
     console.log('=' .repeat(40));
 
     if (result.isValid) {
@@ -367,7 +371,7 @@ program
     }
 
     if (result.warnings.length > 0) {
-      console.log('\n⚠️  Warnings:');
+      console.log('\nWarnings:');
       result.warnings.forEach(warning => console.log(`   • ${warning}`));
     }
   });
@@ -394,13 +398,13 @@ program
 
     const metadata = tool.generateMetadata(contractType, category, customFields);
 
-    console.log(`\n📋 Generated Metadata Template:`);
+    console.log(`\nGenerated Metadata Template:`);
     console.log('=' .repeat(30));
     console.log(JSON.stringify(metadata, null, 2));
 
     if (options.output) {
       fs.writeFileSync(options.output, JSON.stringify(metadata, null, 2));
-      console.log(`\n💾 Metadata saved to ${options.output}`);
+      console.log(`\nMetadata saved to ${options.output}`);
     }
   });
 
@@ -415,13 +419,13 @@ program
     const subdomains = tool.generateSubdomains(protocol, category);
     const script = tool.generateRegistrationScript(protocol, category, subdomains);
 
-    console.log(`\n📝 Generated Registration Script:`);
+    console.log(`\nGenerated Registration Script:`);
     console.log('=' .repeat(35));
     console.log(script);
 
     const filename = options.output || `${protocol}-${category}-registration.sh`;
     fs.writeFileSync(filename, script);
-    console.log(`\n💾 Script saved to ${filename}`);
+    console.log(`\nScript saved to ${filename}`);
   });
 
 program

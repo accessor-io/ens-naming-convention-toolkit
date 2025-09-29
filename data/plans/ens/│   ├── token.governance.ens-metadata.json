@@ -1,0 +1,37 @@
+{
+  "dao": {
+    "name": "{{daoName}}",
+    "mission": "{{mission}}",
+    "foundingDate": "{{foundingDate}}",
+    "memberCount": "{{memberCount}}",
+    "activeProposals": "{{activeProposals}}",
+    "treasuryValue": "{{treasuryValue}}"
+  },
+  "governance": {
+    "type": "token-based",
+    "framework": "{{framework}}",
+    "proposalThreshold": "{{proposalThreshold}}",
+    "votingDelay": "{{votingDelay}}",
+    "votingPeriod": "{{votingPeriod}}",
+    "quorum": "{{quorum}}",
+    "executionDelay": "{{executionDelay}}",
+    "delegationEnabled": "{{delegationEnabled}}"
+  },
+  "token": {
+    "symbol": "{{tokenSymbol}}",
+    "name": "{{tokenName}}",
+    "totalSupply": "{{totalSupply}}",
+    "circulatingSupply": "{{circulatingSupply}}",
+    "decimals": 18,
+    "delegationEnabled": "{{delegationEnabled}}"
+  },
+  "contract": {
+    "type": "governor",
+    "interfaces": [
+      "IGovernor",
+      "IVotes"
+    ],
+    "deploymentBlock": "0",
+    "upgradeable": "{{upgradeable}}"
+  }
+}

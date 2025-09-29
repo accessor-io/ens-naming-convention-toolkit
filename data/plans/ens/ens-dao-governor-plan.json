@@ -1,0 +1,852 @@
+{
+  "protocol": "ens",
+  "category": "dao",
+  "type": "governor",
+  "variables": {
+    "version": "v1",
+    "token": "ens"
+  },
+  "subdomains": [
+    {
+      "pattern": "<dao>.eth",
+      "subdomain": "ens.eth",
+      "metadata": {
+        "subdomain": "ens",
+        "variables": {
+          "version": "v1",
+          "token": "ens"
+        },
+        "generatedAt": "2025-09-29T01:00:48.411Z",
+        "relationships": {
+          "parent": null,
+          "children": [],
+          "siblings": [],
+          "dependencies": []
+        }
+      }
+    },
+    {
+      "pattern": "├── governance.<dao>.eth",
+      "subdomain": "├── governance.ens.eth",
+      "metadata": {
+        "subdomain": "├── governance.ens",
+        "variables": {
+          "version": "v1",
+          "token": "ens"
+        },
+        "generatedAt": "2025-09-29T01:00:48.413Z",
+        "relationships": {
+          "parent": "ens",
+          "children": [],
+          "siblings": [],
+          "dependencies": []
+        }
+      }
+    },
+    {
+      "pattern": "│   ├── governor.governance.<dao>.eth",
+      "subdomain": "│   ├── governor.governance.ens.eth",
+      "metadata": {
+        "subdomain": "│   ├── governor.governance.ens",
+        "variables": {
+          "version": "v1",
+          "token": "ens"
+        },
+        "generatedAt": "2025-09-29T01:00:48.414Z",
+        "relationships": {
+          "parent": "governance.ens",
+          "children": [],
+          "siblings": [],
+          "dependencies": []
+        }
+      }
+    },
+    {
+      "pattern": "│   ├── token.governance.<dao>.eth",
+      "subdomain": "│   ├── token.governance.ens.eth",
+      "metadata": {
+        "subdomain": "│   ├── token.governance.ens",
+        "variables": {
+          "version": "v1",
+          "token": "ens"
+        },
+        "generatedAt": "2025-09-29T01:00:48.414Z",
+        "relationships": {
+          "parent": "governance.ens",
+          "children": [],
+          "siblings": [],
+          "dependencies": []
+        }
+      }
+    },
+    {
+      "pattern": "│   ├── timelock.governance.<dao>.eth",
+      "subdomain": "│   ├── timelock.governance.ens.eth",
+      "metadata": {
+        "subdomain": "│   ├── timelock.governance.ens",
+        "variables": {
+          "version": "v1",
+          "token": "ens"
+        },
+        "generatedAt": "2025-09-29T01:00:48.414Z",
+        "relationships": {
+          "parent": "governance.ens",
+          "children": [],
+          "siblings": [],
+          "dependencies": []
+        }
+      }
+    },
+    {
+      "pattern": "│   └── treasury.governance.<dao>.eth",
+      "subdomain": "│   └── treasury.governance.ens.eth",
+      "metadata": {
+        "subdomain": "│   └── treasury.governance.ens",
+        "variables": {
+          "version": "v1",
+          "token": "ens"
+        },
+        "generatedAt": "2025-09-29T01:00:48.414Z",
+        "relationships": {
+          "parent": "governance.ens",
+          "children": [],
+          "siblings": [],
+          "dependencies": []
+        }
+      }
+    },
+    {
+      "pattern": "├── operations.<dao>.eth",
+      "subdomain": "├── operations.ens.eth",
+      "metadata": {
+        "subdomain": "├── operations.ens",
+        "variables": {
+          "version": "v1",
+          "token": "ens"
+        },
+        "generatedAt": "2025-09-29T01:00:48.414Z",
+        "relationships": {
+          "parent": "ens",
+          "children": [],
+          "siblings": [],
+          "dependencies": []
+        }
+      }
+    },
+    {
+      "pattern": "│   ├── wallet.operations.<dao>.eth",
+      "subdomain": "│   ├── wallet.operations.ens.eth",
+      "metadata": {
+        "subdomain": "│   ├── wallet.operations.ens",
+        "variables": {
+          "version": "v1",
+          "token": "ens"
+        },
+        "generatedAt": "2025-09-29T01:00:48.414Z",
+        "relationships": {
+          "parent": "operations.ens",
+          "children": [],
+          "siblings": [],
+          "dependencies": []
+        }
+      }
+    },
+    {
+      "pattern": "│   ├── delegate.operations.<dao>.eth",
+      "subdomain": "│   ├── delegate.operations.ens.eth",
+      "metadata": {
+        "subdomain": "│   ├── delegate.operations.ens",
+        "variables": {
+          "version": "v1",
+          "token": "ens"
+        },
+        "generatedAt": "2025-09-29T01:00:48.415Z",
+        "relationships": {
+          "parent": "operations.ens",
+          "children": [],
+          "siblings": [],
+          "dependencies": []
+        }
+      }
+    },
+    {
+      "pattern": "│   └── emergency.operations.<dao>.eth",
+      "subdomain": "│   └── emergency.operations.ens.eth",
+      "metadata": {
+        "subdomain": "│   └── emergency.operations.ens",
+        "variables": {
+          "version": "v1",
+          "token": "ens"
+        },
+        "generatedAt": "2025-09-29T01:00:48.415Z",
+        "relationships": {
+          "parent": "operations.ens",
+          "children": [],
+          "siblings": [],
+          "dependencies": []
+        }
+      }
+    },
+    {
+      "pattern": "└── meta.<dao>.eth",
+      "subdomain": "└── meta.ens.eth",
+      "metadata": {
+        "subdomain": "└── meta.ens",
+        "variables": {
+          "version": "v1",
+          "token": "ens"
+        },
+        "generatedAt": "2025-09-29T01:00:48.415Z",
+        "relationships": {
+          "parent": "ens",
+          "children": [],
+          "siblings": [],
+          "dependencies": []
+        }
+      }
+    },
+    {
+      "pattern": "    ├── docs.meta.<dao>.eth",
+      "subdomain": "    ├── docs.meta.ens.eth",
+      "metadata": {
+        "subdomain": "    ├── docs.meta.ens",
+        "variables": {
+          "version": "v1",
+          "token": "ens"
+        },
+        "generatedAt": "2025-09-29T01:00:48.416Z",
+        "relationships": {
+          "parent": "meta.ens",
+          "children": [],
+          "siblings": [],
+          "dependencies": []
+        }
+      }
+    },
+    {
+      "pattern": "    ├── forum.meta.<dao>.eth",
+      "subdomain": "    ├── forum.meta.ens.eth",
+      "metadata": {
+        "subdomain": "    ├── forum.meta.ens",
+        "variables": {
+          "version": "v1",
+          "token": "ens"
+        },
+        "generatedAt": "2025-09-29T01:00:48.416Z",
+        "relationships": {
+          "parent": "meta.ens",
+          "children": [],
+          "siblings": [],
+          "dependencies": []
+        }
+      }
+    },
+    {
+      "pattern": "    └── discord.meta.<dao>.eth",
+      "subdomain": "    └── discord.meta.ens.eth",
+      "metadata": {
+        "subdomain": "    └── discord.meta.ens",
+        "variables": {
+          "version": "v1",
+          "token": "ens"
+        },
+        "generatedAt": "2025-09-29T01:00:48.416Z",
+        "relationships": {
+          "parent": "meta.ens",
+          "children": [],
+          "siblings": [],
+          "dependencies": []
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "ens.eth": {
+      "dao": {
+        "name": "{{daoName}}",
+        "mission": "{{mission}}",
+        "foundingDate": "{{foundingDate}}",
+        "memberCount": "{{memberCount}}",
+        "activeProposals": "{{activeProposals}}",
+        "treasuryValue": "{{treasuryValue}}"
+      },
+      "governance": {
+        "type": "token-based",
+        "framework": "{{framework}}",
+        "proposalThreshold": "{{proposalThreshold}}",
+        "votingDelay": "{{votingDelay}}",
+        "votingPeriod": "{{votingPeriod}}",
+        "quorum": "{{quorum}}",
+        "executionDelay": "{{executionDelay}}",
+        "delegationEnabled": "{{delegationEnabled}}"
+      },
+      "token": {
+        "symbol": "{{tokenSymbol}}",
+        "name": "{{tokenName}}",
+        "totalSupply": "{{totalSupply}}",
+        "circulatingSupply": "{{circulatingSupply}}",
+        "decimals": 18,
+        "delegationEnabled": "{{delegationEnabled}}"
+      },
+      "contract": {
+        "type": "governor",
+        "interfaces": [
+          "IGovernor",
+          "IVotes"
+        ],
+        "deploymentBlock": "0",
+        "upgradeable": "{{upgradeable}}"
+      }
+    },
+    "├── governance.ens.eth": {
+      "dao": {
+        "name": "{{daoName}}",
+        "mission": "{{mission}}",
+        "foundingDate": "{{foundingDate}}",
+        "memberCount": "{{memberCount}}",
+        "activeProposals": "{{activeProposals}}",
+        "treasuryValue": "{{treasuryValue}}"
+      },
+      "governance": {
+        "type": "token-based",
+        "framework": "{{framework}}",
+        "proposalThreshold": "{{proposalThreshold}}",
+        "votingDelay": "{{votingDelay}}",
+        "votingPeriod": "{{votingPeriod}}",
+        "quorum": "{{quorum}}",
+        "executionDelay": "{{executionDelay}}",
+        "delegationEnabled": "{{delegationEnabled}}"
+      },
+      "token": {
+        "symbol": "{{tokenSymbol}}",
+        "name": "{{tokenName}}",
+        "totalSupply": "{{totalSupply}}",
+        "circulatingSupply": "{{circulatingSupply}}",
+        "decimals": 18,
+        "delegationEnabled": "{{delegationEnabled}}"
+      },
+      "contract": {
+        "type": "governor",
+        "interfaces": [
+          "IGovernor",
+          "IVotes"
+        ],
+        "deploymentBlock": "0",
+        "upgradeable": "{{upgradeable}}"
+      }
+    },
+    "│   ├── governor.governance.ens.eth": {
+      "dao": {
+        "name": "{{daoName}}",
+        "mission": "{{mission}}",
+        "foundingDate": "{{foundingDate}}",
+        "memberCount": "{{memberCount}}",
+        "activeProposals": "{{activeProposals}}",
+        "treasuryValue": "{{treasuryValue}}"
+      },
+      "governance": {
+        "type": "token-based",
+        "framework": "{{framework}}",
+        "proposalThreshold": "{{proposalThreshold}}",
+        "votingDelay": "{{votingDelay}}",
+        "votingPeriod": "{{votingPeriod}}",
+        "quorum": "{{quorum}}",
+        "executionDelay": "{{executionDelay}}",
+        "delegationEnabled": "{{delegationEnabled}}"
+      },
+      "token": {
+        "symbol": "{{tokenSymbol}}",
+        "name": "{{tokenName}}",
+        "totalSupply": "{{totalSupply}}",
+        "circulatingSupply": "{{circulatingSupply}}",
+        "decimals": 18,
+        "delegationEnabled": "{{delegationEnabled}}"
+      },
+      "contract": {
+        "type": "governor",
+        "interfaces": [
+          "IGovernor",
+          "IVotes"
+        ],
+        "deploymentBlock": "0",
+        "upgradeable": "{{upgradeable}}"
+      }
+    },
+    "│   ├── token.governance.ens.eth": {
+      "dao": {
+        "name": "{{daoName}}",
+        "mission": "{{mission}}",
+        "foundingDate": "{{foundingDate}}",
+        "memberCount": "{{memberCount}}",
+        "activeProposals": "{{activeProposals}}",
+        "treasuryValue": "{{treasuryValue}}"
+      },
+      "governance": {
+        "type": "token-based",
+        "framework": "{{framework}}",
+        "proposalThreshold": "{{proposalThreshold}}",
+        "votingDelay": "{{votingDelay}}",
+        "votingPeriod": "{{votingPeriod}}",
+        "quorum": "{{quorum}}",
+        "executionDelay": "{{executionDelay}}",
+        "delegationEnabled": "{{delegationEnabled}}"
+      },
+      "token": {
+        "symbol": "{{tokenSymbol}}",
+        "name": "{{tokenName}}",
+        "totalSupply": "{{totalSupply}}",
+        "circulatingSupply": "{{circulatingSupply}}",
+        "decimals": 18,
+        "delegationEnabled": "{{delegationEnabled}}"
+      },
+      "contract": {
+        "type": "governor",
+        "interfaces": [
+          "IGovernor",
+          "IVotes"
+        ],
+        "deploymentBlock": "0",
+        "upgradeable": "{{upgradeable}}"
+      }
+    },
+    "│   ├── timelock.governance.ens.eth": {
+      "dao": {
+        "name": "{{daoName}}",
+        "mission": "{{mission}}",
+        "foundingDate": "{{foundingDate}}",
+        "memberCount": "{{memberCount}}",
+        "activeProposals": "{{activeProposals}}",
+        "treasuryValue": "{{treasuryValue}}"
+      },
+      "governance": {
+        "type": "token-based",
+        "framework": "{{framework}}",
+        "proposalThreshold": "{{proposalThreshold}}",
+        "votingDelay": "{{votingDelay}}",
+        "votingPeriod": "{{votingPeriod}}",
+        "quorum": "{{quorum}}",
+        "executionDelay": "{{executionDelay}}",
+        "delegationEnabled": "{{delegationEnabled}}"
+      },
+      "token": {
+        "symbol": "{{tokenSymbol}}",
+        "name": "{{tokenName}}",
+        "totalSupply": "{{totalSupply}}",
+        "circulatingSupply": "{{circulatingSupply}}",
+        "decimals": 18,
+        "delegationEnabled": "{{delegationEnabled}}"
+      },
+      "contract": {
+        "type": "governor",
+        "interfaces": [
+          "IGovernor",
+          "IVotes"
+        ],
+        "deploymentBlock": "0",
+        "upgradeable": "{{upgradeable}}"
+      }
+    },
+    "│   └── treasury.governance.ens.eth": {
+      "dao": {
+        "name": "{{daoName}}",
+        "mission": "{{mission}}",
+        "foundingDate": "{{foundingDate}}",
+        "memberCount": "{{memberCount}}",
+        "activeProposals": "{{activeProposals}}",
+        "treasuryValue": "{{treasuryValue}}"
+      },
+      "governance": {
+        "type": "token-based",
+        "framework": "{{framework}}",
+        "proposalThreshold": "{{proposalThreshold}}",
+        "votingDelay": "{{votingDelay}}",
+        "votingPeriod": "{{votingPeriod}}",
+        "quorum": "{{quorum}}",
+        "executionDelay": "{{executionDelay}}",
+        "delegationEnabled": "{{delegationEnabled}}"
+      },
+      "token": {
+        "symbol": "{{tokenSymbol}}",
+        "name": "{{tokenName}}",
+        "totalSupply": "{{totalSupply}}",
+        "circulatingSupply": "{{circulatingSupply}}",
+        "decimals": 18,
+        "delegationEnabled": "{{delegationEnabled}}"
+      },
+      "contract": {
+        "type": "governor",
+        "interfaces": [
+          "IGovernor",
+          "IVotes"
+        ],
+        "deploymentBlock": "0",
+        "upgradeable": "{{upgradeable}}"
+      }
+    },
+    "├── operations.ens.eth": {
+      "dao": {
+        "name": "{{daoName}}",
+        "mission": "{{mission}}",
+        "foundingDate": "{{foundingDate}}",
+        "memberCount": "{{memberCount}}",
+        "activeProposals": "{{activeProposals}}",
+        "treasuryValue": "{{treasuryValue}}"
+      },
+      "governance": {
+        "type": "token-based",
+        "framework": "{{framework}}",
+        "proposalThreshold": "{{proposalThreshold}}",
+        "votingDelay": "{{votingDelay}}",
+        "votingPeriod": "{{votingPeriod}}",
+        "quorum": "{{quorum}}",
+        "executionDelay": "{{executionDelay}}",
+        "delegationEnabled": "{{delegationEnabled}}"
+      },
+      "token": {
+        "symbol": "{{tokenSymbol}}",
+        "name": "{{tokenName}}",
+        "totalSupply": "{{totalSupply}}",
+        "circulatingSupply": "{{circulatingSupply}}",
+        "decimals": 18,
+        "delegationEnabled": "{{delegationEnabled}}"
+      },
+      "contract": {
+        "type": "governor",
+        "interfaces": [
+          "IGovernor",
+          "IVotes"
+        ],
+        "deploymentBlock": "0",
+        "upgradeable": "{{upgradeable}}"
+      }
+    },
+    "│   ├── wallet.operations.ens.eth": {
+      "dao": {
+        "name": "{{daoName}}",
+        "mission": "{{mission}}",
+        "foundingDate": "{{foundingDate}}",
+        "memberCount": "{{memberCount}}",
+        "activeProposals": "{{activeProposals}}",
+        "treasuryValue": "{{treasuryValue}}"
+      },
+      "governance": {
+        "type": "token-based",
+        "framework": "{{framework}}",
+        "proposalThreshold": "{{proposalThreshold}}",
+        "votingDelay": "{{votingDelay}}",
+        "votingPeriod": "{{votingPeriod}}",
+        "quorum": "{{quorum}}",
+        "executionDelay": "{{executionDelay}}",
+        "delegationEnabled": "{{delegationEnabled}}"
+      },
+      "token": {
+        "symbol": "{{tokenSymbol}}",
+        "name": "{{tokenName}}",
+        "totalSupply": "{{totalSupply}}",
+        "circulatingSupply": "{{circulatingSupply}}",
+        "decimals": 18,
+        "delegationEnabled": "{{delegationEnabled}}"
+      },
+      "contract": {
+        "type": "governor",
+        "interfaces": [
+          "IGovernor",
+          "IVotes"
+        ],
+        "deploymentBlock": "0",
+        "upgradeable": "{{upgradeable}}"
+      }
+    },
+    "│   ├── delegate.operations.ens.eth": {
+      "dao": {
+        "name": "{{daoName}}",
+        "mission": "{{mission}}",
+        "foundingDate": "{{foundingDate}}",
+        "memberCount": "{{memberCount}}",
+        "activeProposals": "{{activeProposals}}",
+        "treasuryValue": "{{treasuryValue}}"
+      },
+      "governance": {
+        "type": "token-based",
+        "framework": "{{framework}}",
+        "proposalThreshold": "{{proposalThreshold}}",
+        "votingDelay": "{{votingDelay}}",
+        "votingPeriod": "{{votingPeriod}}",
+        "quorum": "{{quorum}}",
+        "executionDelay": "{{executionDelay}}",
+        "delegationEnabled": "{{delegationEnabled}}"
+      },
+      "token": {
+        "symbol": "{{tokenSymbol}}",
+        "name": "{{tokenName}}",
+        "totalSupply": "{{totalSupply}}",
+        "circulatingSupply": "{{circulatingSupply}}",
+        "decimals": 18,
+        "delegationEnabled": "{{delegationEnabled}}"
+      },
+      "contract": {
+        "type": "governor",
+        "interfaces": [
+          "IGovernor",
+          "IVotes"
+        ],
+        "deploymentBlock": "0",
+        "upgradeable": "{{upgradeable}}"
+      }
+    },
+    "│   └── emergency.operations.ens.eth": {
+      "dao": {
+        "name": "{{daoName}}",
+        "mission": "{{mission}}",
+        "foundingDate": "{{foundingDate}}",
+        "memberCount": "{{memberCount}}",
+        "activeProposals": "{{activeProposals}}",
+        "treasuryValue": "{{treasuryValue}}"
+      },
+      "governance": {
+        "type": "token-based",
+        "framework": "{{framework}}",
+        "proposalThreshold": "{{proposalThreshold}}",
+        "votingDelay": "{{votingDelay}}",
+        "votingPeriod": "{{votingPeriod}}",
+        "quorum": "{{quorum}}",
+        "executionDelay": "{{executionDelay}}",
+        "delegationEnabled": "{{delegationEnabled}}"
+      },
+      "token": {
+        "symbol": "{{tokenSymbol}}",
+        "name": "{{tokenName}}",
+        "totalSupply": "{{totalSupply}}",
+        "circulatingSupply": "{{circulatingSupply}}",
+        "decimals": 18,
+        "delegationEnabled": "{{delegationEnabled}}"
+      },
+      "contract": {
+        "type": "governor",
+        "interfaces": [
+          "IGovernor",
+          "IVotes"
+        ],
+        "deploymentBlock": "0",
+        "upgradeable": "{{upgradeable}}"
+      }
+    },
+    "└── meta.ens.eth": {
+      "dao": {
+        "name": "{{daoName}}",
+        "mission": "{{mission}}",
+        "foundingDate": "{{foundingDate}}",
+        "memberCount": "{{memberCount}}",
+        "activeProposals": "{{activeProposals}}",
+        "treasuryValue": "{{treasuryValue}}"
+      },
+      "governance": {
+        "type": "token-based",
+        "framework": "{{framework}}",
+        "proposalThreshold": "{{proposalThreshold}}",
+        "votingDelay": "{{votingDelay}}",
+        "votingPeriod": "{{votingPeriod}}",
+        "quorum": "{{quorum}}",
+        "executionDelay": "{{executionDelay}}",
+        "delegationEnabled": "{{delegationEnabled}}"
+      },
+      "token": {
+        "symbol": "{{tokenSymbol}}",
+        "name": "{{tokenName}}",
+        "totalSupply": "{{totalSupply}}",
+        "circulatingSupply": "{{circulatingSupply}}",
+        "decimals": 18,
+        "delegationEnabled": "{{delegationEnabled}}"
+      },
+      "contract": {
+        "type": "governor",
+        "interfaces": [
+          "IGovernor",
+          "IVotes"
+        ],
+        "deploymentBlock": "0",
+        "upgradeable": "{{upgradeable}}"
+      }
+    },
+    "    ├── docs.meta.ens.eth": {
+      "dao": {
+        "name": "{{daoName}}",
+        "mission": "{{mission}}",
+        "foundingDate": "{{foundingDate}}",
+        "memberCount": "{{memberCount}}",
+        "activeProposals": "{{activeProposals}}",
+        "treasuryValue": "{{treasuryValue}}"
+      },
+      "governance": {
+        "type": "token-based",
+        "framework": "{{framework}}",
+        "proposalThreshold": "{{proposalThreshold}}",
+        "votingDelay": "{{votingDelay}}",
+        "votingPeriod": "{{votingPeriod}}",
+        "quorum": "{{quorum}}",
+        "executionDelay": "{{executionDelay}}",
+        "delegationEnabled": "{{delegationEnabled}}"
+      },
+      "token": {
+        "symbol": "{{tokenSymbol}}",
+        "name": "{{tokenName}}",
+        "totalSupply": "{{totalSupply}}",
+        "circulatingSupply": "{{circulatingSupply}}",
+        "decimals": 18,
+        "delegationEnabled": "{{delegationEnabled}}"
+      },
+      "contract": {
+        "type": "governor",
+        "interfaces": [
+          "IGovernor",
+          "IVotes"
+        ],
+        "deploymentBlock": "0",
+        "upgradeable": "{{upgradeable}}"
+      }
+    },
+    "    ├── forum.meta.ens.eth": {
+      "dao": {
+        "name": "{{daoName}}",
+        "mission": "{{mission}}",
+        "foundingDate": "{{foundingDate}}",
+        "memberCount": "{{memberCount}}",
+        "activeProposals": "{{activeProposals}}",
+        "treasuryValue": "{{treasuryValue}}"
+      },
+      "governance": {
+        "type": "token-based",
+        "framework": "{{framework}}",
+        "proposalThreshold": "{{proposalThreshold}}",
+        "votingDelay": "{{votingDelay}}",
+        "votingPeriod": "{{votingPeriod}}",
+        "quorum": "{{quorum}}",
+        "executionDelay": "{{executionDelay}}",
+        "delegationEnabled": "{{delegationEnabled}}"
+      },
+      "token": {
+        "symbol": "{{tokenSymbol}}",
+        "name": "{{tokenName}}",
+        "totalSupply": "{{totalSupply}}",
+        "circulatingSupply": "{{circulatingSupply}}",
+        "decimals": 18,
+        "delegationEnabled": "{{delegationEnabled}}"
+      },
+      "contract": {
+        "type": "governor",
+        "interfaces": [
+          "IGovernor",
+          "IVotes"
+        ],
+        "deploymentBlock": "0",
+        "upgradeable": "{{upgradeable}}"
+      }
+    },
+    "    └── discord.meta.ens.eth": {
+      "dao": {
+        "name": "{{daoName}}",
+        "mission": "{{mission}}",
+        "foundingDate": "{{foundingDate}}",
+        "memberCount": "{{memberCount}}",
+        "activeProposals": "{{activeProposals}}",
+        "treasuryValue": "{{treasuryValue}}"
+      },
+      "governance": {
+        "type": "token-based",
+        "framework": "{{framework}}",
+        "proposalThreshold": "{{proposalThreshold}}",
+        "votingDelay": "{{votingDelay}}",
+        "votingPeriod": "{{votingPeriod}}",
+        "quorum": "{{quorum}}",
+        "executionDelay": "{{executionDelay}}",
+        "delegationEnabled": "{{delegationEnabled}}"
+      },
+      "token": {
+        "symbol": "{{tokenSymbol}}",
+        "name": "{{tokenName}}",
+        "totalSupply": "{{totalSupply}}",
+        "circulatingSupply": "{{circulatingSupply}}",
+        "decimals": 18,
+        "delegationEnabled": "{{delegationEnabled}}"
+      },
+      "contract": {
+        "type": "governor",
+        "interfaces": [
+          "IGovernor",
+          "IVotes"
+        ],
+        "deploymentBlock": "0",
+        "upgradeable": "{{upgradeable}}"
+      }
+    }
+  },
+  "registrationScript": [
+    "#!/bin/bash",
+    "# Subdomain Registration Script for ens",
+    "# Generated on 2025-09-29T01:00:48.416Z",
+    "# Category: dao, Type: governor",
+    "",
+    "# Register primary domain",
+    "ens-contract register ens.dao.eth --type governor",
+    "",
+    "# Register subdomain: ens.eth",
+    "ens-contract register ens.eth --parent ens.dao.eth",
+    "",
+    "# Register subdomain: ├── governance.ens.eth",
+    "ens-contract register ├── governance.ens.eth --parent ens.dao.eth",
+    "",
+    "# Register subdomain: │   ├── governor.governance.ens.eth",
+    "ens-contract register │   ├── governor.governance.ens.eth --parent ens.dao.eth",
+    "",
+    "# Register subdomain: │   ├── token.governance.ens.eth",
+    "ens-contract register │   ├── token.governance.ens.eth --parent ens.dao.eth",
+    "",
+    "# Register subdomain: │   ├── timelock.governance.ens.eth",
+    "ens-contract register │   ├── timelock.governance.ens.eth --parent ens.dao.eth",
+    "",
+    "# Register subdomain: │   └── treasury.governance.ens.eth",
+    "ens-contract register │   └── treasury.governance.ens.eth --parent ens.dao.eth",
+    "",
+    "# Register subdomain: ├── operations.ens.eth",
+    "ens-contract register ├── operations.ens.eth --parent ens.dao.eth",
+    "",
+    "# Register subdomain: │   ├── wallet.operations.ens.eth",
+    "ens-contract register │   ├── wallet.operations.ens.eth --parent ens.dao.eth",
+    "",
+    "# Register subdomain: │   ├── delegate.operations.ens.eth",
+    "ens-contract register │   ├── delegate.operations.ens.eth --parent ens.dao.eth",
+    "",
+    "# Register subdomain: │   └── emergency.operations.ens.eth",
+    "ens-contract register │   └── emergency.operations.ens.eth --parent ens.dao.eth",
+    "",
+    "# Register subdomain: └── meta.ens.eth",
+    "ens-contract register └── meta.ens.eth --parent ens.dao.eth",
+    "",
+    "# Register subdomain:     ├── docs.meta.ens.eth",
+    "ens-contract register     ├── docs.meta.ens.eth --parent ens.dao.eth",
+    "",
+    "# Register subdomain:     ├── forum.meta.ens.eth",
+    "ens-contract register     ├── forum.meta.ens.eth --parent ens.dao.eth",
+    "",
+    "# Register subdomain:     └── discord.meta.ens.eth",
+    "ens-contract register     └── discord.meta.ens.eth --parent ens.dao.eth",
+    "",
+    "# Set cross-references"
+  ],
+  "crossReferences": {
+    "ens.eth": {},
+    "├── governance.ens.eth": {},
+    "│   ├── governor.governance.ens.eth": {},
+    "│   ├── token.governance.ens.eth": {},
+    "│   ├── timelock.governance.ens.eth": {},
+    "│   └── treasury.governance.ens.eth": {},
+    "├── operations.ens.eth": {},
+    "│   ├── wallet.operations.ens.eth": {},
+    "│   ├── delegate.operations.ens.eth": {},
+    "│   └── emergency.operations.ens.eth": {},
+    "└── meta.ens.eth": {},
+    "    ├── docs.meta.ens.eth": {},
+    "    ├── forum.meta.ens.eth": {},
+    "    └── discord.meta.ens.eth": {}
+  }
+}

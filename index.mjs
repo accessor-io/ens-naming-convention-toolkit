@@ -95,7 +95,7 @@ program
     if (options.output) {
       const fs = await import('fs');
       fs.writeFileSync(options.output, JSON.stringify(results, null, 2));
-      console.log(chalk.green(`\n📄 Report saved to ${options.output}`));
+      console.log(chalk.green(`\nReport saved to ${options.output}`));
     }
   });
 

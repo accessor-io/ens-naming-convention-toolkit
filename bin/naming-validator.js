@@ -7,8 +7,12 @@
  * across all categories and ENS standards.
  */
 
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Validation rules for each category
 const VALIDATION_RULES = {
@@ -568,7 +572,7 @@ class NamingValidator {
   generateReport(results) {
     const report = [];
 
-    report.push(`\n🏆 NAMING CONVENTION VALIDATION REPORT`);
+    report.push(`\nNAMING CONVENTION VALIDATION REPORT`);
     report.push(`═`.repeat(50));
     report.push(`Domain: ${results.domain}`);
     report.push(`Category: ${results.category}`);
@@ -577,7 +581,7 @@ class NamingValidator {
     report.push(``);
 
     if (results.issues.length > 0) {
-      report.push(`🚨 ISSUES (${results.issues.length}):`);
+      report.push(`ISSUES (${results.issues.length}):`);
       results.issues.forEach((issue, i) => {
         report.push(`  ${i + 1}. ${issue}`);
       });
@@ -585,7 +589,7 @@ class NamingValidator {
     }
 
     if (results.warnings.length > 0) {
-      report.push(`⚠️  WARNINGS (${results.warnings.length}):`);
+      report.push(`WARNINGS (${results.warnings.length}):`);
       results.warnings.forEach((warning, i) => {
         report.push(`  ${i + 1}. ${warning}`);
       });
@@ -593,7 +597,7 @@ class NamingValidator {
     }
 
     if (results.suggestions.length > 0) {
-      report.push(`💡 SUGGESTIONS:`);
+      report.push(`SUGGESTIONS:`);
       results.suggestions.forEach((suggestion, i) => {
         report.push(`  ${i + 1}. ${suggestion}`);
       });
@@ -601,16 +605,16 @@ class NamingValidator {
     }
 
     if (results.metadata.coverage.total > 0) {
-      report.push(`📊 METADATA COMPLIANCE:`);
+      report.push(`METADATA COMPLIANCE:`);
       report.push(`  Coverage: ${results.metadata.coverage.percentage}%`);
       report.push(`  Compliant Fields: ${results.metadata.coverage.compliant}/${results.metadata.coverage.total}`);
       report.push(``);
     }
 
-    report.push(`📋 SUMMARY:`);
+    report.push(`SUMMARY:`);
     report.push(`  • Format Validation: ${results.issues.filter(i => i.includes('format') || i.includes('Domain')).length === 0 ? '✅' : '❌'}`);
     report.push(`  • Category Compliance: ${results.issues.filter(i => i.includes('category') || i.includes('pattern')).length === 0 ? '✅' : '❌'}`);
-    report.push(`  • Metadata Quality: ${results.metadata.coverage.percentage >= 80 ? '✅' : '⚠️'}`);
+    report.push(`  • Metadata Quality: ${results.metadata.coverage.percentage >= 80 ? 'Good' : 'Needs Improvement'}`);
 
     return report.join('\n');
   }
@@ -635,7 +639,7 @@ async function main() {
   const args = process.argv.slice(2);
 
   if (args.length < 2) {
-    console.log('\n🔍 Ethereum Contract Naming Validator');
+    console.log('\nEthereum Contract Naming Validator');
     console.log('═'.repeat(40));
     console.log('Usage: node naming-validator.js <domain> <category> [options]');
     console.log('\nOptions:');
@@ -679,7 +683,7 @@ async function main() {
         .map(line => line.trim())
         .filter(line => line && !line.startsWith('#'));
 
-      console.log(`\n🔍 Batch Validation: ${domains.length} domains`);
+      console.log(`\nBatch Validation: ${domains.length} domains`);
       console.log('═'.repeat(45));
 
       const validator = new NamingValidator();
@@ -728,9 +732,9 @@ async function main() {
 }
 
 // Export for use as module
-module.exports = NamingValidator;
+export default NamingValidator;
 
 // Run if called directly
-if (require.main === module) {
+if (import.meta.url === `file://${process.argv[1]}`) {
   main().catch(console.error);
 }
