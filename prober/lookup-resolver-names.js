@@ -36,6 +36,26 @@ const RESOLVER_ABI = [
   "function supportsInterface(bytes4 interfaceID) external view returns (bool)"
 ];
 
+// Domains by resolver address (nested filter on resolver.addr)
+const domainsByResolverAddressQuery = `
+query DomainsByResolverAddress($address: String!, $first: Int!, $skip: Int!) {
+  domains(where: { resolver_: { addr: $address } }, first: $first, skip: $skip) {
+    name
+    id
+    labelName
+    labelhash
+    owner { id }
+    registrant { id }
+    resolver {
+      id
+      addr { id }
+      texts
+    }
+    parent { id name }
+    subdomains { id name }
+  }
+}`;
+
 // Enhanced resolver query with additional metadata
 const resolverQuery = `
 query DomainsWithResolvers($first: Int!, $skip: Int!) {
@@ -230,6 +250,32 @@ class ENSResolverAnalyzer {
       onChainCalls: 0,
       ensRecords: 0
     };
+  }
+
+  async fetchDomainsByResolverSample(resolverAddress, first = 20) {
+    try {
+      const variables = { address: resolverAddress, first, skip: 0 };
+      const json = await this.fetchWithRetry(domainsByResolverAddressQuery, variables);
+      if (!json.data || !json.data.domains) return [];
+      return json.data.domains;
+    } catch (e) {
+      console.error(`Failed sample fetch for resolver ${resolverAddress}: ${e.message}`);
+      return [];
+    }
+  }
+
+  async checkResolversForNames(addresses, options = {}) {
+    const first = typeof options.first === 'number' ? options.first : 20;
+    const results = [];
+    for (const addr of addresses) {
+      const sample = await this.fetchDomainsByResolverSample(addr, first);
+      results.push({
+        resolver: addr,
+        sampleCount: sample.length,
+        sampleDomains: sample.map(d => d.name)
+      });
+    }
+    return results;
   }
 
   loadCache() {
@@ -537,8 +583,8 @@ class ENSResolverAnalyzer {
     let skip = 0;
 
     while (true) {
-      const variables = { resolver: resolverAddress, first: BATCH_SIZE, skip };
-      const json = await this.fetchWithRetry(domainsByResolverQuery, variables);
+      const variables = { address: resolverAddress, first: BATCH_SIZE, skip };
+      const json = await this.fetchWithRetry(domainsByResolverAddressQuery, variables);
       
       if (!json.data || !json.data.domains || json.data.domains.length === 0) break;
 
@@ -1113,6 +1159,7 @@ const TOOLKIT_COMMANDS = {
   'lookup': 'Lookup specific resolver by address or domain',
   'resolve': 'Test resolution for specific domain',
   'stats': 'Show resolver statistics and counts',
+  'check-resolvers': 'List domains that use specified resolver addresses (sample)',
   'help': 'Show available commands'
 };
 
@@ -1130,6 +1177,7 @@ async function showHelp() {
   console.log('  node lookup-resolver-names.js test                # Test resolver functionality');
   console.log('  node lookup-resolver-names.js lookup vitalik.eth  # Lookup resolver for domain');
   console.log('  node lookup-resolver-names.js resolve uniswap.eth # Test domain resolution');
+  console.log('  node lookup-resolver-names.js check-resolvers 0xResolver1 0xResolver2');
   console.log('  node lookup-resolver-names.js stats               # Show resolver statistics');
   console.log('  node lookup-resolver-names.js help                # Show this help');
   console.log('');
@@ -1192,6 +1240,27 @@ async function main() {
       case 'stats':
       case '--stats':
         await analyzer.showStats();
+        break;
+
+      case 'check-resolvers':
+        if (args.length === 0) {
+          console.error('Provide one or more resolver addresses to check');
+          console.log('Example: node lookup-resolver-names.js check-resolvers 0x231b0Ee14048e9dCcD1d247744d114a4EB5E8E63');
+          process.exit(1);
+        }
+        {
+          const addresses = args.filter(a => /^0x[a-fA-F0-9]{40}$/.test(a));
+          if (addresses.length === 0) {
+            console.error('No valid resolver addresses provided.');
+            process.exit(1);
+          }
+          const results = await analyzer.checkResolversForNames(addresses, { first: 20 });
+          results.forEach(r => {
+            console.log(`\nResolver: ${r.resolver}`);
+            console.log(`Sample domains (${r.sampleCount}):`);
+            r.sampleDomains.slice(0, 20).forEach((name, i) => console.log(`  ${i + 1}. ${name}`));
+          });
+        }
         break;
 
       case 'help':

@@ -331,6 +331,7 @@ if [ -d "node_modules" ]; then
     
     # Test prober commands
     run_command "node prober/lookup-resolver-names.js --help" "Lookup resolver help" 0
+    run_command "node prober/lookup-resolver-names.js check-resolvers 0x231b0Ee14048e9dCcD1d247744d114a4EB5E8E63" "Check resolvers sample" 0
     run_command "node prober/enhanced-contract-resolver.js --help" "Enhanced contract resolver help" 0
 else
     log_result "WARNING" "Skipping binary command tests" "node_modules not found"
