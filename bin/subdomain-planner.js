@@ -7,8 +7,8 @@
  * protocol types, enabling systematic contract organization and discovery.
  */
 
-const fs = require('fs');
-const { generateMetadata } = require('./metadata-generator');
+import fs from 'fs';
+import { generateMetadata } from './metadata-generator.mjs';
 
 // Subdomain hierarchies for different protocol categories
 const SUBDOMAIN_HIERARCHIES = {
@@ -557,9 +557,9 @@ function main() {
   }
 }
 
-module.exports = SubdomainPlanner;
+export default SubdomainPlanner;
 
 // Run CLI if called directly
-if (require.main === module) {
+if (import.meta.url === `file://${process.argv[1]}`) {
   main();
 }

@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-
-=======
 # ENS Metadata Tools
 
 Toolkit for discovering ENS resolvers, auditing contract addresses, and generating metadata reports. Includes CLI utilities for contract discovery, resolver analysis, subdomain planning, metadata generation, and security auditing.
@@ -72,10 +69,25 @@ node bin/evmd.js
 ```bash
 npm install
 npx hardhat compile
-npx hardhat test
+npm test
 ```
 
-Lint & checks:
+### Testing
+
+The project includes a comprehensive test suite using Jest:
+
+```bash
+# Run all tests
+npm test
+
+# Run tests with coverage
+npm test -- --coverage
+
+# Run specific test file
+npm test -- contract-discovery.test.js
+```
+
+### Lint & checks:
 
 ```bash
 node scripts/error-checker.sh
@@ -87,14 +99,32 @@ node scripts/error-checker.sh
 - `docs/CACHE-BROWSER.md` – cache browser usage.
 - `ORGANIZATION.md` – project directory structure overview.
 
+## Project Structure
+
+- `bin/` - CLI tools and executables
+- `prober/` - ENS resolver probing and analysis tools
+- `data/` - Generated metadata and configuration files
+- `test/` - Comprehensive test suite
+- `aws/` - AWS infrastructure and Lambda functions
+- `docs/` - Project documentation
+
+## Recent Improvements
+
+- ✅ Resolved git merge conflicts
+- ✅ Organized untracked files into proper directories
+- ✅ Fixed package.json script inconsistencies
+- ✅ Standardized ES module usage
+- ✅ Updated dependencies to latest versions
+- ✅ Added comprehensive test suite with Jest
+- ✅ Improved error handling and logging
+
 ## Contributing
 
 1. Fork the repository and create a feature branch.
-2. Add tests or update docs for new functionality.
-3. Run `node scripts/error-checker.sh` before opening a PR.
+2. Add tests for new functionality.
+3. Run `npm test` to ensure all tests pass.
+4. Run `node scripts/error-checker.sh` before opening a PR.
 
 ## License
 
 MIT
-
->>>>>>> 94925ad (docs: refresh README with ENS tooling overview)

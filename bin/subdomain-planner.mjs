@@ -8,6 +8,8 @@
  */
 
 import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import inquirer from 'inquirer';
 import { generateMetadata } from './metadata-generator.mjs';
 
@@ -239,13 +241,27 @@ const SUBDOMAIN_HIERARCHIES = {
 class SubdomainPlanner {
   constructor() {
     this.hierarchies = SUBDOMAIN_HIERARCHIES;
+    // Load ENS root domains for suggestions
+    try {
+      const __filename = fileURLToPath(import.meta.url);
+      const __dirname = path.dirname(__filename);
+      const rootsPath = path.join(__dirname, '..', 'docs', 'root-domains.json');
+      this.rootDomains = JSON.parse(fs.readFileSync(rootsPath, 'utf8'));
+    } catch {
+      this.rootDomains = { roots: [], aliases: {}, patterns: {} };
+    }
   }
 
   /**
    * Generate complete subdomain plan for a protocol
    */
   generatePlan(protocol, category, type, variables = {}) {
-    const hierarchy = this.hierarchies[category]?.[type];
+    // Map registry category aliases to internal hierarchy keys
+    const categoryAliasMap = {
+      infra: 'infrastructure'
+    };
+    const effectiveCategory = categoryAliasMap[category] || category;
+    const hierarchy = this.hierarchies[effectiveCategory]?.[type];
 
     if (!hierarchy) {
       throw new Error(`Hierarchy not found for ${category}/${type}`);
@@ -253,7 +269,7 @@ class SubdomainPlanner {
 
     const plan = {
       protocol,
-      category,
+      category: effectiveCategory,
       type,
       variables,
       subdomains: [],
@@ -470,6 +486,26 @@ class SubdomainPlanner {
         console.log(`    ${key}: ${value}`);
       });
     });
+
+    // Root domain suggestion based on category
+    const rootHint = (() => {
+      // simple mapping: try direct match of `${plan.category}.eth` in registry
+      const direct = `${plan.category}.eth`;
+      if (this.rootDomains.roots?.includes(direct)) return direct;
+      // alias mapping for infrastructure→infra
+      if (plan.category === 'infrastructure' && this.rootDomains.aliases?.['infrastructure.eth']) {
+        return this.rootDomains.aliases['infrastructure.eth'];
+      }
+      return null;
+    })();
+
+    if (rootHint) {
+      console.log(`\nENS ROOT SUGGESTION: ${rootHint}`);
+      const pattern = this.rootDomains.patterns?.[rootHint];
+      if (pattern) {
+        console.log(`Pattern: ${pattern}`);
+      }
+    }
 
     console.log(`\nREGISTRATION SCRIPT:`);
     console.log('═'.repeat(30));
@@ -705,52 +741,73 @@ const CATEGORY_GUIDANCE = {
 
 // Interactive guidance functions
 async function getProjectDescription() {
+  // Load canonical categories registry
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
+  const registryPath = path.join(__dirname, '..', 'docs', 'category-registry.json');
+  const registry = JSON.parse(fs.readFileSync(registryPath, 'utf8'));
+
+  // Human-friendly labels for roots
+  const label = (root) => {
+    const map = {
+      defi: 'DeFi Protocol (AMM, lending, yield, perps, etc.)',
+      dao: 'DAO/Governance System',
+      l2: 'Layer-2 / Scaling',
+      infra: 'Infrastructure/Oracle/Bridge/RPC',
+      tokens: 'Token Standards & Wrappers',
+      nft: 'NFT Platforms & Services',
+      gaming: 'Gaming/NFT Platform',
+      social: 'Social/Content Platform',
+      identity: 'Identity/Credentials (ENS, DID, VCs)',
+      privacy: 'Privacy (mixers, ZK-ID, shielded pools)',
+      security: 'Security/Monitoring/Audits',
+      wallet: 'Wallets/Payments (EOA, AA-4337, MPC)',
+      analytics: 'Analytics/Indexing',
+      rwa: 'Real World Assets (RWA)',
+      supplychain: 'Supply Chain/Logistics',
+      health: 'Health/Medical Platform',
+      finance: 'Traditional Finance (Banking/Settlement)',
+      developer: 'Developer Tools/Frameworks',
+      art: 'Art/Culture Platforms',
+      interop: 'Cross-chain/Interoperability'
+    };
+    return map[root] || root;
+  };
+
   const { projectType } = await inquirer.prompt([{
     type: 'list',
     name: 'projectType',
     message: 'What type of project are you building?',
-    choices: [
-      { name: 'DeFi Protocol (AMM, lending, yield farming)', value: 'defi' },
-      { name: 'DAO/Governance System', value: 'dao' },
-      { name: 'Infrastructure/Oracle/Bridge', value: 'infrastructure' },
-      { name: 'Gaming/NFT Platform', value: 'gaming' },
-      { name: 'Social/Content Platform', value: 'social' },
-      { name: 'Real World Assets (RWA)', value: 'rwa' },
-      { name: 'Privacy/Security Protocol', value: 'privacy' },
-      { name: 'Token/Standards Implementation', value: 'tokens' },
-      { name: 'Analytics/Dashboard Platform', value: 'analytics' },
-      { name: 'Wallet/Custody Solution', value: 'wallet' },
-      { name: 'Insurance/Risk Management', value: 'insurance' },
-      { name: 'Digital Art/Culture Platform', value: 'art' },
-      { name: 'Supply Chain/Logistics', value: 'supplychain' },
-      { name: 'Healthcare/Medical Platform', value: 'healthcare' },
-      { name: 'Traditional Finance Services', value: 'finance' },
-      { name: 'Developer Tools/Framework', value: 'developer' }
-    ]
+    choices: registry.roots.map(root => ({ name: label(root), value: root }))
   }]);
 
   return projectType;
 }
 
 async function getSubcategory(category) {
-  const categoryInfo = CATEGORY_GUIDANCE[category];
-  const subcategories = Object.keys(categoryInfo.subcategories);
+  // Load from registry to drive subcategory choices
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
+  const registryPath = path.join(__dirname, '..', 'docs', 'category-registry.json');
+  const registry = JSON.parse(fs.readFileSync(registryPath, 'utf8'));
 
+  const subs = registry.subcategories[category] || [];
   const { subcategory } = await inquirer.prompt([{
     type: 'list',
     name: 'subcategory',
-    message: `What specific ${categoryInfo.name.toLowerCase()} functionality?`,
-    choices: subcategories.map(key => ({
-      name: `${categoryInfo.subcategories[key]}`,
-      value: key
-    }))
+    message: `What specific ${category} functionality?`,
+    choices: subs.map(k => ({ name: k, value: k }))
   }]);
 
   return subcategory;
 }
 
 async function getProjectDetails(category, subcategory) {
-  const categoryInfo = CATEGORY_GUIDANCE[category];
+  // Backward-compatible guidance mapping for display text
+  const guidanceKey = CATEGORY_GUIDANCE[category]
+    ? category
+    : (category === 'infra' ? 'infrastructure' : (category === 'health' ? 'healthcare' : category));
+  const categoryInfo = CATEGORY_GUIDANCE[guidanceKey] || { name: category, description: '', examples: [] };
 
   console.log(`\nSelected: ${categoryInfo.name} → ${subcategory}`);
   console.log(`${categoryInfo.description}`);

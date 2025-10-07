@@ -1,0 +1,26 @@
+# Real ENS Resolver Addresses
+# These are actual resolver contracts, not mixed addresses
+
+0x30200e0cb040f38e474e53ef437c95a1be723b2b  # ENS: Owned Resolver
+0x9c4e9cce4780062942a7fe34fa2fa7316c872956  # OpenSea: ENS Resolver
+0x1982131c7d6959ff7768ee39c023ad002d8c9759  # Kyber: ENS Resolver
+0x823be81bbf96bec0e25ca13170f5aacb5b79ba83  # Synthetix: Address Resolver
+0xc1735677a60884abbcf72295e88d47764beda282  # ENS: Offchain Resolver
+0xb66dce2da6afaaa98f2013446dbcb0f4b0ab2842  # Unstoppable Domains: Resolver
+0xdaaf96c344f63131acadd0ea35170e7892d3dfba  # ENS: Public Resolver 1
+0xa2c122be93b0074270ebee7f6b7292c7deb45047  # ENS: Default Reverse Resolver
+0x4976fb03c32e5b8cfe2b6ccb31c09ba78ebaba41  # ENS: Public Resolver 2
+0xfbb6526ed92da8915d4843a86166020d0b7baad0  # Synthetix: Old Address Resolver
+0x0d5bbccb9df4689400c70f8206333c5ce8720f58  # .badass ENS Public Resolver
+0x1da022710df5002339274aadee8d58218e9d6ab5  # ENS: Old Public Resolver 1
+0x226159d592e2b063810a10ebf6dcbada94ed68b8  # ENS: Old Public Resolver 2
+0xe5a0277018879679d18ccdb66b52bd06f7fe95fd  # resolver.1namespace.eth
+0xaf94049d18357bebc539efa51bd106637131a13c  # recover-me.eth
+0x27b10f0ae2a701d76e1194585c744495c246d658  # resolve.0x1x2x3x4x5x6.eth
+0x583069d2076b0a0bb2f56c8d9912224208a4c0b3  # d2r-revolver-game-share.eth
+0x9ed16db6baab91f378ef900702ea436c9f0cec4c  # contact-me-on-telegram...
+0x9bd7a9eeb9c067d9174cfb9f8da0e63e0e3443c0  # to-recover-stolen-funds-2021...
+0xa87361c4e58b619c390f469b9e6f27d759715125  # resolver.on.namestone.eth
+
+# Main ENS Public Resolver (most commonly used)
+0x231b0Ee14048e9dCcD1d247744d114a4EB5E8E63  # ENS: Public Resolver (current)

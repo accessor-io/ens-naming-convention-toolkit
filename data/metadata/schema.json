@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Contract Metadata",
+  "type": "object",
+  "required": [
+    "id", "org", "protocol", "domain", "role", "version", "chainId", "addresses"
+  ],
+  "properties": {
+    "id": { "type": "string" },
+    "org": { "type": "string" },
+    "protocol": { "type": "string" },
+    "domain": { "type": "string" },
+    "role": { "type": "string" },
+    "variant": { "type": "string" },
+    "version": { "type": "string" },
+    "chainId": { "type": "integer" },
+    "addresses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["chainId", "address"],
+        "properties": {
+          "chainId": { "type": "integer" },
+          "address": { "type": "string" },
+          "deployedBlock": { "type": "integer" },
+          "bytecodeHash": { "type": "string" },
+          "implementation": { "type": ["string", "null"] },
+          "implementationSlot": { "type": "string" }
+        }
+      }
+    },
+    "standards": {
+      "type": "object",
+      "properties": {
+        "ercs": { "type": "array", "items": { "type": "string" } },
+        "interfaces": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "artifacts": {
+      "type": "object",
+      "properties": {
+        "abiHash": { "type": "string" },
+        "sourceUri": { "type": "string" },
+        "license": { "type": "string" }
+      }
+    },
+    "lifecycle": {
+      "type": "object",
+      "properties": {
+        "status": { "type": "string" },
+        "since": { "type": "string" },
+        "replacedBy": { "type": "string" }
+      }
+    },
+    "security": {
+      "type": "object",
+      "properties": {
+        "audits": { "type": "array" },
+        "owners": { "type": "array" },
+        "upgradeability": { "type": "string" },
+        "permissions": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "tags": { "type": "array", "items": { "type": "string" } },
+    "subdomains": {
+      "type": "array",
+      "description": "List of subdomains related to this contract metadata and their owners",
+      "items": {
+        "type": "object",
+        "required": ["label", "owner"],
+        "properties": {
+          "label": { "type": "string", "description": "Left-most label of the subdomain (e.g., 'router')" },
+          "owner": { "type": "string", "description": "Ethereum address (checksum) that owns the subdomain" },
+          "controller": { "type": "string", "description": "Address authorized to manage the subdomain (optional)" },
+          "resolver": { "type": "string", "description": "Resolver address set for the subdomain (optional)" },
+          "records": {
+            "type": "object",
+            "description": "Optional ENS records to be set on the subdomain",
+            "additionalProperties": true
+          }
+        }
+      }
+    }
+  }
+}

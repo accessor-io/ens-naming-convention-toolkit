@@ -477,13 +477,13 @@ class ENSResolverAnalyzer {
         return json;
       } catch (error) {
         this.stats.errors++;
-        const base = typeof RETRY_DELAY === 'number' ? RETRY_DELAY : parseInt(RETRY_DELAY || '500', 10);
-        const backoff = base * Math.pow(2, attempt - 1) + Math.floor(Math.random() * 100);
-        console.error(`Attempt ${attempt}/${retries} failed: ${error.message}. Retrying in ${backoff}ms`);
+        console.error(`Attempt ${attempt}/${retries} failed: ${error.message}`);
+        
         if (attempt === retries) {
           throw error;
         }
-        await this.delay(backoff);
+        
+        await this.delay(RETRY_DELAY * attempt);
       }
     }
   }
@@ -923,9 +923,8 @@ class ENSResolverAnalyzer {
         console.log('Trying direct resolver query...');
         let skip = 0;
         const batchSize = 1000;
-        let maxBatches = 5; // Limit to 5 batches for shorter test
 
-        while (maxBatches > 0) {
+        while (true) {
           const json = await this.fetchWithRetry(allResolverAddressesQuery, {
             first: batchSize,
             skip
@@ -944,7 +943,6 @@ class ENSResolverAnalyzer {
 
           if (json.data.resolvers.length < batchSize) break;
           skip += batchSize;
-          maxBatches--;
 
           // Rate limiting
           await this.delay(100);
@@ -993,26 +991,11 @@ class ENSResolverAnalyzer {
       }
 
       console.log(`\n\nFound ${resolverAddresses.size} unique resolver addresses:`);
-      const addressesArray = Array.from(resolverAddresses).sort();
-      addressesArray.forEach((address, index) => {
+      Array.from(resolverAddresses).sort().forEach((address, index) => {
         console.log(`${index + 1}. ${address}`);
       });
 
-      // Save addresses to file
-      const outputFile = 'resolver-addresses-list.txt';
-      
-      let output = `# ENS Resolver Addresses Found\n`;
-      output += `# Total: ${addressesArray.length}\n`;
-      output += `# Generated: ${new Date().toISOString()}\n\n`;
-      
-      addressesArray.forEach((addr, index) => {
-        output += `${index + 1}. ${addr}\n`;
-      });
-      
-      writeFileSync(outputFile, output);
-      console.log(`\nResolver addresses saved to: ${outputFile}`);
-
-      return addressesArray;
+      return Array.from(resolverAddresses).sort();
     } catch (error) {
       console.error(`Failed to query resolver addresses: ${error.message}`);
       return [];

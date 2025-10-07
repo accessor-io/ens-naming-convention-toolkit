@@ -14,6 +14,37 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// Load registry of categories and aliases
+function loadCategoryRegistry() {
+  const registryPath = path.join(__dirname, '..', 'docs', 'category-registry.json');
+  try {
+    return JSON.parse(fs.readFileSync(registryPath, 'utf8'));
+  } catch (e) {
+    console.warn(`Warning: failed to load category registry at ${registryPath}: ${e.message}`);
+    return { roots: [], subcategories: {}, aliases: {} };
+  }
+}
+
+const CATEGORY_REGISTRY = loadCategoryRegistry();
+
+function canonicalizeCategory(input) {
+  if (!input) return input;
+  const alias = CATEGORY_REGISTRY.aliases?.[input];
+  if (!alias) return input;
+  // support namespaced alias like "wallet:payment-processor"
+  const [root, sub] = alias.split(':');
+  return sub ? { root, sub } : { root: alias };
+}
+
+function isKnownRoot(root) {
+  return CATEGORY_REGISTRY.roots?.includes(root);
+}
+
+function isKnownSub(root, sub) {
+  if (!root || !sub) return true;
+  return (CATEGORY_REGISTRY.subcategories?.[root] || []).includes(sub);
+}
+
 // Validation rules for each category
 const VALIDATION_RULES = {
   dao: {
@@ -357,6 +388,23 @@ class NamingValidator {
       }
     };
 
+    // Canonicalize category via registry/aliases if provided
+    if (typeof category === 'string') {
+      const canon = canonicalizeCategory(category);
+      if (canon && typeof canon === 'object') {
+        if (canon.root && !canon.sub) {
+          results.warnings.push(`Alias '${category}' canonicalized to '${canon.root}'`);
+          category = canon.root;
+        } else if (canon.root && canon.sub) {
+          results.warnings.push(`Alias '${category}' canonicalized to '${canon.root}:${canon.sub}'`);
+          category = canon.root;
+        }
+      }
+      if (!isKnownRoot(category)) {
+        results.issues.push(`Unknown category root: ${category}`);
+      }
+    }
+
     // Basic format validation
     const formatResult = this.validateFormat(domain);
     results.issues.push(...formatResult.issues);
@@ -423,7 +471,11 @@ class NamingValidator {
     const warnings = [];
     const suggestions = [];
 
-    const rules = this.rules[category];
+    // Map registry canonical roots to internal rule keys
+    const categoryKey = category === 'health' ? 'healthcare'
+      : category === 'infra' ? 'infrastructure'
+      : category;
+    const rules = this.rules[categoryKey];
     if (!rules) {
       issues.push(`Unknown category: ${category}`);
       return { issues, warnings, suggestions };

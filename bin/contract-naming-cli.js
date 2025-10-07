@@ -16,7 +16,19 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const program = new Command();
 
-// Naming convention configurations
+// Load registries
+function loadCategoryRegistry(baseDir) {
+  const p = path.join(baseDir, '..', 'docs', 'category-registry.json');
+  return JSON.parse(fs.readFileSync(p, 'utf8'));
+}
+function loadRootDomains(baseDir) {
+  const p = path.join(baseDir, '..', 'docs', 'root-domains.json');
+  return JSON.parse(fs.readFileSync(p, 'utf8'));
+}
+const CATEGORY_REGISTRY = loadCategoryRegistry(__dirname);
+const ROOT_DOMAINS = loadRootDomains(__dirname);
+
+// Naming convention configurations (aligned to registry keys)
 const NAMING_CONVENTIONS = {
   dao: {
     primaryDomains: ['<org>.eth', '<org>dao.eth', '<org>-dao.eth'],
@@ -330,7 +342,7 @@ program
   .command('suggest')
   .description('Generate subdomain suggestions for a protocol')
   .argument('<protocol>', 'Protocol name')
-  .argument('<category>', 'Category (dao, defi, l2, tokens, infrastructure)')
+  .argument('<category>', `Category (${CATEGORY_REGISTRY.roots.join(', ')})`)
   .option('-v, --verbose', 'Show detailed output')
   .action((protocol, category, options) => {
     const tool = new ContractNamingTool();
@@ -355,7 +367,7 @@ program
   .command('validate')
   .description('Validate naming convention compliance')
   .argument('<domain>', 'Domain name to validate')
-  .argument('<category>', 'Category (dao, defi, l2, tokens, infrastructure)')
+  .argument('<category>', `Category (${CATEGORY_REGISTRY.roots.join(', ')})`)
   .action((domain, category) => {
     const tool = new ContractNamingTool();
     const result = tool.validateNaming(domain, category);
@@ -434,10 +446,16 @@ program
   .action(() => {
     console.log(`\n📂 Available Categories:`);
     console.log('=' .repeat(25));
-
-    Object.entries(NAMING_CONVENTIONS).forEach(([category, config]) => {
+    CATEGORY_REGISTRY.roots.forEach((category) => {
+      const config = NAMING_CONVENTIONS[category] || {};
       console.log(`\n🔹 ${category.toUpperCase()}`);
       console.log('-'.repeat(20));
+
+      const subs = CATEGORY_REGISTRY.subcategories[category] || [];
+      if (subs.length) {
+        console.log('Subcategories (registry):');
+        subs.forEach(s => console.log(`  • ${s}`));
+      }
 
       if (config.primaryDomains) {
         console.log('Primary domains:');
@@ -462,5 +480,4 @@ program
   });
 
 program.parse();
-
-module.exports = ContractNamingTool;
+// ESM CLI: no CommonJS export

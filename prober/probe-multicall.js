@@ -1,7 +1,49 @@
 #!/usr/bin/env node
 import { ethers } from "ethers";
 
-const TENDERLY_RPC = process.env.RPC_URL || "https://virtual.mainnet.us-west.rpc.tenderly.co/5f3fecd6-23c2-4754-b89c-f80d1d63a03a";
+// Provider pool with basic rate limiting and failover
+const DEFAULT_RPC = "https://virtual.mainnet.us-west.rpc.tenderly.co/5f3fecd6-23c2-4754-b89c-f80d1d63a03a";
+const RPC_URLS = (process.env.RPC_URLS || process.env.RPC_URL || DEFAULT_RPC)
+  .split(',')
+  .map(s => s.trim())
+  .filter(Boolean);
+const MIN_RPC_INTERVAL_MS = parseInt(process.env.MIN_RPC_INTERVAL_MS || '200', 10); // simple throttle
+
+const providerPool = RPC_URLS.map(url => new ethers.providers.JsonRpcProvider(url));
+let activeProviderIndex = 0;
+let lastRpcTs = 0;
+
+function getActiveProvider() {
+  return providerPool[activeProviderIndex];
+}
+
+function patchProviderSend(p) {
+  const originalSend = p.send.bind(p);
+  p.send = async (method, params) => {
+    const now = Date.now();
+    const waitMs = lastRpcTs + MIN_RPC_INTERVAL_MS - now;
+    if (waitMs > 0) {
+      await new Promise(r => setTimeout(r, waitMs));
+    }
+    lastRpcTs = Date.now();
+    try {
+      return await originalSend(method, params);
+    } catch (e) {
+      const status = e?.status || e?.code || '';
+      // basic failover on provider quota/server errors
+      if (String(status).includes('SERVER_ERROR') || String(e?.message || '').includes('quota') || String(e?.message || '').includes('403')) {
+        const prev = activeProviderIndex;
+        activeProviderIndex = (activeProviderIndex + 1) % providerPool.length;
+        console.error(`[DEBUG] RPC error on provider#${prev}. Switching to provider#${activeProviderIndex}`);
+        return await providerPool[activeProviderIndex].send(method, params);
+      }
+      throw e;
+    }
+  };
+}
+
+// Patch all providers' send to enforce throttling; failover handled by switching index
+providerPool.forEach(patchProviderSend);
 
 // Minimal ABIs
 const MULTICALL_IFACE = new ethers.utils.Interface([
@@ -62,7 +104,7 @@ const targets = [
   { label: "iamtheresolver.eth", addr: "0x969953575da5142799c68372bdcfab437b1e68c0" },
 ];
 
-const provider = new ethers.providers.JsonRpcProvider(TENDERLY_RPC);
+let provider = getActiveProvider();
 
 function encodeCalls(node) {
   const d1 = RESOLVER_IFACE.encodeFunctionData("addr(bytes32)", [node]);
