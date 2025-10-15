@@ -11,7 +11,7 @@ const program = new Command();
 program
   .name('ens-metadata-tools')
   .description('Comprehensive ENS metadata management and security tools')
-  .version(packageJson.version);
+  .version(packageJson.version, '-v, --version', 'display version number');
 
 program
   .command('metadata')
@@ -19,15 +19,41 @@ program
   .option('-c, --category <category>', 'Protocol category')
   .option('-t, --type <type>', 'Protocol type')
   .option('-n, --name <name>', 'Protocol name')
-  .option('-V, --protocol-version <version>', 'Protocol version')
+  .option('--protocol-version <version>', 'Protocol version')
   .option('-o, --output <file>', 'Output file path')
   .action(async (options) => {
     try {
-      const { generateMetadata } = await import('./bin/metadata-generator.js');
-      const metadata = generateMetadata(options.category, options.type, options);
-      console.log(JSON.stringify(metadata, null, 2));
+      const { generateMetadata } = await import('./bin/metadata-generator.mjs');
+
+      // Map CLI options to template variables
+      const variables = {
+        protocol: options.name || 'ProtocolName',
+        version: options.protocolVersion || 'v1-0-0',
+        contractType: options.type,
+        deploymentBlock: '0',
+        launchDate: new Date().toISOString().split('T')[0],
+        ...options,
+      };
+
+      const metadata = generateMetadata(options.category, options.type, {
+        ...variables,
+        org: options.name || 'protocol',
+        protocol: options.name || 'protocol',
+        version: options.protocolVersion || 'v1-0-0',
+        chainId: 1,
+        name: options.name,
+      });
+
+      if (options.output) {
+        const fs = await import('fs');
+        fs.writeFileSync(options.output, JSON.stringify(metadata, null, 2));
+        console.log(chalk.green(`Metadata saved to ${options.output}`));
+      } else {
+        console.log(JSON.stringify(metadata, null, 2));
+      }
     } catch (error) {
-      console.error(`❌ Error: ${error.message}`);
+      console.error(`Error: ${error.message}`);
+      console.error(`Stack: ${error.stack}`);
       process.exit(1);
     }
   });
@@ -40,8 +66,10 @@ program
   .option('--strict', 'Strict validation mode')
   .option('-m, --metadata <file>', 'Metadata file to validate against')
   .action(async (domain, options) => {
-    const { default: validateNaming } = await import('./bin/naming-validator.js');
-    await validateNaming(domain, options);
+    const { default: NamingValidator } = await import('./bin/naming-validator.mjs');
+    const validator = new NamingValidator();
+    const result = await validator.validateDomain(domain, options.category, options);
+    console.log(validator.generateReport(result));
   });
 
 program
@@ -50,10 +78,21 @@ program
   .argument('<domain>', 'Root domain')
   .option('-c, --category <category>', 'Protocol category')
   .option('-t, --type <type>', 'Protocol type')
-  .option('-v, --version <version>', 'Protocol version')
+  .option('--protocol-version <version>', 'Protocol version')
   .action(async (domain, options) => {
-    const { default: planSubdomains } = await import('./bin/subdomain-planner.js');
-    await planSubdomains(domain, options);
+    const { default: SubdomainPlanner } = await import('./bin/subdomain-planner.mjs');
+    const planner = new SubdomainPlanner();
+
+    try {
+      const plan = planner.generatePlan(domain, options.category, options.type, {
+        version: options.protocolVersion,
+        protocol: domain.split('.')[0],
+      });
+      planner.displayPlan(plan);
+    } catch (error) {
+      console.error(`Error generating plan: ${error.message}`);
+      process.exit(1);
+    }
   });
 
 program
@@ -63,8 +102,24 @@ program
   .option('-m, --multicall', 'Use multicall for batch probing')
   .option('-o, --output <file>', 'Output file path')
   .action(async (options) => {
-    const { default: probeContracts } = await import('./prober/probe-multicall.js');
-    await probeContracts(options);
+    const { default: MulticallProber } = await import('./tools/prober/probe-multicall.js');
+    const prober = new MulticallProber();
+
+    if (!options.address) {
+      console.error('Error: Address is required. Use --address <address>');
+      process.exit(1);
+    }
+
+    const addresses = options.address.split(',').map((addr) => addr.trim());
+    const results = await prober.probeContracts(addresses, 'erc20');
+
+    prober.displayResults(results);
+
+    if (options.output) {
+      const fs = await import('fs');
+      fs.writeFileSync(options.output, JSON.stringify(results, null, 2));
+      console.log(chalk.green(`\nResults saved to ${options.output}`));
+    }
   });
 
 program
@@ -73,8 +128,23 @@ program
   .option('-r, --resolver <address>', 'Specific resolver address')
   .option('-o, --output <file>', 'Output file path')
   .action(async (options) => {
-    const { default: lookupNames } = await import('./prober/lookup-resolver-names.js');
-    await lookupNames(options);
+    const { lookupNamesByResolver } = await import('./tools/prober/lookup-resolver-names.js');
+
+    if (!options.resolver) {
+      console.error('Error: Resolver address is required. Use --resolver <address>');
+      process.exit(1);
+    }
+
+    const results = await lookupNamesByResolver(options.resolver, {
+      output: options.output,
+      format: 'json',
+    });
+
+    if (options.output) {
+      console.log(chalk.green(`\nResults saved to ${options.output}`));
+    } else {
+      console.log(JSON.stringify(results, null, 2));
+    }
   });
 
 program
@@ -85,8 +155,8 @@ program
   .option('--check-verification', 'Check identity verification')
   .option('-o, --output <file>', 'Output file path')
   .action(async (domain, options) => {
-    const { default: analyzeSecurity } = await import('./bin/security-analyzer.js');
-    const analyzer = new (await import('./bin/security-analyzer.js')).ENSecurityAnalyzer();
+    const { ENSecurityAnalyzer } = await import('./bin/security-analyzer.mjs');
+    const analyzer = new ENSecurityAnalyzer();
     const results = await analyzer.analyzeSecurity(domain, options);
 
     analyzer.displayReport(results);
@@ -100,19 +170,10 @@ program
   });
 
 // Global options
-program
-  .option('--verbose', 'Verbose output')
-  .option('--json', 'JSON output format');
+program.option('--verbose', 'Verbose output').option('--json', 'JSON output format');
 
-// Error handling
-program.exitOverride();
-
-try {
-  program.parse();
-} catch (error) {
-  console.error(chalk.red('Error:'), error.message);
-  process.exit(1);
-}
+// Parse arguments
+program.parse();
 
 // Show help if no command provided
 if (!program.args.length) {
