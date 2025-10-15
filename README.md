@@ -34,8 +34,8 @@ npm install -g ens-metadata-tools
 ### Local Development
 
 ```bash
-git clone https://github.com/accessor-io/ens-naming-convention-toolkit.git
-cd ens-naming-convention-toolkit
+git clone https://github.com/ens-contracts/metadata-tools.git
+cd metadata-tools
 npm install
 ```
 
@@ -45,13 +45,13 @@ npm install
 
 ```bash
 # Generate metadata for a DeFi AMM protocol
-ens-metadata metadata --category defi --type amm --name Uniswap --protocol-version v4-0-0 --output uniswap-metadata.json
+ens-metadata-tools metadata --category defi --type amm --name Uniswap --protocol-version v4-0-0 --output uniswap-metadata.json
 
 # Validate the generated metadata
-ens-metadata validate uniswap-metadata.json --strict
+ens-metadata-tools validate uniswap-metadata.json --strict
 
 # Check ENSIP-19 compliance
-ens-metadata validate uniswap-metadata.json --schema data/metadata/schema.json
+ens-metadata-tools validate uniswap-metadata.json --schema data/metadata/schema.json
 ```
 
 ### Example Generated Metadata
@@ -81,22 +81,22 @@ ens-metadata validate uniswap-metadata.json --schema data/metadata/schema.json
 
 ```bash
 # Generate metadata for any protocol category
-ens-metadata metadata --category <category> --type <type> --name <name> [options]
+ens-metadata-tools metadata --category <category> --type <type> --name <name> [options]
 
 # Validate metadata against ENSIP-19 schema
-ens-metadata validate <metadata-file> [options]
+ens-metadata-tools validate <metadata-file> [options]
 
 # Plan subdomain structure
-ens-metadata plan <domain> [options]
+ens-metadata-tools plan <domain> [options]
 
 # Security analysis
-ens-metadata security <domain> [options]
+ens-metadata-tools security <domain> [options]
 
 # Probe ENS resolvers
-ens-metadata probe [options]
+ens-metadata-tools probe [options]
 
 # Lookup ENS names
-ens-metadata lookup [options]
+ens-metadata-tools lookup [options]
 ```
 
 ### Available Categories and Types
@@ -119,6 +119,18 @@ ens-metadata lookup [options]
 | **supplychain** | tracking | Supply chain |
 | **healthcare** | medical | Healthcare systems |
 | **finance** | banking | Financial services |
+
+### Additional CLI Tools
+
+The toolkit also provides standalone CLI tools:
+
+```bash
+# Individual tool usage
+ens-validator <domain> <category> [options]     # Domain validation
+ens-contract <command> [options]                # ENS contract operations
+ens-cache-browser [options]                     # Metadata cache management
+evmd [options]                                  # Ethereum metadata viewer
+```
 
 ## ENSIP-19 Compliance
 
@@ -171,8 +183,8 @@ Supports 5-level domain hierarchy:
 ### Setup
 
 ```bash
-git clone https://github.com/accessor-io/ens-naming-convention-toolkit.git
-cd ens-naming-convention-toolkit
+git clone https://github.com/ens-contracts/metadata-tools.git
+cd metadata-tools
 npm install
 npm run prepare  # Setup git hooks
 ```
@@ -295,8 +307,8 @@ See [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) for detailed guidelines.
 
 ## Support
 
-- [Issues](https://github.com/accessor-io/ens-naming-convention-toolkit/issues)
-- [Discussions](https://github.com/accessor-io/ens-naming-convention-toolkit/discussions)
+- [Issues](https://github.com/ens-contracts/metadata-tools/issues)
+- [Discussions](https://github.com/ens-contracts/metadata-tools/discussions)
 - [Documentation](docs/)
 
 ## License
