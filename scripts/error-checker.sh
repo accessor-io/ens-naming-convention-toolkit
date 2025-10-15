@@ -26,21 +26,21 @@ log_result() {
     TOTAL_TESTS=$((TOTAL_TESTS + 1))
     
     if [ "$status" = "ERROR" ]; then
-        echo -e "${RED}❌ ERROR:${NC} $message"
+        echo -e "${RED}ERROR:${NC} $message"
         if [ -n "$details" ]; then
             echo -e "${RED}   Details: $details${NC}"
         fi
         ERRORS=$((ERRORS + 1))
     elif [ "$status" = "WARNING" ]; then
-        echo -e "${YELLOW}⚠️  WARNING:${NC} $message"
+        echo -e "${YELLOW}WARNING:${NC} $message"
         if [ -n "$details" ]; then
             echo -e "${YELLOW}   Details: $details${NC}"
         fi
         WARNINGS=$((WARNINGS + 1))
     elif [ "$status" = "SUCCESS" ]; then
-        echo -e "${GREEN}✅ SUCCESS:${NC} $message"
+        echo -e "${GREEN}SUCCESS:${NC} $message"
     else
-        echo -e "${BLUE}ℹ️  INFO:${NC} $message"
+        echo -e "${BLUE}INFO:${NC} $message"
     fi
 }
 
@@ -375,9 +375,9 @@ echo -e "Warnings: ${YELLOW}${WARNINGS}${NC}"
 echo -e "Successes: ${GREEN}$((TOTAL_TESTS - ERRORS - WARNINGS))${NC}"
 
 if [ $ERRORS -eq 0 ]; then
-    echo -e "\n${GREEN}🎉 No errors found! Project is ready to use.${NC}"
+    echo -e "\n${GREEN}No errors found! Project is ready to use.${NC}"
     exit 0
 else
-    echo -e "\n${RED}❌ Found $ERRORS error(s). Please fix them before proceeding.${NC}"
+    echo -e "\n${RED}Found $ERRORS error(s). Please fix them before proceeding.${NC}"
     exit 1
 fi

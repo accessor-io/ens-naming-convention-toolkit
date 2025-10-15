@@ -22,23 +22,21 @@ const SUBDOMAIN_HIERARCHIES = {
         '├── factory.amm.<protocol>.defi.evmd.eth',
         '├── router.amm.<protocol>.defi.evmd.eth',
         '├── quoter.amm.<protocol>.defi.evmd.eth',
-        '├── multicall.amm.<protocol>.defi.evmd.eth',
         '└── positions.amm.<protocol>.defi.evmd.eth',
         'amm.v2.<protocol>.defi.evmd.eth',
         '└── factory.amm.v2.<protocol>.defi.evmd.eth',
-        'amm.legacy.<protocol>.defi.evmd.eth'
+        'amm.legacy.<protocol>.defi.evmd.eth',
       ],
       metadata: {
         'amm.<protocol>.defi.evmd.eth': { category: 'amm', version: '3' },
         'factory.amm.<protocol>.defi.evmd.eth': { contractType: 'factory' },
         'router.amm.<protocol>.defi.evmd.eth': { contractType: 'router' },
         'quoter.amm.<protocol>.defi.evmd.eth': { contractType: 'quoter' },
-        'multicall.amm.<protocol>.defi.evmd.eth': { contractType: 'multicall' },
         'positions.amm.<protocol>.defi.evmd.eth': { contractType: 'positions' },
         'amm.v2.<protocol>.defi.evmd.eth': { category: 'amm', version: '2' },
         'factory.amm.v2.<protocol>.defi.evmd.eth': { contractType: 'factory' },
-        'amm.legacy.<protocol>.defi.evmd.eth': { category: 'amm', version: 'legacy' }
-      }
+        'amm.legacy.<protocol>.defi.evmd.eth': { category: 'amm', version: 'legacy' },
+      },
     },
 
     lending: {
@@ -51,7 +49,7 @@ const SUBDOMAIN_HIERARCHIES = {
         '└── ui-helpers.lending.<protocol>.defi.evmd.eth',
         'incentives.lending.<protocol>.defi.evmd.eth',
         '└── incentives-controller.incentives.lending.<protocol>.defi.evmd.eth',
-        'governance.<protocol>.lending.eth'
+        'governance.<protocol>.lending.eth',
       ],
       metadata: {
         'lending.<protocol>.defi.evmd.eth': { category: 'lending', version: '3' },
@@ -61,10 +59,12 @@ const SUBDOMAIN_HIERARCHIES = {
         'price-oracle.v3.<protocol>.lending.eth': { contractType: 'price-oracle' },
         'ui-helpers.v3.<protocol>.lending.eth': { contractType: 'ui-helpers' },
         'incentives.<protocol>.lending.eth': { category: 'lending', type: 'incentives' },
-        'incentives-controller.incentives.<protocol>.lending.eth': { contractType: 'incentives-controller' },
-        'governance.<protocol>.lending.eth': { category: 'lending', type: 'governance' }
-      }
-    }
+        'incentives-controller.incentives.<protocol>.lending.eth': {
+          contractType: 'incentives-controller',
+        },
+        'governance.<protocol>.lending.eth': { category: 'lending', type: 'governance' },
+      },
+    },
   },
 
   dao: {
@@ -83,7 +83,7 @@ const SUBDOMAIN_HIERARCHIES = {
         '└── meta.<dao>.eth',
         '    ├── docs.meta.<dao>.eth',
         '    ├── forum.meta.<dao>.eth',
-        '    └── discord.meta.<dao>.eth'
+        '    └── discord.meta.<dao>.eth',
       ],
       metadata: {
         '<dao>.eth': { category: 'dao', type: 'primary' },
@@ -99,9 +99,9 @@ const SUBDOMAIN_HIERARCHIES = {
         'meta.<dao>.eth': { category: 'meta', type: 'meta' },
         'docs.meta.<dao>.eth': { contractType: 'docs' },
         'forum.meta.<dao>.eth': { contractType: 'forum' },
-        'discord.meta.<dao>.eth': { contractType: 'discord' }
-      }
-    }
+        'discord.meta.<dao>.eth': { contractType: 'discord' },
+      },
+    },
   },
 
   infrastructure: {
@@ -114,19 +114,31 @@ const SUBDOMAIN_HIERARCHIES = {
         '│   ├── link-usd.feeds.<provider>.oracle.eth',
         '│   └── aggregator.feeds.<provider>.oracle.eth',
         '├── nodes.<provider>.oracle.eth',
-        '└── registry.<provider>.oracle.eth'
+        '└── registry.<provider>.oracle.eth',
       ],
       metadata: {
         '<provider>.oracle.eth': { category: 'oracle', type: 'provider' },
         'feeds.<provider>.oracle.eth': { category: 'oracle', type: 'feeds' },
-        'eth-usd.feeds.<provider>.oracle.eth': { feedType: 'price-feed', baseAsset: 'ETH', quoteAsset: 'USD' },
-        'btc-usd.feeds.<provider>.oracle.eth': { feedType: 'price-feed', baseAsset: 'BTC', quoteAsset: 'USD' },
-        'link-usd.feeds.<provider>.oracle.eth': { feedType: 'price-feed', baseAsset: 'LINK', quoteAsset: 'USD' },
+        'eth-usd.feeds.<provider>.oracle.eth': {
+          feedType: 'price-feed',
+          baseAsset: 'ETH',
+          quoteAsset: 'USD',
+        },
+        'btc-usd.feeds.<provider>.oracle.eth': {
+          feedType: 'price-feed',
+          baseAsset: 'BTC',
+          quoteAsset: 'USD',
+        },
+        'link-usd.feeds.<provider>.oracle.eth': {
+          feedType: 'price-feed',
+          baseAsset: 'LINK',
+          quoteAsset: 'USD',
+        },
         'aggregator.feeds.<provider>.oracle.eth': { contractType: 'aggregator' },
         'nodes.<provider>.oracle.eth': { category: 'oracle', type: 'nodes' },
-        'registry.<provider>.oracle.eth': { contractType: 'registry' }
-      }
-    }
+        'registry.<provider>.oracle.eth': { contractType: 'registry' },
+      },
+    },
   },
 
   // Gaming & NFT Platforms
@@ -145,7 +157,7 @@ const SUBDOMAIN_HIERARCHIES = {
         '└── social.<game>.gaming.evmd.eth',
         '    ├── guilds.social.<game>.gaming.evmd.eth',
         '    ├── tournaments.social.<game>.gaming.evmd.eth',
-        '    └── chat.social.<game>.gaming.evmd.eth'
+        '    └── chat.social.<game>.gaming.evmd.eth',
       ],
       metadata: {
         '<game>.gaming.evmd.eth': { category: 'gaming', type: 'nft-game' },
@@ -160,9 +172,9 @@ const SUBDOMAIN_HIERARCHIES = {
         'social.<game>.gaming.evmd.eth': { category: 'gaming', type: 'social' },
         'guilds.social.<game>.gaming.evmd.eth': { contractType: 'guilds' },
         'tournaments.social.<game>.gaming.evmd.eth': { contractType: 'tournaments' },
-        'chat.social.<game>.gaming.evmd.eth': { contractType: 'chat' }
-      }
-    }
+        'chat.social.<game>.gaming.evmd.eth': { contractType: 'chat' },
+      },
+    },
   },
 
   // Social & Communication
@@ -181,7 +193,7 @@ const SUBDOMAIN_HIERARCHIES = {
         '└── monetization.<platform>.social.evmd.eth',
         '    ├── tokens.monetization.<platform>.social.evmd.eth',
         '    ├── subscriptions.monetization.<platform>.social.evmd.eth',
-        '    └── ads.monetization.<platform>.social.evmd.eth'
+        '    └── ads.monetization.<platform>.social.evmd.eth',
       ],
       metadata: {
         '<platform>.social.evmd.eth': { category: 'social', type: 'platform' },
@@ -196,9 +208,9 @@ const SUBDOMAIN_HIERARCHIES = {
         'monetization.<platform>.social.evmd.eth': { category: 'social', type: 'monetization' },
         'tokens.monetization.<platform>.social.evmd.eth': { contractType: 'tokens' },
         'subscriptions.monetization.<platform>.social.evmd.eth': { contractType: 'subscriptions' },
-        'ads.monetization.<platform>.social.evmd.eth': { contractType: 'ads' }
-      }
-    }
+        'ads.monetization.<platform>.social.evmd.eth': { contractType: 'ads' },
+      },
+    },
   },
 
   // Real World Assets (RWA)
@@ -217,7 +229,7 @@ const SUBDOMAIN_HIERARCHIES = {
         '└── compliance.<property>.rwa.evmd.eth',
         '    ├── legal.compliance.<property>.rwa.evmd.eth',
         '    ├── regulatory.compliance.<property>.rwa.evmd.eth',
-        '    └── audit.compliance.<property>.rwa.evmd.eth'
+        '    └── audit.compliance.<property>.rwa.evmd.eth',
       ],
       metadata: {
         '<property>.rwa.evmd.eth': { category: 'rwa', type: 'real-estate' },
@@ -232,10 +244,10 @@ const SUBDOMAIN_HIERARCHIES = {
         'compliance.<property>.rwa.evmd.eth': { category: 'rwa', type: 'compliance' },
         'legal.compliance.<property>.rwa.evmd.eth': { contractType: 'legal' },
         'regulatory.compliance.<property>.rwa.evmd.eth': { contractType: 'regulatory' },
-        'audit.compliance.<property>.rwa.evmd.eth': { contractType: 'audit' }
-      }
-    }
-  }
+        'audit.compliance.<property>.rwa.evmd.eth': { contractType: 'audit' },
+      },
+    },
+  },
 };
 
 class SubdomainPlanner {
@@ -258,7 +270,7 @@ class SubdomainPlanner {
   generatePlan(protocol, category, type, variables = {}) {
     // Map registry category aliases to internal hierarchy keys
     const categoryAliasMap = {
-      infra: 'infrastructure'
+      infra: 'infrastructure',
     };
     const effectiveCategory = categoryAliasMap[category] || category;
     const hierarchy = this.hierarchies[effectiveCategory]?.[type];
@@ -275,7 +287,7 @@ class SubdomainPlanner {
       subdomains: [],
       metadata: {},
       registrationScript: [],
-      crossReferences: {}
+      crossReferences: {},
     };
 
     // Add metadata for root domains
@@ -288,7 +300,7 @@ class SubdomainPlanner {
       contractName: `${plan.category.toUpperCase()} Category Root`,
       description: `${plan.category} category root domain under evmd.eth`,
       level: 'category',
-      lastUpdated: new Date().toISOString()
+      lastUpdated: new Date().toISOString(),
     };
 
     plan.metadata[protocolDomain] = {
@@ -297,11 +309,11 @@ class SubdomainPlanner {
       contractName: `${plan.protocol.toUpperCase()} ${plan.category.toUpperCase()} Protocol Root`,
       description: `${plan.protocol} ${plan.category} protocol root domain`,
       level: 'protocol',
-      lastUpdated: new Date().toISOString()
+      lastUpdated: new Date().toISOString(),
     };
 
     // Generate subdomains with metadata
-    hierarchy.structure.forEach(subdomainPattern => {
+    hierarchy.structure.forEach((subdomainPattern) => {
       const subdomain = subdomainPattern
         .replace('<protocol>', protocol)
         .replace('<dao>', protocol)
@@ -316,7 +328,11 @@ class SubdomainPlanner {
       plan.subdomains.push({
         pattern: subdomainPattern,
         subdomain,
-        metadata: this.generateSubdomainMetadata(subdomainKey, hierarchy.metadata[metadataKey] || {}, variables)
+        metadata: this.generateSubdomainMetadata(
+          subdomainKey,
+          hierarchy.metadata[metadataKey] || {},
+          variables
+        ),
       });
 
       // Generate metadata for this subdomain
@@ -347,7 +363,7 @@ class SubdomainPlanner {
       ...baseMetadata,
       variables,
       generatedAt: new Date().toISOString(),
-      relationships: this.analyzeRelationships(subdomain, variables)
+      relationships: this.analyzeRelationships(subdomain, variables),
     };
   }
 
@@ -359,7 +375,7 @@ class SubdomainPlanner {
       parent: null,
       children: [],
       siblings: [],
-      dependencies: []
+      dependencies: [],
     };
 
     // Simple relationship analysis based on subdomain structure
@@ -386,46 +402,96 @@ class SubdomainPlanner {
     script.push(`# Subdomain Registration Script for ${plan.protocol}`);
     script.push(`# Generated on ${new Date().toISOString()}`);
     script.push(`# Category: ${plan.category}, Type: ${plan.type}`);
+    script.push(`#`);
+    script.push(`# Prerequisites:`);
+    script.push(`# 1. Install ens-metadata-tools: npm install`);
+    script.push(`# 2. Connect wallet or set RPC: --rpc-url <url> --private-key <key>`);
+    script.push(`# 3. Ensure you own the parent domain`);
     script.push(``);
 
     // Register primary domain first (rooted under evmd.eth)
     const primaryDomain = `${plan.category}.evmd.eth`;
     script.push(`# Register primary domain`);
-    script.push(`ens-contract register ${primaryDomain} --type ${plan.category}`);
-    script.push(``);
-    script.push(`# Set metadata for category root`);
-    script.push(`ens-contract metadata ${primaryDomain} --data "${JSON.stringify(plan.metadata[primaryDomain])}"`);
+    script.push(`echo "Registering primary domain: ${primaryDomain}"`);
+    script.push(
+      `node bin/ens-contract.js register ${primaryDomain} --owner \${OWNER_ADDRESS:-"0x0000000000000000000000000000000000000000"}`
+    );
     script.push(``);
 
     // Register protocol subdomain under primary domain
     const protocolDomain = `${plan.protocol}.${plan.category}.evmd.eth`;
     script.push(`# Register protocol subdomain`);
-    script.push(`ens-contract register ${protocolDomain} --parent ${primaryDomain} --type ${plan.type}`);
+    script.push(`echo "Registering protocol subdomain: ${protocolDomain}"`);
+    script.push(
+      `node bin/ens-contract.js register ${protocolDomain} --owner \${OWNER_ADDRESS:-"0x0000000000000000000000000000000000000000"}`
+    );
     script.push(``);
-    script.push(`# Set metadata for protocol root`);
-    script.push(`ens-contract metadata ${protocolDomain} --data "${JSON.stringify(plan.metadata[protocolDomain])}"`);
+
+    // Set resolver for protocol domain
+    script.push(`# Set resolver for protocol domain`);
+    script.push(`echo "Setting resolver for ${protocolDomain}"`);
+    script.push(
+      `node bin/ens-contract.js set-resolver ${protocolDomain} --address \${RESOLVER_ADDRESS:-"0x231b0Ee14048e9dCcD1d247744d114a4EB5E8E63"}`
+    );
     script.push(``);
 
     // Register subdomains under protocol domain
     plan.subdomains.forEach(({ subdomain, metadata }) => {
       script.push(`# Register subdomain: ${subdomain}`);
-      script.push(`ens-contract register ${subdomain} --parent ${protocolDomain}`);
+      script.push(`echo "Registering subdomain: ${subdomain}"`);
+      script.push(
+        `node bin/ens-contract.js register ${subdomain} --owner \${OWNER_ADDRESS:-"0x0000000000000000000000000000000000000000"}`
+      );
+      script.push(``);
 
-      if (metadata.contractType) {
-        script.push(`# Set metadata for ${subdomain}`);
-        script.push(`ens-contract metadata ${subdomain} --data "${JSON.stringify(plan.metadata[subdomain])}"`);
+      // Set resolver for subdomain
+      script.push(`# Set resolver for ${subdomain}`);
+      script.push(
+        `node bin/ens-contract.js set-resolver ${subdomain} --address \${RESOLVER_ADDRESS:-"0x231b0Ee14048e9dCcD1d247744d114a4EB5E8E63"}`
+      );
+      script.push(``);
+
+      // Set contract address if specified in metadata
+      if (metadata.contractType && plan.metadata[subdomain]?.addresses) {
+        const addresses = plan.metadata[subdomain].addresses;
+        if (addresses.length > 0) {
+          script.push(`# Set contract address for ${subdomain}`);
+          script.push(
+            `node bin/ens-contract.js set-record ${subdomain} --address ${addresses[0].address}`
+          );
+          script.push(``);
+        }
       }
 
-      script.push(``);
+      // Set text records if specified
+      if (plan.metadata[subdomain]?.description) {
+        script.push(`# Set description for ${subdomain}`);
+        script.push(
+          `node bin/ens-contract.js set-record ${subdomain} --text description="${plan.metadata[subdomain].description}"`
+        );
+        script.push(``);
+      }
+
+      if (plan.metadata[subdomain]?.url) {
+        script.push(`# Set URL for ${subdomain}`);
+        script.push(
+          `node bin/ens-contract.js set-record ${subdomain} --text url="${plan.metadata[subdomain].url}"`
+        );
+        script.push(``);
+      }
     });
 
-    // Set cross-references
+    // Set cross-references as text records
     script.push(`# Set cross-references`);
     Object.entries(plan.crossReferences).forEach(([domain, references]) => {
       Object.entries(references).forEach(([key, value]) => {
-        script.push(`ens-contract metadata ${domain} --set ${key}=${value}`);
+        script.push(`node bin/ens-contract.js set-record ${domain} --text ${key}="${value}"`);
       });
     });
+
+    script.push(``);
+    script.push(`echo "Registration script completed"`);
+    script.push(`echo "Check domain info with: node bin/ens-contract.js info <domain>"`);
 
     return script;
   }
@@ -447,8 +513,8 @@ class SubdomainPlanner {
       // Add contract type references
       if (metadata.contractType) {
         const relatedDomains = plan.subdomains
-          .filter(s => s.metadata.contractType && s.subdomain !== subdomain)
-          .map(s => s.subdomain);
+          .filter((s) => s.metadata.contractType && s.subdomain !== subdomain)
+          .map((s) => s.subdomain);
 
         if (relatedDomains.length > 0) {
           references[subdomain][`related.contracts`] = relatedDomains.join(',');
@@ -509,7 +575,7 @@ class SubdomainPlanner {
 
     console.log(`\nREGISTRATION SCRIPT:`);
     console.log('═'.repeat(30));
-    plan.registrationScript.slice(0, 20).forEach(line => {
+    plan.registrationScript.slice(0, 20).forEach((line) => {
       console.log(`  ${line}`);
     });
     if (plan.registrationScript.length > 20) {
@@ -518,7 +584,9 @@ class SubdomainPlanner {
 
     console.log(`\nFILES GENERATED:`);
     console.log(`  • Registration script: ${plan.protocol}-${plan.category}-${plan.type}-setup.sh`);
-    console.log(`  • Metadata files: ${Object.keys(plan.metadata).length} subdomain metadata files`);
+    console.log(
+      `  • Metadata files: ${Object.keys(plan.metadata).length} subdomain metadata files`
+    );
   }
 
   /**
@@ -551,192 +619,192 @@ class SubdomainPlanner {
     // Save registration script
     const scriptPath = `${outputDir}/${scriptFilename}`;
     fs.writeFileSync(scriptPath, plan.registrationScript.join('\n'));
-    console.log(`✅ Registration script: ${scriptPath}`);
+    console.log(`OK: Registration script: ${scriptPath}`);
 
     // Save metadata files
     Object.entries(plan.metadata).forEach(([subdomain, metadata]) => {
       if (!metadata.error) {
         const metadataPath = `${outputDir}/${subdomain.replace('.evmd.eth', '')}-metadata.json`;
         fs.writeFileSync(metadataPath, JSON.stringify(metadata, null, 2));
-        console.log(`✅ Metadata file: ${metadataPath}`);
+        console.log(`OK: Metadata file: ${metadataPath}`);
       }
     });
 
     // Save plan summary
     const planPath = `${outputDir}/${plan.protocol}-${plan.category}-${plan.type}-plan.json`;
     fs.writeFileSync(planPath, JSON.stringify(plan, null, 2));
-    console.log(`✅ Plan summary: ${planPath}`);
+    console.log(`OK: Plan summary: ${planPath}`);
   }
 }
 
 // Interactive Category Selection
 const CATEGORY_GUIDANCE = {
   defi: {
-    name: "Decentralized Finance",
-    description: "Protocols for lending, borrowing, trading, and financial services",
+    name: 'Decentralized Finance',
+    description: 'Protocols for lending, borrowing, trading, and financial services',
     subcategories: {
-      amm: "Automated Market Makers (Uniswap, SushiSwap, PancakeSwap)",
-      lending: "Lending & Borrowing (Aave, Compound, MakerDAO)",
-      stablecoin: "Stablecoin Protocols (DAI, USDC, algorithmic stables)",
-      derivatives: "Derivatives & Options (Synthetix, dYdX)",
-      yield: "Yield Farming & Liquid Staking (Yearn, Convex, Lido)"
+      amm: 'Automated Market Makers (Uniswap, SushiSwap, PancakeSwap)',
+      lending: 'Lending & Borrowing (Aave, Compound, MakerDAO)',
+      stablecoin: 'Stablecoin Protocols (DAI, USDC, algorithmic stables)',
+      derivatives: 'Derivatives & Options (Synthetix, dYdX)',
+      yield: 'Yield Farming & Liquid Staking (Yearn, Convex, Lido)',
     },
-    examples: ["Uniswap", "Aave", "Compound", "Synthetix", "MakerDAO"]
+    examples: ['Uniswap', 'Aave', 'Compound', 'Synthetix', 'MakerDAO'],
   },
   dao: {
-    name: "Decentralized Autonomous Organizations",
-    description: "Governance and organizational protocols",
+    name: 'Decentralized Autonomous Organizations',
+    description: 'Governance and organizational protocols',
     subcategories: {
-      governor: "Governance Systems (ENS, Uniswap, Compound)",
-      treasury: "Treasury Management (DAOhaus, Gnosis Safe)",
-      multisig: "Multi-signature Wallets (Gnosis Safe, Argent)"
+      governor: 'Governance Systems (ENS, Uniswap, Compound)',
+      treasury: 'Treasury Management (DAOhaus, Gnosis Safe)',
+      multisig: 'Multi-signature Wallets (Gnosis Safe, Argent)',
     },
-    examples: ["ENS", "Uniswap", "Compound", "Aragon"]
+    examples: ['ENS', 'Uniswap', 'Compound', 'Aragon'],
   },
   infrastructure: {
-    name: "Protocol Infrastructure",
-    description: "Core blockchain infrastructure and utilities",
+    name: 'Protocol Infrastructure',
+    description: 'Core blockchain infrastructure and utilities',
     subcategories: {
-      oracle: "Price Oracles (Chainlink, Tellor, Pyth)",
-      bridge: "Cross-chain Bridges (Polygon Bridge, Arbitrum Bridge)",
-      indexer: "Data Indexing (The Graph, Covalent)",
-      rpc: "RPC & Node Infrastructure"
+      oracle: 'Price Oracles (Chainlink, Tellor, Pyth)',
+      bridge: 'Cross-chain Bridges (Polygon Bridge, Arbitrum Bridge)',
+      indexer: 'Data Indexing (The Graph, Covalent)',
+      rpc: 'RPC & Node Infrastructure',
     },
-    examples: ["Chainlink", "The Graph", "Infura", "Alchemy"]
+    examples: ['Chainlink', 'The Graph', 'Infura', 'Alchemy'],
   },
   gaming: {
-    name: "Gaming & NFTs",
-    description: "Gaming platforms, NFT marketplaces, and virtual worlds",
+    name: 'Gaming & NFTs',
+    description: 'Gaming platforms, NFT marketplaces, and virtual worlds',
     subcategories: {
-      nft: "NFT Gaming (Axie Infinity, CryptoKitties)",
-      marketplace: "NFT Marketplaces (OpenSea, Rarible, LooksRare)",
-      metaverse: "Virtual Worlds (Decentraland, The Sandbox)"
+      nft: 'NFT Gaming (Axie Infinity, CryptoKitties)',
+      marketplace: 'NFT Marketplaces (OpenSea, Rarible, LooksRare)',
+      metaverse: 'Virtual Worlds (Decentraland, The Sandbox)',
     },
-    examples: ["Axie Infinity", "OpenSea", "Decentraland", "The Sandbox"]
+    examples: ['Axie Infinity', 'OpenSea', 'Decentraland', 'The Sandbox'],
   },
   social: {
-    name: "Social & Content",
-    description: "Social networks, content platforms, and creator economies",
+    name: 'Social & Content',
+    description: 'Social networks, content platforms, and creator economies',
     subcategories: {
-      platform: "Social Networks (Lens Protocol, Farcaster)",
-      content: "Content Platforms (Mirror, Paragraph)",
-      creator: "Creator Economy (Patreon on-chain, Mirror)"
+      platform: 'Social Networks (Lens Protocol, Farcaster)',
+      content: 'Content Platforms (Mirror, Paragraph)',
+      creator: 'Creator Economy (Patreon on-chain, Mirror)',
     },
-    examples: ["Lens Protocol", "Farcaster", "Mirror", "Paragraph"]
+    examples: ['Lens Protocol', 'Farcaster', 'Mirror', 'Paragraph'],
   },
   rwa: {
-    name: "Real World Assets",
-    description: "Tokenization of physical assets and commodities",
+    name: 'Real World Assets',
+    description: 'Tokenization of physical assets and commodities',
     subcategories: {
-      realestate: "Real Estate (Manhattan, RealT)",
-      commodities: "Commodities (gold, oil, carbon credits)",
-      art: "Fine Art & Collectibles",
-      securities: "Traditional Securities"
+      realestate: 'Real Estate (Manhattan, RealT)',
+      commodities: 'Commodities (gold, oil, carbon credits)',
+      art: 'Fine Art & Collectibles',
+      securities: 'Traditional Securities',
     },
-    examples: ["Manhattan", "RealT", "Centrifuge", "Goldfinch"]
+    examples: ['Manhattan', 'RealT', 'Centrifuge', 'Goldfinch'],
   },
   privacy: {
-    name: "Privacy & Security",
-    description: "Privacy-preserving protocols and security tools",
+    name: 'Privacy & Security',
+    description: 'Privacy-preserving protocols and security tools',
     subcategories: {
-      mixer: "Privacy Mixers (Tornado Cash)",
-      zkp: "Zero-Knowledge Proofs",
-      encryption: "Encryption Protocols"
+      mixer: 'Privacy Mixers (Tornado Cash)',
+      zkp: 'Zero-Knowledge Proofs',
+      encryption: 'Encryption Protocols',
     },
-    examples: ["Tornado Cash", "Semaphore", "Haven Protocol"]
+    examples: ['Tornado Cash', 'Semaphore', 'Haven Protocol'],
   },
   tokens: {
-    name: "Token Standards & Infrastructure",
-    description: "ERC standards, token utilities, and infrastructure",
+    name: 'Token Standards & Infrastructure',
+    description: 'ERC standards, token utilities, and infrastructure',
     subcategories: {
-      erc20: "ERC-20 Tokens",
-      erc721: "ERC-721 NFTs",
-      erc1155: "ERC-1155 Multi-tokens",
-      dao: "DAO Tokens & Governance"
+      erc20: 'ERC-20 Tokens',
+      erc721: 'ERC-721 NFTs',
+      erc1155: 'ERC-1155 Multi-tokens',
+      dao: 'DAO Tokens & Governance',
     },
-    examples: ["ERC-20", "ERC-721", "Compound Token", "Uniswap Token"]
+    examples: ['ERC-20', 'ERC-721', 'Compound Token', 'Uniswap Token'],
   },
   analytics: {
-    name: "Analytics & Data",
-    description: "On-chain analytics, dashboards, and data platforms",
+    name: 'Analytics & Data',
+    description: 'On-chain analytics, dashboards, and data platforms',
     subcategories: {
-      dashboard: "Analytics Dashboards (Dune, Nansen)",
-      indexer: "Data Indexing Services",
-      oracle: "Analytics Oracles"
+      dashboard: 'Analytics Dashboards (Dune, Nansen)',
+      indexer: 'Data Indexing Services',
+      oracle: 'Analytics Oracles',
     },
-    examples: ["Dune Analytics", "Nansen", "IntoTheBlock"]
+    examples: ['Dune Analytics', 'Nansen', 'IntoTheBlock'],
   },
   wallet: {
-    name: "Wallets & Custody",
-    description: "Wallet infrastructure and custody solutions",
+    name: 'Wallets & Custody',
+    description: 'Wallet infrastructure and custody solutions',
     subcategories: {
-      hardware: "Hardware Wallets",
-      software: "Software Wallets",
-      custody: "Institutional Custody",
-      multisig: "Multi-signature Solutions"
+      hardware: 'Hardware Wallets',
+      software: 'Software Wallets',
+      custody: 'Institutional Custody',
+      multisig: 'Multi-signature Solutions',
     },
-    examples: ["MetaMask", "Ledger", "Fireblocks", "Gnosis Safe"]
+    examples: ['MetaMask', 'Ledger', 'Fireblocks', 'Gnosis Safe'],
   },
   insurance: {
-    name: "Insurance & Risk",
-    description: "Decentralized insurance and risk management",
+    name: 'Insurance & Risk',
+    description: 'Decentralized insurance and risk management',
     subcategories: {
-      parametric: "Parametric Insurance",
-      traditional: "Traditional Insurance",
-      reinsurance: "Reinsurance Protocols"
+      parametric: 'Parametric Insurance',
+      traditional: 'Traditional Insurance',
+      reinsurance: 'Reinsurance Protocols',
     },
-    examples: ["Nexus Mutual", "Etherisc", "Cover Protocol"]
+    examples: ['Nexus Mutual', 'Etherisc', 'Cover Protocol'],
   },
   art: {
-    name: "Digital Art & Culture",
-    description: "NFT art platforms and cultural institutions",
+    name: 'Digital Art & Culture',
+    description: 'NFT art platforms and cultural institutions',
     subcategories: {
-      marketplace: "Art Marketplaces",
-      gallery: "Digital Galleries",
-      curation: "Art Curation Platforms"
+      marketplace: 'Art Marketplaces',
+      gallery: 'Digital Galleries',
+      curation: 'Art Curation Platforms',
     },
-    examples: ["Foundation", "SuperRare", "Zora", "KnownOrigin"]
+    examples: ['Foundation', 'SuperRare', 'Zora', 'KnownOrigin'],
   },
   supplychain: {
-    name: "Supply Chain & Logistics",
-    description: "Supply chain tracking and logistics on blockchain",
+    name: 'Supply Chain & Logistics',
+    description: 'Supply chain tracking and logistics on blockchain',
     subcategories: {
-      tracking: "Product Tracking",
-      provenance: "Provenance Verification",
-      logistics: "Logistics Coordination"
+      tracking: 'Product Tracking',
+      provenance: 'Provenance Verification',
+      logistics: 'Logistics Coordination',
     },
-    examples: ["VeChain", "Provenance", "Everledger"]
+    examples: ['VeChain', 'Provenance', 'Everledger'],
   },
   healthcare: {
-    name: "Healthcare & Medical",
-    description: "Healthcare data, medical records, and biotech",
+    name: 'Healthcare & Medical',
+    description: 'Healthcare data, medical records, and biotech',
     subcategories: {
-      records: "Medical Records",
-      research: "Medical Research",
-      insurance: "Health Insurance"
+      records: 'Medical Records',
+      research: 'Medical Research',
+      insurance: 'Health Insurance',
     },
-    examples: ["MedicalChain", "Robomed", "Nure"]
+    examples: ['MedicalChain', 'Robomed', 'Nure'],
   },
   finance: {
-    name: "Traditional Finance",
-    description: "Traditional finance services on blockchain",
+    name: 'Traditional Finance',
+    description: 'Traditional finance services on blockchain',
     subcategories: {
-      banking: "Digital Banking",
-      payments: "Payment Systems",
-      lending: "Traditional Lending"
+      banking: 'Digital Banking',
+      payments: 'Payment Systems',
+      lending: 'Traditional Lending',
     },
-    examples: ["Revolut", "Monzo", "Traditional Banks"]
+    examples: ['Revolut', 'Monzo', 'Traditional Banks'],
   },
   developer: {
-    name: "Developer Tools",
-    description: "Development frameworks, libraries, and tools",
+    name: 'Developer Tools',
+    description: 'Development frameworks, libraries, and tools',
     subcategories: {
-      framework: "Development Frameworks",
-      library: "Smart Contract Libraries",
-      testing: "Testing & Verification Tools"
+      framework: 'Development Frameworks',
+      library: 'Smart Contract Libraries',
+      testing: 'Testing & Verification Tools',
     },
-    examples: ["Hardhat", "OpenZeppelin", "Truffle"]
-  }
+    examples: ['Hardhat', 'OpenZeppelin', 'Truffle'],
+  },
 };
 
 // Interactive guidance functions
@@ -769,17 +837,19 @@ async function getProjectDescription() {
       finance: 'Traditional Finance (Banking/Settlement)',
       developer: 'Developer Tools/Frameworks',
       art: 'Art/Culture Platforms',
-      interop: 'Cross-chain/Interoperability'
+      interop: 'Cross-chain/Interoperability',
     };
     return map[root] || root;
   };
 
-  const { projectType } = await inquirer.prompt([{
-    type: 'list',
-    name: 'projectType',
-    message: 'What type of project are you building?',
-    choices: registry.roots.map(root => ({ name: label(root), value: root }))
-  }]);
+  const { projectType } = await inquirer.prompt([
+    {
+      type: 'list',
+      name: 'projectType',
+      message: 'What type of project are you building?',
+      choices: registry.roots.map((root) => ({ name: label(root), value: root })),
+    },
+  ]);
 
   return projectType;
 }
@@ -792,12 +862,14 @@ async function getSubcategory(category) {
   const registry = JSON.parse(fs.readFileSync(registryPath, 'utf8'));
 
   const subs = registry.subcategories[category] || [];
-  const { subcategory } = await inquirer.prompt([{
-    type: 'list',
-    name: 'subcategory',
-    message: `What specific ${category} functionality?`,
-    choices: subs.map(k => ({ name: k, value: k }))
-  }]);
+  const { subcategory } = await inquirer.prompt([
+    {
+      type: 'list',
+      name: 'subcategory',
+      message: `What specific ${category} functionality?`,
+      choices: subs.map((k) => ({ name: k, value: k })),
+    },
+  ]);
 
   return subcategory;
 }
@@ -806,62 +878,80 @@ async function getProjectDetails(category, subcategory) {
   // Backward-compatible guidance mapping for display text
   const guidanceKey = CATEGORY_GUIDANCE[category]
     ? category
-    : (category === 'infra' ? 'infrastructure' : (category === 'health' ? 'healthcare' : category));
-  const categoryInfo = CATEGORY_GUIDANCE[guidanceKey] || { name: category, description: '', examples: [] };
+    : category === 'infra'
+      ? 'infrastructure'
+      : category === 'health'
+        ? 'healthcare'
+        : category;
+  const categoryInfo = CATEGORY_GUIDANCE[guidanceKey] || {
+    name: category,
+    description: '',
+    examples: [],
+  };
 
   console.log(`\nSelected: ${categoryInfo.name} → ${subcategory}`);
   console.log(`${categoryInfo.description}`);
   console.log(`Examples: ${categoryInfo.examples.join(', ')}\n`);
 
-  const { protocolName } = await inquirer.prompt([{
-    type: 'input',
-    name: 'protocolName',
-    message: 'What is your protocol/project name?',
-    validate: input => input.length > 0 || 'Protocol name is required'
-  }]);
+  const { protocolName } = await inquirer.prompt([
+    {
+      type: 'input',
+      name: 'protocolName',
+      message: 'What is your protocol/project name?',
+      validate: (input) => input.length > 0 || 'Protocol name is required',
+    },
+  ]);
 
-  const { version } = await inquirer.prompt([{
-    type: 'input',
-    name: 'version',
-    message: 'What version is this? (leave empty for latest)',
-    default: 'v1'
-  }]);
+  const { version } = await inquirer.prompt([
+    {
+      type: 'input',
+      name: 'version',
+      message: 'What version is this? (leave empty for latest)',
+      default: 'v1',
+    },
+  ]);
 
   // Category-specific questions
   const options = { version };
 
   if (category === 'defi' && subcategory === 'amm') {
-    const { tvl } = await inquirer.prompt([{
-      type: 'input',
-      name: 'tvl',
-      message: 'Estimated TVL (Total Value Locked) in USD?',
-      default: '1000000'
-    }]);
+    const { tvl } = await inquirer.prompt([
+      {
+        type: 'input',
+        name: 'tvl',
+        message: 'Estimated TVL (Total Value Locked) in USD?',
+        default: '1000000',
+      },
+    ]);
     options.tvl = tvl;
   }
 
   if (category === 'dao') {
-    const { tokenSymbol } = await inquirer.prompt([{
-      type: 'input',
-      name: 'tokenSymbol',
-      message: 'Governance token symbol?',
-      default: 'GOV'
-    }]);
+    const { tokenSymbol } = await inquirer.prompt([
+      {
+        type: 'input',
+        name: 'tokenSymbol',
+        message: 'Governance token symbol?',
+        default: 'GOV',
+      },
+    ]);
     options.token = tokenSymbol;
   }
 
   if (category === 'gaming' && subcategory === 'nft') {
-    const { gameType } = await inquirer.prompt([{
-      type: 'list',
-      name: 'gameType',
-      message: 'What type of NFT game?',
-      choices: [
-        { name: 'Play-to-Earn (Axie, CryptoKitties)', value: 'playtoearn' },
-        { name: 'Competitive Gaming', value: 'competitive' },
-        { name: 'Virtual World/Metaverse', value: 'metaverse' },
-        { name: 'Collectible/Card Game', value: 'collectible' }
-      ]
-    }]);
+    const { gameType } = await inquirer.prompt([
+      {
+        type: 'list',
+        name: 'gameType',
+        message: 'What type of NFT game?',
+        choices: [
+          { name: 'Play-to-Earn (Axie, CryptoKitties)', value: 'playtoearn' },
+          { name: 'Competitive Gaming', value: 'competitive' },
+          { name: 'Virtual World/Metaverse', value: 'metaverse' },
+          { name: 'Collectible/Card Game', value: 'collectible' },
+        ],
+      },
+    ]);
     options.gameType = gameType;
   }
 
@@ -892,38 +982,44 @@ async function interactiveMode() {
     planner.displayPlan(plan);
 
     // Step 5: Save and fill metadata
-    const { savePlan } = await inquirer.prompt([{
-      type: 'confirm',
-      name: 'savePlan',
-      message: 'Save this subdomain plan?',
-      default: true
-    }]);
+    const { savePlan } = await inquirer.prompt([
+      {
+        type: 'confirm',
+        name: 'savePlan',
+        message: 'Save this subdomain plan?',
+        default: true,
+      },
+    ]);
 
     let outputDir;
     if (savePlan) {
-      const outputResponse = await inquirer.prompt([{
-        type: 'input',
-        name: 'outputDir',
-        message: 'Output directory?',
-        default: `./plans/${protocolName}`
-      }]);
+      const outputResponse = await inquirer.prompt([
+        {
+          type: 'input',
+          name: 'outputDir',
+          message: 'Output directory?',
+          default: `./plans/${protocolName}`,
+        },
+      ]);
       outputDir = outputResponse.outputDir;
 
       planner.savePlan(plan, outputDir);
       console.log(`Plan saved to ${outputDir}`);
 
       // Offer to fill metadata
-      const { fillMetadata } = await inquirer.prompt([{
-        type: 'confirm',
-        name: 'fillMetadata',
-        message: 'Fill metadata templates with real contract data?',
-        default: true
-      }]);
+      const { fillMetadata } = await inquirer.prompt([
+        {
+          type: 'confirm',
+          name: 'fillMetadata',
+          message: 'Fill metadata templates with real contract data?',
+          default: true,
+        },
+      ]);
 
       if (fillMetadata) {
         console.log('\nLaunching metadata filler...');
         try {
-          const { default: MetadataFiller } = await import('./metadata-filler.js');
+          const { default: MetadataFiller } = await import('./metadata-filler.mjs');
           const filler = new MetadataFiller();
           await filler.fillPlan(outputDir, { ...options, protocolName });
           console.log('Metadata filling complete!');
@@ -933,7 +1029,6 @@ async function interactiveMode() {
         }
       }
     }
-
   } catch (error) {
     console.error(`Error: ${error.message}`);
     process.exit(1);
@@ -963,7 +1058,7 @@ function main() {
     console.log('DIRECT MODE (Advanced):');
     console.log('Usage: node subdomain-planner.js <protocol> <category> <type> [options]');
     console.log('\nAvailable Categories:');
-    Object.keys(CATEGORY_GUIDANCE).forEach(cat => {
+    Object.keys(CATEGORY_GUIDANCE).forEach((cat) => {
       const info = CATEGORY_GUIDANCE[cat];
       console.log(`  ${cat.padEnd(15)} - ${info.name}`);
     });
@@ -1004,7 +1099,6 @@ function main() {
     } else {
       planner.savePlan(plan);
     }
-
   } catch (error) {
     console.error(`Error: ${error.message}`);
     console.log('\nTry interactive mode: node subdomain-planner.js --interactive');

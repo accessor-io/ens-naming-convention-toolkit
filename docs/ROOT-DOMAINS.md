@@ -23,12 +23,9 @@
 Aliases (map to canonical): infrastructure.eth → infra.eth, healthcare.eth → health.eth.
 
 Pattern hints:
+
 - defi.eth: role.protocol.defi.eth
 - dao.eth: role.org.dao.eth
 - l2.eth: role.network.l2.eth
 - infra.eth: role.provider.infra.eth
 - token.eth: symbol.token.eth
-
-
-
-

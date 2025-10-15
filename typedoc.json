@@ -1,0 +1,62 @@
+{
+  "entryPoints": [
+    "src/cli/cli-utils.ts",
+    "src/core/contract-resolver.js",
+    "src/core/ens-operations.ts",
+    "src/core/ens-wallet-connector.js",
+    "src/types/index.ts",
+    "src/utils/file-operations.ts",
+    "src/utils/validation.ts"
+  ],
+  "out": "docs/api",
+  "name": "ENS Metadata Tools",
+  "includeVersion": true,
+  "excludeExternals": true,
+  "excludePrivate": true,
+  "excludeProtected": false,
+  "excludeInternal": false,
+  "readme": "README.md",
+  "theme": "default",
+  "navigation": {
+    "includeCategories": true,
+    "includeGroups": true
+  },
+  "categorizeByGroup": true,
+  "defaultCategory": "Other",
+  "categoryOrder": ["Core", "CLI", "Utils", "Types", "Other"],
+  "sort": ["source-order"],
+  "kindSortOrder": [
+    "Project",
+    "Module",
+    "Namespace",
+    "Enum",
+    "Class",
+    "Interface",
+    "Constructor",
+    "Property",
+    "Variable",
+    "Function",
+    "Accessor"
+  ],
+  "visibilityFilters": {
+    "protected": false,
+    "private": false,
+    "inherited": true,
+    "external": false
+  },
+  "searchInComments": true,
+  "cleanOutputDir": true,
+  "preserveWatchOutput": true,
+  "watch": false,
+  "pretty": true,
+  "gitRevision": "main",
+  "gitRemote": "origin",
+  "plugin": [],
+  "logLevel": "Info",
+  "treatWarningsAsErrors": false,
+  "validation": {
+    "notExported": true,
+    "invalidLink": true,
+    "notDocumented": false
+  }
+}

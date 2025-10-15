@@ -1,0 +1,151 @@
+{
+  "version": "1.0.0",
+  "generated": "2025-10-15T17:33:14.668Z",
+  "commands": [
+    {
+      "name": "ens-metadata",
+      "file": "cli.mjs",
+      "description": "Main CLI entry point for ENS metadata operations",
+      "usage": "ens-metadata [command] [options]",
+      "examples": [
+        "ens-metadata validate example.eth",
+        "ens-metadata generate --category defi --type amm"
+      ]
+    },
+    {
+      "name": "ens-validator",
+      "file": "naming-validator.mjs",
+      "description": "Ethereum Contract Naming Convention Validator",
+      "usage": "ens-validator <domain> <category> [options]",
+      "options": [
+        {
+          "name": "--strict",
+          "description": "Strict validation mode",
+          "type": "boolean"
+        },
+        {
+          "name": "--metadata <file>",
+          "description": "Load metadata from JSON file",
+          "type": "string"
+        },
+        {
+          "name": "--batch <file>",
+          "description": "Validate multiple domains from file",
+          "type": "string"
+        },
+        {
+          "name": "--qa",
+          "description": "Enable QA standards validation",
+          "type": "boolean"
+        },
+        {
+          "name": "--no-qa",
+          "description": "Disable QA standards validation",
+          "type": "boolean"
+        }
+      ],
+      "examples": [
+        "ens-validator governor.ensdao.eth dao",
+        "ens-validator uniswap.amm.eth defi --strict --qa",
+        "ens-validator uni.token.eth tokens --metadata token-metadata.json --qa"
+      ]
+    },
+    {
+      "name": "ens-cache-browser",
+      "file": "cache-browser.mjs",
+      "description": "ENS cache browser for metadata exploration",
+      "usage": "ens-cache-browser [options]",
+      "examples": [
+        "ens-cache-browser --domain example.eth",
+        "ens-cache-browser --list --category defi"
+      ]
+    },
+    {
+      "name": "evmd",
+      "file": "evmd.js",
+      "description": "EVM metadata operations",
+      "usage": "evmd [command] [options]",
+      "examples": ["evmd analyze contract.json", "evmd generate metadata --type erc20"]
+    },
+    {
+      "name": "ens-contract",
+      "file": "ens-contract.mjs",
+      "description": "ENS contract operations and management",
+      "usage": "ens-contract [command] [options]",
+      "examples": [
+        "ens-contract register subdomain.eth --owner 0x...",
+        "ens-contract set-resolver domain.eth --resolver 0x..."
+      ]
+    },
+    {
+      "name": "metadata-generator",
+      "file": "metadata-generator.mjs",
+      "description": "Generate standardized metadata templates",
+      "usage": "metadata-generator --category <category> --type <type> [options]",
+      "options": [
+        {
+          "name": "--category <cat>",
+          "description": "Protocol category",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "--type <type>",
+          "description": "Protocol type",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "--name <name>",
+          "description": "Protocol/contract name",
+          "type": "string"
+        },
+        {
+          "name": "--version <ver>",
+          "description": "Version number",
+          "type": "string"
+        },
+        {
+          "name": "--symbol <sym>",
+          "description": "Token symbol",
+          "type": "string"
+        },
+        {
+          "name": "--supply <num>",
+          "description": "Token supply",
+          "type": "string"
+        },
+        {
+          "name": "--output <file>",
+          "description": "Save to file",
+          "type": "string"
+        }
+      ],
+      "examples": [
+        "metadata-generator --category defi --type amm --name Uniswap --version 3",
+        "metadata-generator --category dao --type governor --dao ENS --token ENS",
+        "metadata-generator --category tokens --type erc20 --symbol UNI --supply 1000000000"
+      ]
+    },
+    {
+      "name": "subdomain-planner",
+      "file": "subdomain-planner.mjs",
+      "description": "Plan and organize subdomain structures",
+      "usage": "subdomain-planner [options]",
+      "examples": [
+        "subdomain-planner --domain example.eth --interactive",
+        "subdomain-planner --template defi --output plan.json"
+      ]
+    },
+    {
+      "name": "security-analyzer",
+      "file": "security-analyzer.mjs",
+      "description": "Analyze ENS metadata for security issues",
+      "usage": "security-analyzer [options]",
+      "examples": [
+        "security-analyzer --metadata contract.json",
+        "security-analyzer --batch metadata/ --report security-report.json"
+      ]
+    }
+  ]
+}

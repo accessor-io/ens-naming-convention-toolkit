@@ -27,10 +27,7 @@
   },
   "contract": {
     "type": "governor",
-    "interfaces": [
-      "IGovernor",
-      "IVotes"
-    ],
+    "interfaces": ["IGovernor", "IVotes"],
     "deploymentBlock": "0",
     "upgradeable": "{{upgradeable}}"
   }

@@ -1,0 +1,174 @@
+{
+  "networks": {
+    "mainnet": {
+      "chainId": 1,
+      "name": "Ethereum Mainnet",
+      "contracts": {
+        "registry": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
+        "nameWrapper": "0xD4416b13d2b3a9aBEa5ebA7259A58d9A4e5c528Db",
+        "publicResolver": "0x231b0Ee14048e9dCcD1d247744d114a4EB5E8E63",
+        "reverseRegistrar": "0xa58E81fe9b61B5c3fE2AFD33CF304c454AbFc7Cb",
+        "universalResolver": "0xc0497E381f536Be9b14E9FD05eCF084A4973E193"
+      }
+    },
+    "sepolia": {
+      "chainId": 11155111,
+      "name": "Sepolia Testnet",
+      "contracts": {
+        "registry": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
+        "nameWrapper": "0x0635513f179D50A207757E05759CbD106d7dFcE8",
+        "publicResolver": "0x8FADE66Ba79cD89eEFcEbe2b8bE9cE306e27C048",
+        "reverseRegistrar": "0x0000000000000000000000000000000000000000",
+        "universalResolver": "0x0000000000000000000000000000000000000000"
+      }
+    },
+    "goerli": {
+      "chainId": 5,
+      "name": "Goerli Testnet",
+      "contracts": {
+        "registry": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
+        "nameWrapper": "0x114D4603199df73e7D157787f8778E21fCd13066",
+        "publicResolver": "0xd7a4F6473f32aC2Af804B3686AE8F1932bC35750",
+        "reverseRegistrar": "0x6F628b68b80D4d75a94dde8F3C4f8718594F3F44",
+        "universalResolver": "0x0000000000000000000000000000000000000000"
+      }
+    }
+  },
+  "abis": {
+    "registry": [
+      "function owner(bytes32 node) external view returns (address)",
+      "function resolver(bytes32 node) external view returns (address)",
+      "function ttl(bytes32 node) external view returns (uint64)",
+      "function recordExists(bytes32 node) external view returns (bool)",
+      "function setOwner(bytes32 node, address owner) external",
+      "function setSubnodeOwner(bytes32 node, bytes32 label, address owner) external returns (bytes32)",
+      "function setResolver(bytes32 node, address resolver) external",
+      "function setTTL(bytes32 node, uint64 ttl) external"
+    ],
+    "nameWrapper": [
+      "function ownerOf(uint256 id) external view returns (address)",
+      "function getData(uint256 id) external view returns (address, uint32, uint64)",
+      "function setSubnodeRecord(bytes32 parentNode, string label, address owner, address resolver, uint64 ttl, uint32 fuses, uint64 expiry) external",
+      "function setSubnodeOwner(bytes32 parentNode, string label, address owner, uint32 fuses, uint64 expiry) external returns (bytes32)",
+      "function setFuses(bytes32 node, uint32 fuses) external",
+      "function allFusesBurned(bytes32 node, uint32 fuseMask) external view returns (bool)",
+      "function isWrapped(bytes32 node) external view returns (bool)",
+      "function isTokenOwnerOrApproved(address account, bytes32 node) external view returns (bool)"
+    ],
+    "publicResolver": [
+      "function addr(bytes32 node) external view returns (address)",
+      "function addr(bytes32 node, uint256 coinType) external view returns (bytes memory)",
+      "function setAddr(bytes32 node, address a) external",
+      "function setAddr(bytes32 node, uint256 coinType, bytes calldata a) external",
+      "function text(bytes32 node, string calldata key) external view returns (string memory)",
+      "function setText(bytes32 node, string calldata key, string calldata value) external",
+      "function contenthash(bytes32 node) external view returns (bytes memory)",
+      "function setContenthash(bytes32 node, bytes calldata hash) external",
+      "function name(bytes32 node) external view returns (string memory)",
+      "function setName(bytes32 node, string calldata name) external",
+      "function supportsInterface(bytes4 interfaceID) external view returns (bool)"
+    ],
+    "reverseRegistrar": [
+      "function claim(address owner) external returns (bytes32)",
+      "function claimWithResolver(address owner, address resolver) external returns (bytes32)",
+      "function setName(string calldata name) external returns (bytes32)",
+      "function node(address addr) external pure returns (bytes32)"
+    ]
+  },
+  "fuseDefinitions": {
+    "CANNOT_UNWRAP": {
+      "bit": 1,
+      "description": "Cannot unwrap the name",
+      "security": "HIGH",
+      "required": true
+    },
+    "CANNOT_BURN_FUSES": {
+      "bit": 2,
+      "description": "Cannot burn fuses",
+      "security": "HIGH",
+      "required": true
+    },
+    "CANNOT_TRANSFER": {
+      "bit": 4,
+      "description": "Cannot transfer the name",
+      "security": "HIGH",
+      "required": true
+    },
+    "CANNOT_SET_RESOLVER": {
+      "bit": 8,
+      "description": "Cannot set resolver",
+      "security": "MEDIUM",
+      "required": false
+    },
+    "CANNOT_SET_TTL": {
+      "bit": 16,
+      "description": "Cannot set TTL",
+      "security": "LOW",
+      "required": false
+    },
+    "CANNOT_CREATE_SUBDOMAIN": {
+      "bit": 32,
+      "description": "Cannot create subdomains",
+      "security": "HIGH",
+      "required": true
+    },
+    "CANNOT_APPROVE": {
+      "bit": 64,
+      "description": "Cannot approve name transfers",
+      "security": "HIGH",
+      "required": true
+    },
+    "PARENT_CANNOT_CONTROL": {
+      "bit": 65536,
+      "description": "Parent domain cannot control this name",
+      "security": "CRITICAL",
+      "required": true
+    },
+    "IS_DOT_ETH": {
+      "bit": 131072,
+      "description": ".eth names have special rules",
+      "security": "INFO",
+      "required": false
+    },
+    "CAN_EXTEND_EXPIRY": {
+      "bit": 262144,
+      "description": "Can extend expiry",
+      "security": "LOW",
+      "required": false
+    }
+  },
+  "fuseTemplates": {
+    "locked": {
+      "description": "Lock name with all critical fuses",
+      "fuses": [
+        "CANNOT_UNWRAP",
+        "CANNOT_BURN_FUSES",
+        "CANNOT_TRANSFER",
+        "CANNOT_CREATE_SUBDOMAIN",
+        "CANNOT_APPROVE",
+        "PARENT_CANNOT_CONTROL"
+      ]
+    },
+    "immutable": {
+      "description": "Make name completely immutable",
+      "fuses": [
+        "CANNOT_UNWRAP",
+        "CANNOT_BURN_FUSES",
+        "CANNOT_TRANSFER",
+        "CANNOT_SET_RESOLVER",
+        "CANNOT_SET_TTL",
+        "CANNOT_CREATE_SUBDOMAIN",
+        "CANNOT_APPROVE",
+        "PARENT_CANNOT_CONTROL"
+      ]
+    },
+    "subdomain-locked": {
+      "description": "Lock subdomain creation only",
+      "fuses": ["CANNOT_CREATE_SUBDOMAIN"]
+    },
+    "resolver-locked": {
+      "description": "Lock resolver changes",
+      "fuses": ["CANNOT_SET_RESOLVER"]
+    }
+  }
+}

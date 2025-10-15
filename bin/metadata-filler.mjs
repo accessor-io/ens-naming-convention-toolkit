@@ -23,19 +23,28 @@ class MetadataFiller {
     const templates = {};
 
     // Load base category templates
-    const categoryFiles = fs.readdirSync(templateDir)
-      .filter(file => file.includes(`${category}-metadata.json`) || file.includes(`${category}.evmd-metadata.json`))
-      .forEach(file => {
+    const categoryFiles = fs
+      .readdirSync(templateDir)
+      .filter(
+        (file) =>
+          file.includes(`${category}-metadata.json`) ||
+          file.includes(`${category}.evmd-metadata.json`)
+      )
+      .forEach((file) => {
         const templatePath = path.join(templateDir, file);
         const template = JSON.parse(fs.readFileSync(templatePath, 'utf8'));
         templates[file.replace('-metadata.json', '').replace('.evmd-metadata.json', '')] = template;
       });
 
     // Load subcategory-specific templates
-    const subcategoryFiles = fs.readdirSync(templateDir)
-      .filter(file => file.includes(`${subcategory}.${category}-metadata.json`) ||
-                     file.includes(`${subcategory}.${category}.evmd-metadata.json`))
-      .forEach(file => {
+    const subcategoryFiles = fs
+      .readdirSync(templateDir)
+      .filter(
+        (file) =>
+          file.includes(`${subcategory}.${category}-metadata.json`) ||
+          file.includes(`${subcategory}.${category}.evmd-metadata.json`)
+      )
+      .forEach((file) => {
         const templatePath = path.join(templateDir, file);
         const template = JSON.parse(fs.readFileSync(templatePath, 'utf8'));
         templates[file.replace('-metadata.json', '').replace('.evmd-metadata.json', '')] = template;
@@ -51,7 +60,7 @@ class MetadataFiller {
     const filledMetadata = {};
 
     console.log(`\nFilling metadata for ${category}/${subcategory}`);
-    console.log('=' .repeat(50));
+    console.log('='.repeat(50));
 
     for (const [templateName, template] of Object.entries(templates)) {
       console.log(`\nFilling ${templateName}...`);
@@ -78,7 +87,10 @@ class MetadataFiller {
     }
 
     if (filled.tokenomics || filled.economics) {
-      filled.tokenomics = await this.fillEconomicsSection(filled.tokenomics || filled.economics, options);
+      filled.tokenomics = await this.fillEconomicsSection(
+        filled.tokenomics || filled.economics,
+        options
+      );
     }
 
     if (filled.security) {
@@ -100,32 +112,32 @@ class MetadataFiller {
         type: 'input',
         name: 'name',
         message: 'Protocol name:',
-        default: protocol.name || options.protocolName
+        default: protocol.name || options.protocolName,
       },
       {
         type: 'input',
         name: 'version',
         message: 'Version:',
-        default: protocol.version || options.version || '1.0.0'
+        default: protocol.version || options.version || '1.0.0',
       },
       {
         type: 'input',
         name: 'description',
         message: 'Description:',
-        default: protocol.description
+        default: protocol.description,
       },
       {
         type: 'input',
         name: 'website',
         message: 'Website URL:',
-        default: protocol.website
+        default: protocol.website,
       },
       {
         type: 'input',
         name: 'documentation',
         message: 'Documentation URL:',
-        default: protocol.documentation
-      }
+        default: protocol.documentation,
+      },
     ];
 
     const answers = await inquirer.prompt(questions);
@@ -134,7 +146,7 @@ class MetadataFiller {
       ...protocol,
       ...answers,
       ecosystem: protocol.ecosystem || 'ethereum',
-      launchDate: protocol.launchDate || new Date().toISOString().split('T')[0]
+      launchDate: protocol.launchDate || new Date().toISOString().split('T')[0],
     };
   }
 
@@ -146,21 +158,22 @@ class MetadataFiller {
         type: 'input',
         name: 'address',
         message: 'Contract address:',
-        validate: input => /^0x[a-fA-F0-9]{40}$/.test(input) || 'Must be a valid Ethereum address'
+        validate: (input) =>
+          /^0x[a-fA-F0-9]{40}$/.test(input) || 'Must be a valid Ethereum address',
       },
       {
         type: 'input',
         name: 'deploymentBlock',
         message: 'Deployment block number:',
-        validate: input => !isNaN(input) || 'Must be a valid block number'
+        validate: (input) => !isNaN(input) || 'Must be a valid block number',
       },
       {
         type: 'list',
         name: 'network',
         message: 'Deployment network:',
         choices: ['mainnet', 'goerli', 'sepolia', 'polygon', 'arbitrum', 'optimism'],
-        default: 'mainnet'
-      }
+        default: 'mainnet',
+      },
     ];
 
     // Add category-specific questions
@@ -169,7 +182,7 @@ class MetadataFiller {
         type: 'input',
         name: 'feeTiers',
         message: 'Fee tiers (comma-separated):',
-        default: '500,3000,10000'
+        default: '500,3000,10000',
       });
     }
 
@@ -178,7 +191,7 @@ class MetadataFiller {
         type: 'input',
         name: 'maxSupply',
         message: 'Max token supply:',
-        default: '10000000'
+        default: '10000000',
       });
     }
 
@@ -188,7 +201,7 @@ class MetadataFiller {
       ...contract,
       ...answers,
       interfaces: contract.interfaces || ['ERC165'],
-      compiler: contract.compiler || { version: '0.8.19', optimizer: true }
+      compiler: contract.compiler || { version: '0.8.19', optimizer: true },
     };
   }
 
@@ -202,7 +215,7 @@ class MetadataFiller {
         type: 'input',
         name: 'totalSupply',
         message: 'Total token supply:',
-        default: economics.totalSupply
+        default: economics.totalSupply,
       });
     }
 
@@ -211,7 +224,7 @@ class MetadataFiller {
         type: 'input',
         name: 'circulatingSupply',
         message: 'Circulating supply:',
-        default: economics.circulatingSupply
+        default: economics.circulatingSupply,
       });
     }
 
@@ -221,13 +234,13 @@ class MetadataFiller {
           type: 'input',
           name: 'tvl',
           message: 'Total Value Locked (USD):',
-          default: options.tvl || '0'
+          default: options.tvl || '0',
         },
         {
           type: 'input',
           name: 'dailyVolume',
           message: 'Daily volume (USD):',
-          default: '0'
+          default: '0',
         }
       );
     }
@@ -237,7 +250,7 @@ class MetadataFiller {
         type: 'input',
         name: 'totalProposals',
         message: 'Total proposals created:',
-        default: '0'
+        default: '0',
       });
     }
 
@@ -246,7 +259,7 @@ class MetadataFiller {
     return {
       ...economics,
       ...answers,
-      lastUpdated: new Date().toISOString()
+      lastUpdated: new Date().toISOString(),
     };
   }
 
@@ -258,35 +271,35 @@ class MetadataFiller {
         type: 'confirm',
         name: 'hasAudits',
         message: 'Has the contract been audited?',
-        default: false
+        default: false,
       },
       {
         type: 'input',
         name: 'auditReports',
         message: 'Audit report URLs (comma-separated):',
-        when: answers => answers.hasAudits
+        when: (answers) => answers.hasAudits,
       },
       {
         type: 'confirm',
         name: 'hasBugBounty',
         message: 'Is there an active bug bounty program?',
-        default: false
+        default: false,
       },
       {
         type: 'input',
         name: 'bugBountyUrl',
         message: 'Bug bounty URL:',
-        when: answers => answers.hasBugBounty
-      }
+        when: (answers) => answers.hasBugBounty,
+      },
     ];
 
     const answers = await inquirer.prompt(questions);
 
     return {
       ...security,
-      audits: answers.hasAudits ? answers.auditReports?.split(',').map(url => url.trim()) : [],
+      audits: answers.hasAudits ? answers.auditReports?.split(',').map((url) => url.trim()) : [],
       bugBounty: answers.hasBugBounty ? { url: answers.bugBountyUrl, active: true } : null,
-      riskAssessment: security.riskAssessment || 'Low'
+      riskAssessment: security.riskAssessment || 'Low',
     };
   }
 
@@ -342,17 +355,16 @@ class MetadataFiller {
     console.log(`\nFilling metadata for plan: ${plan.protocol.name}`);
     console.log(`Category: ${plan.category}/${plan.subcategory}`);
 
-    const filledMetadata = await this.fillMetadata(
-      plan.category,
-      plan.subcategory,
-      { ...plan.options, protocolName: plan.protocol.name }
-    );
+    const filledMetadata = await this.fillMetadata(plan.category, plan.subcategory, {
+      ...plan.options,
+      protocolName: plan.protocol.name,
+    });
 
     // Validate
     const errors = this.validateMetadata(filledMetadata);
     if (errors.length > 0) {
       console.log('\nValidation Errors:');
-      errors.forEach(error => console.log(`  - ${error}`));
+      errors.forEach((error) => console.log(`  - ${error}`));
       throw new Error('Metadata validation failed');
     }
 
@@ -401,11 +413,12 @@ function main() {
 
   if (options.plan) {
     // Fill from existing plan
-    filler.fillPlan(options.plan, options)
+    filler
+      .fillPlan(options.plan, options)
       .then(() => {
         console.log('\nMetadata filling complete!');
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(`Error: ${error.message}`);
         process.exit(1);
       });
@@ -419,12 +432,13 @@ function main() {
       process.exit(1);
     }
 
-    filler.fillMetadata(category, subcategory, options)
-      .then(metadata => {
+    filler
+      .fillMetadata(category, subcategory, options)
+      .then((metadata) => {
         const errors = filler.validateMetadata(metadata);
         if (errors.length > 0) {
           console.log('\nValidation Errors:');
-          errors.forEach(error => console.log(`  - ${error}`));
+          errors.forEach((error) => console.log(`  - ${error}`));
           process.exit(1);
         }
 
@@ -432,7 +446,7 @@ function main() {
         filler.saveMetadata(outputDir, metadata);
         console.log('\nMetadata filling complete!');
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(`Error: ${error.message}`);
         process.exit(1);
       });

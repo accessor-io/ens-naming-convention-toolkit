@@ -1,0 +1,41 @@
+{
+  "id": "uniswap.uniswap.domain.router.v1-0-0.1",
+  "org": "uniswap",
+  "protocol": "uniswap",
+  "domain": "defi",
+  "role": "router",
+  "version": "v1-0-0",
+  "chainId": 1,
+  "addresses": [
+    {
+      "chainId": 1,
+      "address": "0xE592427A0AEce92De3Edee1F18E0157C05861564",
+      "deployedBlock": 12369621
+    }
+  ],
+  "standards": {
+    "ercs": ["ERC20"],
+    "interfaces": ["0x414bf389"]
+  },
+  "artifacts": {
+    "abiHash": "0x1234567890abcdef",
+    "sourceUri": "https://github.com/Uniswap/v3-core",
+    "license": "BUSL-1.1"
+  },
+  "lifecycle": {
+    "status": "deployed",
+    "since": "2021-05-05T00:00:00Z"
+  },
+  "security": {
+    "audits": [
+      {
+        "firm": "Trail of Bits",
+        "date": "2021-04-01",
+        "report": "https://github.com/Uniswap/v3-core/blob/main/audits/Trail_of_Bits.pdf"
+      }
+    ],
+    "owners": ["0x1234567890123456789012345678901234567890"],
+    "upgradeability": "immutable"
+  },
+  "tags": ["defi", "amm", "dex"]
+}

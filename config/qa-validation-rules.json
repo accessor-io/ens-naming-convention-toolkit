@@ -1,0 +1,594 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "QA Validation Rules Configuration",
+  "description": "Machine-readable validation rules for ENS metadata QA standards",
+  "version": "1.0.0",
+  "standards": {
+    "1": {
+      "name": "Metadata Schema Validation",
+      "priority": "critical",
+      "category": "structure",
+      "validationLevel": "required",
+      "rules": {
+        "requiredFields": [
+          "id",
+          "org",
+          "protocol",
+          "category",
+          "role",
+          "version",
+          "chainId",
+          "addresses",
+          "metadataHash"
+        ],
+        "fieldValidation": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-z0-9.-]+$"
+          },
+          "org": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-z0-9-]+$"
+          },
+          "protocol": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-z0-9.-]+$"
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "defi",
+              "dao",
+              "l2",
+              "infra",
+              "token",
+              "nft",
+              "gaming",
+              "social",
+              "identity",
+              "privacy",
+              "security",
+              "wallet",
+              "analytics",
+              "rwa",
+              "supply",
+              "health",
+              "finance",
+              "dev",
+              "art",
+              "interop"
+            ]
+          },
+          "subcategory": {
+            "type": "string",
+            "minLength": 1
+          },
+          "ensRoot": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-z0-9.-]+\\.cns\\.eth$",
+            "description": "Subname under cns.eth hosting subdomains"
+          },
+          "domain": {
+            "type": "string",
+            "description": "DEPRECATED: Use 'category' instead",
+            "enum": [
+              "defi",
+              "dao",
+              "l2",
+              "infra",
+              "token",
+              "nft",
+              "gaming",
+              "social",
+              "identity",
+              "privacy",
+              "security",
+              "wallet",
+              "analytics",
+              "rwa",
+              "supply",
+              "health",
+              "finance",
+              "dev",
+              "art",
+              "interop"
+            ]
+          },
+          "role": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-z0-9-]+$"
+          },
+          "version": {
+            "type": "string",
+            "pattern": "^v[0-9]+(-[0-9]+)?(-[0-9]+)?$",
+            "description": "Version format: v{num}, v{num}-{num}, or v{num}-{num}-{num}"
+          },
+          "chainId": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "metadataHash": {
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]{64}$",
+            "description": "SHA-256 hash of the complete metadata artifact"
+          },
+          "addresses": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": ["chainId", "address"],
+              "properties": {
+                "chainId": { "type": "integer", "minimum": 1 },
+                "address": {
+                  "type": "string",
+                  "pattern": "^0x[a-fA-F0-9]{40}$"
+                },
+                "deployedBlock": { "type": "integer", "minimum": 0 },
+                "bytecodeHash": { "type": "string" },
+                "implementation": { "type": ["string", "null"] },
+                "implementationSlot": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "2": {
+      "name": "Canonical ID Grammar",
+      "priority": "critical",
+      "category": "naming",
+      "validationLevel": "required",
+      "rules": {
+        "grammarPattern": "^([a-z0-9-]+)\\.([a-z0-9.-]+)\\.([a-z]+)\\.([a-z0-9-]+)(?:\\.([a-z0-9-]+))?\\.v([0-9]+\\.[0-9]+\\.[0-9]+)\\.([0-9]+)$",
+        "components": {
+          "org": {
+            "pattern": "^[a-z0-9-]+$",
+            "description": "Organization identifier (lowercase, hyphen-separated)"
+          },
+          "protocol": {
+            "pattern": "^[a-z0-9.-]+$",
+            "description": "Protocol name (lowercase, hyphen-separated)"
+          },
+          "category": {
+            "pattern": "^(defi|dao|l2|infra|token|nft|gaming|social|identity|privacy|security|wallet|analytics|rwa|supply|health|finance|dev|art|interop)$",
+            "description": "Root category"
+          },
+          "subcategory": {
+            "pattern": "^[a-z0-9-]+$",
+            "optional": true,
+            "description": "Optional subcategory within the main category"
+          },
+          "role": {
+            "pattern": "^[a-z0-9-]+$",
+            "description": "Contract role/function (lowercase, descriptive)"
+          },
+          "variant": {
+            "pattern": "^[a-z0-9-]+$",
+            "optional": true,
+            "description": "Optional protocol variant identifier"
+          },
+          "version": {
+            "pattern": "^v[0-9]+(-[0-9]+)?(-[0-9]+)?$",
+            "description": "Version format: v{num}, v{num}-{num}, or v{num}-{num}-{num}"
+          },
+          "chainId": {
+            "pattern": "^[0-9]+$",
+            "description": "Target blockchain network ID"
+          }
+        }
+      }
+    },
+    "3": {
+      "name": "Root Domain Categorization",
+      "priority": "high",
+      "category": "classification",
+      "validationLevel": "required",
+      "rules": {
+        "approvedDomains": [
+          "defi",
+          "dao",
+          "l2",
+          "infra",
+          "token",
+          "nft",
+          "gaming",
+          "social",
+          "identity",
+          "privacy",
+          "security",
+          "wallet",
+          "analytics",
+          "rwa",
+          "supply",
+          "health",
+          "finance",
+          "dev",
+          "art",
+          "interop"
+        ],
+        "aliases": {
+          "infrastructure": "infra",
+          "healthcare": "health",
+          "payments": "wallet",
+          "insurance": "defi"
+        },
+        "validation": {
+          "mustUseCanonical": true,
+          "caseSensitive": false,
+          "allowCustom": false
+        }
+      }
+    },
+    "4": {
+      "name": "Subcategory Classification",
+      "priority": "high",
+      "category": "classification",
+      "validationLevel": "required",
+      "rules": {
+        "subcategories": {
+          "defi": [
+            "amm",
+            "lending",
+            "stablecoin",
+            "yield",
+            "perps",
+            "options",
+            "derivatives",
+            "dex-aggregator",
+            "asset-management",
+            "liquid-staking",
+            "cdps",
+            "synthetics",
+            "insurance"
+          ],
+          "dao": ["governor", "timelock", "treasury", "voting", "multisig", "module"],
+          "l2": [
+            "optimistic-rollup",
+            "zk-rollup",
+            "validium",
+            "da-layer",
+            "bridge",
+            "sequencer",
+            "prover"
+          ],
+          "infra": [
+            "oracle",
+            "relayer",
+            "rpc",
+            "indexer",
+            "subgraph",
+            "event-stream",
+            "data-availability"
+          ],
+          "token": ["erc20", "erc721", "erc1155", "governance-token", "rwa", "wrapped", "bridged"],
+          "nft": ["marketplace", "launchpad", "royalty", "metadata", "rental"],
+          "gaming": ["nft-game", "engine", "marketplace", "loot", "economy"],
+          "social": ["protocol", "messaging", "profile", "feed", "moderation"],
+          "identity": ["ens", "did", "attestations", "verifiable-credentials"],
+          "privacy": ["mixer", "zk-id", "shielded-pool", "fhe", "mev-protection"],
+          "security": ["auditor", "monitoring", "scanning", "incident-response", "bug-bounty"],
+          "wallet": ["eoa", "aa-4337", "mpc", "custody", "payment-processor", "onramp", "offramp"],
+          "analytics": ["indexer", "dashboard", "analytics-service"],
+          "rwa": ["real-estate", "commodities", "treasuries", "invoices"],
+          "supply": ["tracking", "verification", "logistics", "compliance"],
+          "health": ["medical-records", "data-sharing", "consent"],
+          "finance": ["banking", "settlement", "custody", "compliance"],
+          "dev": ["framework", "testing", "deployment", "debugging", "plugins"],
+          "art": ["platform", "curation", "royalty", "minting"]
+        },
+        "validation": {
+          "minSubcategories": 1,
+          "caseSensitive": false,
+          "allowCustom": false
+        }
+      }
+    },
+    "5": {
+      "name": "Security Standards",
+      "priority": "critical",
+      "category": "security",
+      "validationLevel": "required",
+      "rules": {
+        "requiredFields": ["audits", "owners", "upgradeability", "permissions"],
+        "auditRequirements": {
+          "minAudits": 1,
+          "requiredForProduction": true,
+          "reputableFirms": [
+            "Trail of Bits",
+            "ConsenSys Diligence",
+            "OpenZeppelin",
+            "Quantstamp",
+            "CertiK",
+            "SlowMist",
+            "PeckShield"
+          ],
+          "auditFields": ["firm", "date", "report", "findings"]
+        },
+        "ownerValidation": {
+          "addressPattern": "^0x[a-fA-F0-9]{40}$",
+          "minOwners": 1,
+          "multisigRecommended": true
+        },
+        "upgradeabilityOptions": [
+          "immutable",
+          "transparent",
+          "uups",
+          "diamond",
+          "beacon",
+          "minimal"
+        ],
+        "permissionTypes": ["admin", "pauser", "minter", "burner", "governor", "operator"]
+      }
+    },
+    "6": {
+      "name": "Lifecycle Management",
+      "priority": "medium",
+      "category": "governance",
+      "validationLevel": "recommended",
+      "rules": {
+        "requiredFields": ["status", "since"],
+        "validStatuses": [
+          "planning",
+          "development",
+          "testing",
+          "deployed",
+          "deprecated",
+          "discontinued"
+        ],
+        "dateFormat": "ISO 8601",
+        "datePattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{3})?Z?$",
+        "statusTransitions": {
+          "planning": ["development"],
+          "development": ["testing", "discontinued"],
+          "testing": ["deployed", "development"],
+          "deployed": ["deprecated"],
+          "deprecated": ["discontinued"],
+          "discontinued": []
+        },
+        "deprecationRequirements": {
+          "mustSpecifyReplacement": true,
+          "replacementField": "replacedBy"
+        }
+      }
+    },
+    "7": {
+      "name": "Standards Compliance",
+      "priority": "high",
+      "category": "technical",
+      "validationLevel": "required",
+      "rules": {
+        "supportedStandards": [
+          "ERC20",
+          "ERC721",
+          "ERC1155",
+          "ERC165",
+          "ERC173",
+          "ERC1967",
+          "ERC2535",
+          "ERC4337"
+        ],
+        "proxyStandards": {
+          "transparent": "ERC-1967 Transparent Proxy",
+          "uups": "ERC-1967 UUPS Proxy",
+          "beacon": "ERC-1967 Beacon Proxy",
+          "diamond": "ERC-2535 Diamond Proxy",
+          "minimal": "Minimal Proxy (Clone)",
+          "immutable": "Immutable Contract"
+        },
+        "interfaceIdPattern": "^0x[a-fA-F0-9]{8}$",
+        "validation": {
+          "mustMatchImplementation": true,
+          "noFalseClaims": true,
+          "caseSensitive": true
+        }
+      }
+    },
+    "8": {
+      "name": "Subdomain Management",
+      "priority": "medium",
+      "category": "ens",
+      "validationLevel": "recommended",
+      "rules": {
+        "requiredFields": ["label", "owner"],
+        "optionalFields": ["controller", "resolver", "records"],
+        "addressValidation": {
+          "pattern": "^0x[a-fA-F0-9]{40}$",
+          "checksumRequired": true
+        },
+        "labelValidation": {
+          "pattern": "^[a-z0-9-]+$",
+          "maxLength": 63,
+          "minLength": 1
+        },
+        "resolverValidation": {
+          "knownResolvers": [
+            "0x4976fb03C32e5B8cfe2b6cCB31c09Ba78EBaBa41",
+            "0xdaaf96c344f63131acadd0ea35170e7892d3dfba"
+          ]
+        }
+      }
+    },
+    "9": {
+      "name": "File and Format Standards",
+      "priority": "medium",
+      "category": "structure",
+      "validationLevel": "required",
+      "rules": {
+        "jsonValidation": {
+          "syntax": "valid",
+          "indentation": 2,
+          "trailingCommas": false,
+          "doubleQuotes": true,
+          "lineEndings": "LF"
+        },
+        "fileConstraints": {
+          "maxSize": 1048576,
+          "encoding": "UTF-8",
+          "extension": ".json"
+        },
+        "fieldOrdering": "alphabetical"
+      }
+    },
+    "10": {
+      "name": "Version and Compatibility",
+      "priority": "high",
+      "category": "governance",
+      "validationLevel": "required",
+      "rules": {
+        "versioning": {
+          "pattern": "^v[0-9]+(-[0-9]+)?(-[0-9]+)?$",
+          "allowedFormats": ["v{num}", "v{num}-{num}", "v{num}-{num}-{num}"],
+          "description": "Hyphen-separated versioning without dots"
+        },
+        "versionConsistency": {
+          "acrossRelatedContracts": true,
+          "breakingChanges": "major",
+          "newFeatures": "minor",
+          "bugFixes": "patch"
+        }
+      }
+    },
+    "11": {
+      "name": "Schema Validation Integration",
+      "priority": "critical",
+      "category": "technical",
+      "validationLevel": "required",
+      "rules": {
+        "schemaPath": "data/metadata/schema.json",
+        "validator": "AJV",
+        "validationOptions": {
+          "allErrors": true,
+          "verbose": true,
+          "strict": false
+        },
+        "errorReporting": {
+          "includeFieldPaths": true,
+          "includeSchemaPaths": true,
+          "includeDataPaths": true
+        }
+      }
+    },
+    "12": {
+      "name": "Cross-Reference Validation",
+      "priority": "high",
+      "category": "consistency",
+      "validationLevel": "required",
+      "rules": {
+        "crossReferences": {
+          "idGrammarConsistency": true,
+          "categoryAlignment": true,
+          "addressFormatValidation": true,
+          "chainIdConsistency": true,
+          "statusTransitionValidation": true,
+          "deprecatedDomainHandling": true
+        },
+        "validationChecks": [
+          "id.matches.canonical.grammar",
+          "category.matches.id.category",
+          "domain.deprecated.warning",
+          "addresses.chainId.matches.metadata.chainId",
+          "lifecycle.status.valid.enum",
+          "security.upgradeability.consistent"
+        ]
+      }
+    },
+    "13": {
+      "name": "Dependency and Compatibility",
+      "priority": "medium",
+      "category": "technical",
+      "validationLevel": "recommended",
+      "rules": {
+        "dependencyManagement": {
+          "requiredDependencies": "listed",
+          "versionRanges": "defined",
+          "breakingChanges": "flagged",
+          "compatibility": "documented"
+        },
+        "validation": {
+          "dependencyAvailability": true,
+          "versionCompatibility": true,
+          "breakingChangeDocumentation": true
+        }
+      }
+    },
+    "14": {
+      "name": "Security Audit Validation",
+      "priority": "critical",
+      "category": "security",
+      "validationLevel": "required",
+      "rules": {
+        "auditRequirements": {
+          "minAudits": 1,
+          "reputableFirms": [
+            "Trail of Bits",
+            "ConsenSys Diligence",
+            "OpenZeppelin",
+            "Quantstamp",
+            "CertiK",
+            "SlowMist",
+            "PeckShield"
+          ],
+          "coverageThreshold": 0.8,
+          "publiclyAvailable": true
+        },
+        "vulnerabilityManagement": {
+          "documentKnownVulnerabilities": true,
+          "addressSecurityFindings": true,
+          "bugBountyActive": "recommended"
+        }
+      }
+    },
+    "15": {
+      "name": "Performance and Gas Standards",
+      "priority": "low",
+      "category": "technical",
+      "validationLevel": "recommended",
+      "rules": {
+        "performanceBenchmarks": {
+          "maxGasPerTransaction": 500000,
+          "maxFunctionComplexity": 15,
+          "storageOptimization": "documented",
+          "batchOperations": "supported"
+        },
+        "validation": {
+          "gasUsageWithinLimits": true,
+          "complexityMeasured": true,
+          "optimizationDocumented": true
+        }
+      }
+    }
+  },
+  "scoring": {
+    "methodology": {
+      "critical": 20,
+      "high": 15,
+      "medium": 10,
+      "low": 5
+    },
+    "complianceLevels": {
+      "excellent": { "min": 90, "max": 100 },
+      "good": { "min": 80, "max": 89 },
+      "acceptable": { "min": 70, "max": 79 },
+      "poor": { "min": 60, "max": 69 },
+      "nonCompliant": { "min": 0, "max": 59 }
+    }
+  },
+  "errorHandling": {
+    "critical": "block",
+    "high": "require_resolution",
+    "medium": "warning",
+    "low": "report"
+  },
+  "validationTools": {
+    "schemaValidator": "bin/schema-validator.js",
+    "namingValidator": "bin/naming-validator.js",
+    "crossReferenceValidator": "bin/cross-reference-validator.js",
+    "qaReportGenerator": "bin/qa-report-generator.js"
+  }
+}

@@ -6,17 +6,8 @@
     "description": "ProtocolName automated market maker protocol",
     "ecosystem": "ethereum",
     "launchDate": "2025-09-26",
-    "feeTiers": [
-      500,
-      3000,
-      10000
-    ],
-    "supportedNetworks": [
-      "mainnet",
-      "polygon",
-      "arbitrum",
-      "optimism"
-    ]
+    "feeTiers": [500, 3000, 10000],
+    "supportedNetworks": ["mainnet", "polygon", "arbitrum", "optimism"]
   },
   "contract": {
     "type": "amm",

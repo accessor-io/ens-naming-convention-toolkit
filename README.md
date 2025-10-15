@@ -1,17 +1,37 @@
 # ENS Metadata Tools
 
-Toolkit for discovering ENS resolvers, auditing contract addresses, and generating metadata reports. Includes CLI utilities for contract discovery, resolver analysis, subdomain planning, metadata generation, and security auditing.
+[![npm version](https://badge.fury.io/js/ens-metadata-tools.svg)](https://badge.fury.io/js/ens-metadata-tools)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.4+-blue.svg)](https://www.typescriptlang.org/)
+[![ENSIP-19](https://img.shields.io/badge/ENSIP--19-Compliant-green.svg)](docs/ENSIP-19.md)
 
-## Features
+> **ENSIP-19 Compliant Toolkit** for Ethereum smart contract metadata management, security analysis, and ENS subdomain planning
 
-- Contract discovery via on-chain bytecode checks.
-- Resolver lookup with analytics, capability inspection, and ENS record summaries.
-- Subdomain planner and naming validator for consistent ENS naming structures.
-- Metadata generators and fillers for protocol templates.
-- Security analyzer for ENS domains and Name Wrapper fuse checks.
-- Interactive EVMD launcher to explore tooling from a single menu.
+## Overview
+
+The ENS Metadata Tools provide a comprehensive suite for managing Ethereum smart contract metadata according to the [ENSIP-19 specification](docs/ENSIP-19.md). This toolkit enables developers, protocol teams, and organizations to create, validate, and manage standardized contract metadata with cryptographic integrity verification.
+
+### Key Features
+
+- **ENSIP-19 Compliance**: Full implementation of the ENSIP-19 metadata standard
+- **Metadata Generation**: Create standardized metadata with canonical ID grammar and SHA-256 hashing
+- **Validation Suite**: Comprehensive validation against ENSIP-19 schema requirements
+- **Security Analysis**: Analyze ENS domain security posture and identify vulnerabilities
+- **Subdomain Planning**: Plan optimal hierarchical subdomain structures
+- **ENS Operations**: Direct ENS contract interactions and management
+- **Proxy Support**: Handle transparent, UUPS, beacon, diamond, and other proxy patterns
+- **Cross-Chain**: Support for multiple blockchain networks
+- **CCIP Integration**: Off-chain metadata retrieval via Cross-Chain Interoperability Protocol
 
 ## Installation
+
+### Global Installation
+
+```bash
+npm install -g ens-metadata-tools
+```
+
+### Local Development
 
 ```bash
 git clone https://github.com/ens-contracts/metadata-tools.git
@@ -21,110 +41,287 @@ npm install
 
 ## Quick Start
 
+### Generate ENSIP-19 Compliant Metadata
+
 ```bash
-# Contract discovery: find out if addresses are contracts
-RPC_URL=https://mainnet.infura.io/v3/YOUR_PROJECT_ID \
-  node prober/contract-discovery.js 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2
+# Generate metadata for a DeFi AMM protocol
+ens-metadata-tools metadata --category defi --type amm --name Uniswap --protocol-version v4-0-0 --output uniswap-metadata.json
 
-# Resolver lookup: sample domains using a resolver address
-node prober/lookup-resolver-names.js check-resolvers 0x231b0Ee14048e9dCcD1d247744d114a4EB5E8E63
+# Validate the generated metadata
+ens-metadata-tools validate uniswap-metadata.json --strict
 
-# Interactive EVMD menu
-node bin/evmd.js
+# Check ENSIP-19 compliance
+ens-metadata-tools validate uniswap-metadata.json --schema data/metadata/schema.json
+```
+
+### Example Generated Metadata
+
+```json
+{
+  "id": "uniswap.uniswap.defi.amm.v4-0-0.1",
+  "org": "uniswap",
+  "protocol": "uniswap",
+  "category": "defi",
+  "role": "amm",
+  "version": "v4-0-0",
+  "chainId": 1,
+  "addresses": [
+    {
+      "chainId": 1,
+      "address": "0x0000000000000000000000000000000000000000"
+    }
+  ],
+  "metadataHash": "0xcd788df219a200c224a9f06a1f2738b04512be65a0219162f9ac4aa926da097f"
+}
 ```
 
 ## CLI Commands
 
-- `node prober/contract-discovery.js` – determine if Ethereum addresses are contracts.
-- `node prober/lookup-resolver-names.js` – resolver toolkit with commands such as:
-  - `addresses` – list unique resolver addresses.
-  - `check-resolvers` – list domains that use given resolver addresses.
-  - `lookup <domain|address>` – resolve ENS domains or list domains for a resolver.
-  - `resolve <domain>` – test ENS resolution with on-chain calls.
-- `node bin/subdomain-planner.mjs --interactive` – guided ENS subdomain planner.
-- `node bin/metadata-generator.mjs` – generate metadata templates.
-- `node bin/metadata-filler.mjs` – fill metadata plans with live contract data.
-- `node bin/security-analyzer.js` – assess ENS domain configuration with fuse checks and verifications.
-- `node bin/cli.mjs` – master CLI for protocols and metadata tasks.
+### Core Metadata Operations
 
-## Scripts
+```bash
+# Generate metadata for any protocol category
+ens-metadata-tools metadata --category <category> --type <type> --name <name> [options]
 
-`package.json` exposes helper scripts:
+# Validate metadata against ENSIP-19 schema
+ens-metadata-tools validate <metadata-file> [options]
 
-- `npm run probe` – ENS resolver prober (multicall).
-- `npm run lookup` – resolver lookup toolkit.
-- `npm run plan` – interactive subdomain planner.
-- `npm run metadata` – metadata generator CLI.
-- `npm run security` – security analyzer.
-- `npm run cache` – cached resolver browser.
+# Plan subdomain structure
+ens-metadata-tools plan <domain> [options]
 
-## AWS & Automation
+# Security analysis
+ens-metadata-tools security <domain> [options]
 
-- CDK stack (`aws/cdk`) for deploying metadata tooling infrastructure.
-- Lambda handlers for resolver lookup, metadata generation, and security analysis.
-- Bash scripts under `aws/scripts` for deployment automation.
+# Probe ENS resolvers
+ens-metadata-tools probe [options]
+
+# Lookup ENS names
+ens-metadata-tools lookup [options]
+```
+
+### Available Categories and Types
+
+| Category | Types | Description |
+|----------|-------|-------------|
+| **defi** | amm, lending, stablecoin | DeFi protocols |
+| **dao** | governor, treasury | DAO governance |
+| **infrastructure** | oracle, bridge | Infrastructure services |
+| **tokens** | erc20, erc721, governance | Token contracts |
+| **gaming** | nft, gambling | Gaming applications |
+| **social** | platform, messaging | Social platforms |
+| **rwa** | realestate, commodities | Real-world assets |
+| **privacy** | mixer, security | Privacy tools |
+| **developer** | framework, oracle | Dev tools |
+| **analytics** | indexer, dashboard | Analytics services |
+| **wallet** | infrastructure, payments | Wallet services |
+| **insurance** | protocol | Insurance protocols |
+| **art** | platform | Art platforms |
+| **supplychain** | tracking | Supply chain |
+| **healthcare** | medical | Healthcare systems |
+| **finance** | banking | Financial services |
+
+### Additional CLI Tools
+
+The toolkit also provides standalone CLI tools:
+
+```bash
+# Individual tool usage
+ens-validator <domain> <category> [options]     # Domain validation
+ens-contract <command> [options]                # ENS contract operations
+ens-cache-browser [options]                     # Metadata cache management
+evmd [options]                                  # Ethereum metadata viewer
+```
+
+## ENSIP-19 Compliance
+
+This toolkit implements the complete ENSIP-19 specification:
+
+### Canonical ID Grammar
+
+```
+org.protocol.category.role[.variant].v{version}.{chainId}
+```
+
+**Example**: `uniswap.uniswap.defi.amm.v4-0-0.1`
+
+### Metadata Hash Generation
+
+- **Algorithm**: SHA-256
+- **Format**: Canonical JSON (sorted keys, no whitespace)
+- **Prefix**: `0x` for Ethereum compatibility
+- **Length**: 64 characters (32 bytes)
+
+### Required Fields
+
+- `id` - Canonical identifier
+- `org` - Organization identifier
+- `protocol` - Protocol identifier  
+- `category` - Primary category classification
+- `role` - Contract role/function
+- `version` - Version format (v{num}-{num}-{num})
+- `chainId` - Target blockchain network ID
+- `addresses` - Contract addresses array
+- `metadataHash` - SHA-256 hash of metadata
+
+### Hierarchical Schema System
+
+Supports 5-level domain hierarchy:
+- **Level 0**: CNS Root (`cns.eth`)
+- **Level 1**: Project (`{project}.cns.eth`)
+- **Level 2**: Category (`{category}.{project}.cns.eth`)
+- **Level 3**: Protocol (`{protocol}.{category}.{project}.cns.eth`)
+- **Level 4**: Variant (`{variant}.{protocol}.{category}.{project}.cns.eth`)
 
 ## Development
 
+### Prerequisites
+
+- Node.js 18+ (recommended: 20.x)
+- npm or yarn
+- Git
+
+### Setup
+
 ```bash
+git clone https://github.com/ens-contracts/metadata-tools.git
+cd metadata-tools
 npm install
-npx hardhat compile
-npm test
+npm run prepare  # Setup git hooks
 ```
 
-### Testing
-
-The project includes a comprehensive test suite using Jest:
+### Development Workflow
 
 ```bash
-# Run all tests
+# Install dependencies
+npm install
+
+# Run linting
+npm run lint
+
+# Check formatting
+npm run format:check
+
+# Type checking
+npm run typecheck
+
+# Run tests
 npm test
 
-# Run tests with coverage
-npm test -- --coverage
+# Build project
+npm run build
 
-# Run specific test file
-npm test -- contract-discovery.test.js
+# Generate documentation
+npm run docs:cli
+npm run docs:api
 ```
 
-### Lint & checks:
+### Code Quality
 
-```bash
-node scripts/error-checker.sh
+- **ESLint**: Code linting with TypeScript support
+- **Prettier**: Code formatting
+- **TypeScript**: Type safety and better IDE support
+- **Husky**: Git hooks for pre-commit checks
+- **CI/CD**: Automated testing and security checks
+
+## Architecture
+
+The toolkit consists of specialized modules:
+
+### Core Modules
+
+- **Metadata Generator** (`bin/metadata-generator.mjs`) - Creates ENSIP-19 compliant metadata
+- **Schema Validator** (`bin/schema-validator.mjs`) - Validates against ENSIP-19 schema
+- **Subdomain Planner** (`bin/subdomain-planner.mjs`) - Generates optimal subdomain hierarchies
+- **Security Analyzer** (`bin/security-analyzer.mjs`) - Analyzes ENS domain security posture
+- **ENS Operations** (`bin/ens-contract.mjs`) - Direct ENS contract interactions
+
+### Validation Suite
+
+- **Naming Validator** (`bin/naming-validator.mjs`) - ENS naming convention validation
+- **Cross-Reference Validator** (`bin/cross-reference-validator.mjs`) - Cross-reference validation
+- **QA Report Generator** (`bin/qa-report-generator.mjs`) - Quality assurance reporting
+- **Edge Case Validator** (`bin/edge-case-validator.mjs`) - Edge case handling
+
+### Utility Tools
+
+- **Cache Browser** (`bin/cache-browser.mjs`) - Metadata cache management
+- **Metadata Filler** (`bin/metadata-filler.mjs`) - Template filling utilities
+- **Schema Generator** (`bin/schema-generator.mjs`) - Schema generation tools
+
+## Configuration
+
+### Schema Configuration
+
+The toolkit uses JSON Schema for validation located at `data/metadata/schema.json`:
+
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ENS Contract Metadata",
+  "type": "object",
+  "required": [
+    "id", "org", "protocol", "category", "role", 
+    "version", "chainId", "addresses", "metadataHash"
+  ]
+}
 ```
 
-## Documentation
+### QA Validation Rules
 
-- `docs/ENS-CONTRACT-RESOLVER-API.md` – resolver prober API details.
-- `docs/CACHE-BROWSER.md` – cache browser usage.
-- `ORGANIZATION.md` – project directory structure overview.
+Quality assurance rules are defined in `config/qa-validation-rules.json`:
 
-## Project Structure
-
-- `bin/` - CLI tools and executables
-- `prober/` - ENS resolver probing and analysis tools
-- `data/` - Generated metadata and configuration files
-- `test/` - Comprehensive test suite
-- `aws/` - AWS infrastructure and Lambda functions
-- `docs/` - Project documentation
-
-## Recent Improvements
-
-- ✅ Resolved git merge conflicts
-- ✅ Organized untracked files into proper directories
-- ✅ Fixed package.json script inconsistencies
-- ✅ Standardized ES module usage
-- ✅ Updated dependencies to latest versions
-- ✅ Added comprehensive test suite with Jest
-- ✅ Improved error handling and logging
+```json
+{
+  "standards": {
+    "1": {
+      "name": "Metadata Schema Validation",
+      "priority": "critical",
+      "validationLevel": "required"
+    }
+  }
+}
+```
 
 ## Contributing
 
-1. Fork the repository and create a feature branch.
-2. Add tests for new functionality.
-3. Run `npm test` to ensure all tests pass.
-4. Run `node scripts/error-checker.sh` before opening a PR.
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes
+4. Add tests for new functionality
+5. Ensure all tests pass (`npm test`)
+6. Commit your changes (`git commit -m 'Add amazing feature'`)
+7. Push to the branch (`git push origin feature/amazing-feature`)
+8. Open a Pull Request
+
+See [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) for detailed guidelines.
+
+## Documentation
+
+- [Complete Documentation](docs/) - Comprehensive guides and references
+- [Getting Started](docs/Getting-Started.md) - Installation and setup guide
+- [CLI Commands](docs/CLI-COMMANDS.md) - Command reference
+- [API Documentation](docs/api/) - Programmatic usage
+- [ENSIP-19 Specification](docs/ENSIP-19.md) - Complete specification
+- [Architecture](docs/Architecture.md) - System architecture overview
+- [Security](docs/SECURITY.md) - Security considerations
+
+## Support
+
+- [Issues](https://github.com/ens-contracts/metadata-tools/issues)
+- [Discussions](https://github.com/ens-contracts/metadata-tools/discussions)
+- [Documentation](docs/)
 
 ## License
 
-MIT
+MIT License - see [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- [ENS (Ethereum Name Service)](https://ens.domains/) for the naming system
+- [ENSIP-19](docs/ENSIP-19.md) specification contributors
+- [Ethereum Foundation](https://ethereum.org/) for blockchain infrastructure
+- [OpenZeppelin](https://openzeppelin.com/) for smart contract standards
+
+---
+
+**Built for the Ethereum ecosystem**

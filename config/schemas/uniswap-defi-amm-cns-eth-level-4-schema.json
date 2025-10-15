@@ -1,0 +1,107 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Contract Schema for uniswap.defi.amm.cns.eth",
+  "type": "object",
+  "allOf": [
+    {
+      "type": "object",
+      "required": ["contractRoot"],
+      "properties": {
+        "domainHierarchy": {
+          "type": "object",
+          "properties": {
+            "level": {
+              "type": "integer",
+              "const": 4
+            },
+            "domain": {
+              "type": "string",
+              "const": "uniswap.defi.amm.cns.eth"
+            },
+            "parent": {
+              "type": ["string", "null"]
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "traits": {
+          "type": "object",
+          "properties": {
+            "inheritedFrom": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "levelSpecific": {
+              "type": "object"
+            },
+            "overrides": {
+              "type": "object"
+            }
+          }
+        },
+        "deduplication": {
+          "type": "object",
+          "properties": {
+            "inheritedFields": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "overriddenFields": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "mergedFields": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "parentSchema": {
+      "type": "object",
+      "properties": {}
+    },
+    "levelSpecific": {
+      "type": "object",
+      "properties": {
+        "contractRoot": {
+          "type": "string",
+          "pattern": "^uniswap.defi.amm.cns.eth$"
+        },
+        "contractTraits": {
+          "type": "object",
+          "properties": {
+            "inheritedFrom": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "contractSpecific": {
+              "type": "object"
+            },
+            "overrides": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    }
+  }
+}

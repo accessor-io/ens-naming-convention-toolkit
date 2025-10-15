@@ -1,0 +1,14 @@
+# CODEOWNERS
+
+# Core CLI and runtime
+/bin/* @ens-contracts/core-maintainers
+/lib/* @ens-contracts/core-maintainers
+/index.mjs @ens-contracts/core-maintainers
+
+# Documentation
+/docs/* @ens-contracts/docs-maintainers
+/README.md @ens-contracts/docs-maintainers
+
+# Infra and workflows
+/.github/* @ens-contracts/infra-maintainers
+

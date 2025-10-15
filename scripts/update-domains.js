@@ -28,14 +28,32 @@ content = content.replace(/developer\.eth/g, 'developer.evmd.eth');
 
 // Update metadata keys to match new structure
 content = content.replace(/'v3\.<protocol>\.amm\.eth'/g, "'amm.<protocol>.defi.evmd.eth'");
-content = content.replace(/'factory\.v3\.<protocol>\.amm\.eth'/g, "'factory.amm.<protocol>.defi.evmd.eth'");
-content = content.replace(/'router\.v3\.<protocol>\.amm\.eth'/g, "'router.amm.<protocol>.defi.evmd.eth'");
-content = content.replace(/'quoter\.v3\.<protocol>\.amm\.eth'/g, "'quoter.amm.<protocol>.defi.evmd.eth'");
-content = content.replace(/'multicall\.v3\.<protocol>\.amm\.eth'/g, "'multicall.amm.<protocol>.defi.evmd.eth'");
-content = content.replace(/'positions\.v3\.<protocol>\.amm\.eth'/g, "'positions.amm.<protocol>.defi.evmd.eth'");
+content = content.replace(
+  /'factory\.v3\.<protocol>\.amm\.eth'/g,
+  "'factory.amm.<protocol>.defi.evmd.eth'"
+);
+content = content.replace(
+  /'router\.v3\.<protocol>\.amm\.eth'/g,
+  "'router.amm.<protocol>.defi.evmd.eth'"
+);
+content = content.replace(
+  /'quoter\.v3\.<protocol>\.amm\.eth'/g,
+  "'quoter.amm.<protocol>.defi.evmd.eth'"
+);
+content = content.replace(
+  /'multicall\.v3\.<protocol>\.amm\.eth'/g,
+  "'multicall.amm.<protocol>.defi.evmd.eth'"
+);
+content = content.replace(
+  /'positions\.v3\.<protocol>\.amm\.eth'/g,
+  "'positions.amm.<protocol>.defi.evmd.eth'"
+);
 
 content = content.replace(/'v3\.<protocol>\.lending\.eth'/g, "'lending.<protocol>.defi.evmd.eth'");
-content = content.replace(/'pool\.v3\.<protocol>\.lending\.eth'/g, "'pool.lending.<protocol>.defi.evmd.eth'");
+content = content.replace(
+  /'pool\.v3\.<protocol>\.lending\.eth'/g,
+  "'pool.lending.<protocol>.defi.evmd.eth'"
+);
 
 fs.writeFileSync('bin/subdomain-planner.js', content);
 console.log('Updated all domain structures to use evmd.eth as root');
