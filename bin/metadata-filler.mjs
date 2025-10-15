@@ -23,8 +23,7 @@ class MetadataFiller {
     const templates = {};
 
     // Load base category templates
-    const categoryFiles = fs
-      .readdirSync(templateDir)
+    fs.readdirSync(templateDir)
       .filter(
         (file) =>
           file.includes(`${category}-metadata.json`) ||
@@ -37,8 +36,7 @@ class MetadataFiller {
       });
 
     // Load subcategory-specific templates
-    const subcategoryFiles = fs
-      .readdirSync(templateDir)
+    fs.readdirSync(templateDir)
       .filter(
         (file) =>
           file.includes(`${subcategory}.${category}-metadata.json`) ||
@@ -263,7 +261,7 @@ class MetadataFiller {
     };
   }
 
-  async fillSecuritySection(security, options) {
+  async fillSecuritySection(security, _options) {
     console.log('  Security Information:');
 
     const questions = [
@@ -297,7 +295,14 @@ class MetadataFiller {
 
     return {
       ...security,
-      audits: answers.hasAudits ? answers.auditReports?.split(',').map((url) => url.trim()) : [],
+      audits: answers.hasAudits
+        ? answers.auditReports
+          ? answers.auditReports
+              .split(',')
+              .map((url) => url.trim())
+              .filter(Boolean)
+          : []
+        : [],
       bugBounty: answers.hasBugBounty ? { url: answers.bugBountyUrl, active: true } : null,
       riskAssessment: security.riskAssessment || 'Low',
     };
@@ -343,7 +348,7 @@ class MetadataFiller {
   }
 
   // Generate metadata for a subdomain plan
-  async fillPlan(planPath, options = {}) {
+  async fillPlan(planPath, _options = {}) {
     const planFile = path.join(process.cwd(), planPath, 'plan.json');
 
     if (!fs.existsSync(planFile)) {

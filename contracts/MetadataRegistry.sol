@@ -6,11 +6,12 @@ import "./ENSMetadataTypes.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/security/Pausable.sol";
 
 /// @title ENS Contract Metadata Registry
 /// @notice Core contract for registering and managing ENS contract metadata
 /// @dev Implements ENSIP-X metadata standard with cross-chain support and fee collection
-contract MetadataRegistry is IMetadataRegistry, Ownable, ReentrancyGuard {
+contract MetadataRegistry is IMetadataRegistry, Ownable, ReentrancyGuard, Pausable {
     using ECDSA for bytes32;
 
     /// @notice Fee structure for different service tiers
