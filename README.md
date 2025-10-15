@@ -13,15 +13,15 @@ The ENS Metadata Tools provide a comprehensive suite for managing Ethereum smart
 
 ### Key Features
 
-- **🔐 ENSIP-19 Compliance**: Full implementation of the ENSIP-19 metadata standard
-- **📝 Metadata Generation**: Create standardized metadata with canonical ID grammar and SHA-256 hashing
-- **✅ Validation Suite**: Comprehensive validation against ENSIP-19 schema requirements
-- **🔍 Security Analysis**: Analyze ENS domain security posture and identify vulnerabilities
-- **🗺️ Subdomain Planning**: Plan optimal hierarchical subdomain structures
-- **⚡ ENS Operations**: Direct ENS contract interactions and management
-- **🛡️ Proxy Support**: Handle transparent, UUPS, beacon, diamond, and other proxy patterns
-- **🌐 Cross-Chain**: Support for multiple blockchain networks
-- **📊 CCIP Integration**: Off-chain metadata retrieval via Cross-Chain Interoperability Protocol
+- **ENSIP-19 Compliance**: Full implementation of the ENSIP-19 metadata standard
+- **Metadata Generation**: Create standardized metadata with canonical ID grammar and SHA-256 hashing
+- **Validation Suite**: Comprehensive validation against ENSIP-19 schema requirements
+- **Security Analysis**: Analyze ENS domain security posture and identify vulnerabilities
+- **Subdomain Planning**: Plan optimal hierarchical subdomain structures
+- **ENS Operations**: Direct ENS contract interactions and management
+- **Proxy Support**: Handle transparent, UUPS, beacon, diamond, and other proxy patterns
+- **Cross-Chain**: Support for multiple blockchain networks
+- **CCIP Integration**: Off-chain metadata retrieval via Cross-Chain Interoperability Protocol
 
 ## Installation
 
@@ -285,19 +285,19 @@ See [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) for detailed guidelines.
 
 ## Documentation
 
-- [📚 Complete Documentation](docs/) - Comprehensive guides and references
-- [🚀 Getting Started](docs/Getting-Started.md) - Installation and setup guide
-- [⚡ CLI Commands](docs/CLI-COMMANDS.md) - Command reference
-- [🔧 API Documentation](docs/api/) - Programmatic usage
-- [📋 ENSIP-19 Specification](docs/ENSIP-19.md) - Complete specification
-- [🏗️ Architecture](docs/Architecture.md) - System architecture overview
-- [🔒 Security](docs/SECURITY.md) - Security considerations
+- [Complete Documentation](docs/) - Comprehensive guides and references
+- [Getting Started](docs/Getting-Started.md) - Installation and setup guide
+- [CLI Commands](docs/CLI-COMMANDS.md) - Command reference
+- [API Documentation](docs/api/) - Programmatic usage
+- [ENSIP-19 Specification](docs/ENSIP-19.md) - Complete specification
+- [Architecture](docs/Architecture.md) - System architecture overview
+- [Security](docs/SECURITY.md) - Security considerations
 
 ## Support
 
-- [🐛 Issues](https://github.com/accessor-io/ens-naming-convention-toolkit/issues)
-- [💬 Discussions](https://github.com/accessor-io/ens-naming-convention-toolkit/discussions)
-- [📖 Documentation](docs/)
+- [Issues](https://github.com/accessor-io/ens-naming-convention-toolkit/issues)
+- [Discussions](https://github.com/accessor-io/ens-naming-convention-toolkit/discussions)
+- [Documentation](docs/)
 
 ## License
 
@@ -312,4 +312,4 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ---
 
-**Built with ❤️ for the Ethereum ecosystem**
+**Built for the Ethereum ecosystem**
