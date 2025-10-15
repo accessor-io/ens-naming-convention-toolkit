@@ -1,130 +1,172 @@
 # ENS Metadata Tools
 
-Toolkit for discovering ENS resolvers, auditing contract addresses, and generating metadata reports. Includes CLI utilities for contract discovery, resolver analysis, subdomain planning, metadata generation, and security auditing.
+[![npm version](https://badge.fury.io/js/ens-metadata-tools.svg)](https://badge.fury.io/js/ens-metadata-tools)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![CI](https://github.com/ens-contracts/metadata-tools/workflows/CI/badge.svg)](https://github.com/ens-contracts/metadata-tools/actions)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.4+-blue.svg)](https://www.typescriptlang.org/)
+
+> Toolkit for ENS contract metadata management, security analysis, and subdomain planning
 
 ## Features
 
-- Contract discovery via on-chain bytecode checks.
-- Resolver lookup with analytics, capability inspection, and ENS record summaries.
-- Subdomain planner and naming validator for consistent ENS naming structures.
-- Metadata generators and fillers for protocol templates.
-- Security analyzer for ENS domains and Name Wrapper fuse checks.
-- Interactive EVMD launcher to explore tooling from a single menu.
+- **Metadata Generation**: Create standardized metadata templates for different contract categories
+- **Validation Suite**: Validate ENS naming conventions and metadata compliance
+- **Security Analysis**: Analyze ENS domain security posture and identify vulnerabilities
+- **Subdomain Planning**: Plan optimal subdomain hierarchies for protocols
+- **ENS Operations**: Direct ENS contract interactions and management
+- **TypeScript Support**: Full TypeScript implementation with type safety
+- **CI/CD Integration**: Automated testing, linting, and security checks
 
 ## Installation
 
 ```bash
+# Global installation
+npm install -g ens-metadata-tools
+
+# Local development
 git clone https://github.com/ens-contracts/metadata-tools.git
-cd metadata-tools
+cd ens-metadata-tools
 npm install
 ```
 
 ## Quick Start
 
 ```bash
-# Contract discovery: find out if addresses are contracts
-RPC_URL=https://mainnet.infura.io/v3/YOUR_PROJECT_ID \
-  node prober/contract-discovery.js 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2
+# Show help
+ens-metadata --help
 
-# Resolver lookup: sample domains using a resolver address
-node prober/lookup-resolver-names.js check-resolvers 0x231b0Ee14048e9dCcD1d247744d114a4EB5E8E63
+# Validate domain naming
+ens-validator uniswap.amm.eth defi --strict
 
-# Interactive EVMD menu
-node bin/evmd.js
+# Generate metadata template
+metadata-generator --category defi --type amm --name Uniswap --version 3
+
+# Plan subdomain structure
+subdomain-planner --domain uniswap.eth --interactive
+
+# Analyze security
+security-analyzer --metadata contract.json --report security-report.json
 ```
 
 ## CLI Commands
 
-- `node prober/contract-discovery.js` – determine if Ethereum addresses are contracts.
-- `node prober/lookup-resolver-names.js` – resolver toolkit with commands such as:
-  - `addresses` – list unique resolver addresses.
-  - `check-resolvers` – list domains that use given resolver addresses.
-  - `lookup <domain|address>` – resolve ENS domains or list domains for a resolver.
-  - `resolve <domain>` – test ENS resolution with on-chain calls.
-- `node bin/subdomain-planner.mjs --interactive` – guided ENS subdomain planner.
-- `node bin/metadata-generator.mjs` – generate metadata templates.
-- `node bin/metadata-filler.mjs` – fill metadata plans with live contract data.
-- `node bin/security-analyzer.js` – assess ENS domain configuration with fuse checks and verifications.
-- `node bin/cli.mjs` – master CLI for protocols and metadata tasks.
+### Core Commands
 
-## Scripts
+- `ens-metadata` - Main CLI entry point
+- `ens-validator` - Domain and metadata validation
+- `ens-contract` - ENS contract operations
+- `metadata-generator` - Generate metadata templates
+- `subdomain-planner` - Plan subdomain structures
+- `security-analyzer` - Security analysis and reporting
 
-`package.json` exposes helper scripts:
+### Validation & QA
 
-- `npm run probe` – ENS resolver prober (multicall).
-- `npm run lookup` – resolver lookup toolkit.
-- `npm run plan` – interactive subdomain planner.
-- `npm run metadata` – metadata generator CLI.
-- `npm run security` – security analyzer.
-- `npm run cache` – cached resolver browser.
+- `validate` - Validate ENS naming conventions
+- `validate:qa` - Generate QA reports
+- `validate:schema` - Schema validation
+- `validate:cross-ref` - Cross-reference validation
 
-## AWS & Automation
+### Development
 
-- CDK stack (`aws/cdk`) for deploying metadata tooling infrastructure.
-- Lambda handlers for resolver lookup, metadata generation, and security analysis.
-- Bash scripts under `aws/scripts` for deployment automation.
+- `test` - Run test suite
+- `lint` - Code linting
+- `format` - Code formatting
+- `typecheck` - TypeScript type checking
+- `build` - Build project
+
+See [CLI Commands Reference](docs/CLI-COMMANDS.md) for detailed documentation.
 
 ## Development
 
+### Prerequisites
+
+- Node.js 18+ (recommended: 20.x)
+- npm or yarn
+- Git
+
+### Setup
+
 ```bash
+git clone https://github.com/ens-contracts/metadata-tools.git
+cd ens-metadata-tools
 npm install
-npx hardhat compile
-npm test
+npm run prepare  # Setup git hooks
 ```
 
-### Testing
-
-The project includes a comprehensive test suite using Jest:
+### Development Workflow
 
 ```bash
-# Run all tests
+# Install dependencies
+npm install
+
+# Run linting
+npm run lint
+
+# Check formatting
+npm run format:check
+
+# Type checking
+npm run typecheck
+
+# Run tests
 npm test
 
-# Run tests with coverage
-npm test -- --coverage
+# Build project
+npm run build
 
-# Run specific test file
-npm test -- contract-discovery.test.js
+# Generate documentation
+npm run docs:cli
+npm run docs:api
 ```
 
-### Lint & checks:
+### Code Quality
 
-```bash
-node scripts/error-checker.sh
-```
+- **ESLint**: Code linting with TypeScript support
+- **Prettier**: Code formatting
+- **TypeScript**: Type safety and better IDE support
+- **Husky**: Git hooks for pre-commit checks
+- **CI/CD**: Automated testing and security checks
 
-## Documentation
+## Architecture
 
-- `docs/ENS-CONTRACT-RESOLVER-API.md` – resolver prober API details.
-- `docs/CACHE-BROWSER.md` – cache browser usage.
-- `ORGANIZATION.md` – project directory structure overview.
+The toolkit consists of several specialized modules:
 
-## Project Structure
-
-- `bin/` - CLI tools and executables
-- `prober/` - ENS resolver probing and analysis tools
-- `data/` - Generated metadata and configuration files
-- `test/` - Comprehensive test suite
-- `aws/` - AWS infrastructure and Lambda functions
-- `docs/` - Project documentation
-
-## Recent Improvements
-
-- ✅ Resolved git merge conflicts
-- ✅ Organized untracked files into proper directories
-- ✅ Fixed package.json script inconsistencies
-- ✅ Standardized ES module usage
-- ✅ Updated dependencies to latest versions
-- ✅ Added comprehensive test suite with Jest
-- ✅ Improved error handling and logging
+- **Metadata Generator** - Creates standardized protocol metadata
+- **Subdomain Planner** - Generates optimal subdomain hierarchies
+- **Security Analyzer** - Analyzes ENS domain security posture
+- **Validation Suite** - Comprehensive QA and compliance checking
+- **ENS Operations** - Direct ENS contract interactions
 
 ## Contributing
 
-1. Fork the repository and create a feature branch.
-2. Add tests for new functionality.
-3. Run `npm test` to ensure all tests pass.
-4. Run `node scripts/error-checker.sh` before opening a PR.
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes
+4. Add tests for new functionality
+5. Ensure all tests pass (`npm test`)
+6. Commit your changes (`git commit -m 'Add amazing feature'`)
+7. Push to the branch (`git push origin feature/amazing-feature`)
+8. Open a Pull Request
+
+See [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) for detailed guidelines.
 
 ## License
 
-MIT
+MIT License - see [LICENSE](LICENSE) file for details.
+
+## Documentation
+
+- [Documentation](docs/) - Complete documentation and guides
+- [Getting Started](docs/Getting-Started.md) - Installation and setup
+- [CLI Commands](docs/commands/) - Command reference
+- [API Documentation](docs/API/) - Programmatic usage
+
+## Support
+
+- [Issues](https://github.com/ensdomains/ens-metadata-tools/issues)
+- [Discussions](https://github.com/ensdomains/ens-metadata-tools/discussions)
+
+```
+npm install
+npm test
+```

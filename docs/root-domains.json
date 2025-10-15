@@ -1,9 +1,24 @@
 {
   "roots": [
-    "defi.eth","dao.eth","l2.eth","infra.eth","token.eth",
-    "gaming.eth","social.eth","analytics.eth","wallet.eth","payments.eth",
-    "insurance.eth","art.eth","supply.eth","health.eth","finance.eth",
-    "rwa.eth","privacy.eth","security.eth","dev.eth"
+    "defi.eth",
+    "dao.eth",
+    "l2.eth",
+    "infra.eth",
+    "token.eth",
+    "gaming.eth",
+    "social.eth",
+    "analytics.eth",
+    "wallet.eth",
+    "payments.eth",
+    "insurance.eth",
+    "art.eth",
+    "supply.eth",
+    "health.eth",
+    "finance.eth",
+    "rwa.eth",
+    "privacy.eth",
+    "security.eth",
+    "dev.eth"
   ],
   "aliases": {
     "infrastructure.eth": "infra.eth",
@@ -17,7 +32,3 @@
     "token.eth": "symbol.token.eth"
   }
 }
-
-
-
-

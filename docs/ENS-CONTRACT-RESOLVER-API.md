@@ -25,7 +25,7 @@ import { ENSContractResolver } from 'ens-metadata-tools';
 const resolver = new ENSContractResolver({
   rpcUrl: 'https://mainnet.infura.io/v3/YOUR_PROJECT_ID',
   enableCaching: true,
-  enableMetrics: true
+  enableMetrics: true,
 });
 
 // Resolve a single ENS name
@@ -36,7 +36,7 @@ console.log(result.contractAddress); // 0x1f9840a85d5af5bf1d1762f925bdaddc4201f9
 const batchResult = await resolver.resolveContractsBatch([
   'uniswap.eth',
   'aave.eth',
-  'compound.eth'
+  'compound.eth',
 ]);
 console.log(batchResult.results); // Array of resolution results
 ```
@@ -49,17 +49,17 @@ console.log(batchResult.results); // Array of resolution results
 
 ```typescript
 interface ENSResolverConfig {
-  subgraphUrl?: string;        // ENS subgraph endpoint
-  rpcUrl: string;             // Ethereum RPC endpoint (required)
-  timeout?: number;           // Request timeout in ms (default: 30000)
-  retries?: number;           // Retry attempts (default: 3)
-  enableCaching?: boolean;    // Enable result caching (default: true)
-  cacheExpiry?: number;       // Cache expiry in seconds (default: 3600)
-  batchSize?: number;         // Batch processing size (default: 100)
-  enableMetrics?: boolean;    // Enable performance metrics (default: true)
+  subgraphUrl?: string; // ENS subgraph endpoint
+  rpcUrl: string; // Ethereum RPC endpoint (required)
+  timeout?: number; // Request timeout in ms (default: 30000)
+  retries?: number; // Retry attempts (default: 3)
+  enableCaching?: boolean; // Enable result caching (default: true)
+  cacheExpiry?: number; // Cache expiry in seconds (default: 3600)
+  batchSize?: number; // Batch processing size (default: 100)
+  enableMetrics?: boolean; // Enable performance metrics (default: true)
   rateLimit?: {
     requestsPerSecond?: number; // Max requests per second (default: 10)
-    burstLimit?: number;       // Burst request limit (default: 50)
+    burstLimit?: number; // Burst request limit (default: 50)
   };
 }
 ```
@@ -71,12 +71,14 @@ interface ENSResolverConfig {
 Resolve a single ENS name to its contract address.
 
 **Parameters:**
+
 - `ensName` (string): ENS name to resolve (e.g., 'uniswap.eth')
 - `options` (Object, optional): Additional resolution options
 
 **Returns:** Promise resolving to `ContractResolutionResult` or `null` if not found
 
 **Example:**
+
 ```javascript
 const result = await resolver.resolveContract('uniswap.eth');
 if (result) {
@@ -91,12 +93,14 @@ if (result) {
 Resolve multiple ENS names in batch for improved performance.
 
 **Parameters:**
+
 - `ensNames` (string[]): Array of ENS names to resolve
 - `options` (Object, optional): Batch processing options
 
 **Returns:** Promise resolving to `BatchResolutionResult`
 
 **Example:**
+
 ```javascript
 const names = ['uniswap.eth', 'aave.eth', 'compound.eth'];
 const batchResult = await resolver.resolveContractsBatch(names);
@@ -130,6 +134,7 @@ The resolver emits events for monitoring and debugging:
 - `batchComplete`: Emitted when batch processing completes
 
 **Example:**
+
 ```javascript
 resolver.on('resolutionComplete', (data) => {
   console.log(`Resolved ${data.ensName} in ${data.duration}ms`);
@@ -239,7 +244,9 @@ resolver.on('batchComplete', (result) => {
     }
   },
   "definitions": {
-    "ContractResolutionResult": { /* ContractResolutionResult schema */ }
+    "ContractResolutionResult": {
+      /* ContractResolutionResult schema */
+    }
   }
 }
 ```
@@ -252,7 +259,7 @@ resolver.on('batchComplete', (result) => {
 import { ENSContractResolver } from 'ens-metadata-tools';
 
 const resolver = new ENSContractResolver({
-  rpcUrl: 'https://mainnet.infura.io/v3/YOUR_PROJECT_ID'
+  rpcUrl: 'https://mainnet.infura.io/v3/YOUR_PROJECT_ID',
 });
 
 // Resolve a single contract
@@ -263,12 +270,7 @@ console.log(uniswap.contractAddress); // 0x1f9840a85d5af5bf1d1762f925bdaddc4201f
 ### Batch Processing
 
 ```javascript
-const names = [
-  'uniswap.eth',
-  'aave.eth',
-  'compound.eth',
-  'makerdao.eth'
-];
+const names = ['uniswap.eth', 'aave.eth', 'compound.eth', 'makerdao.eth'];
 
 const batchResult = await resolver.resolveContractsBatch(names);
 console.log(`Found ${batchResult.results.length} contracts`);
@@ -278,7 +280,7 @@ console.log(`Found ${batchResult.results.length} contracts`);
 
 ```javascript
 resolver.on('resolutionComplete', (data) => {
-  console.log(`✅ ${data.ensName} -> ${data.result.contractAddress}`);
+  console.log(`${data.ensName} -> ${data.result.contractAddress}`);
 });
 
 resolver.on('batchComplete', (result) => {
@@ -296,24 +298,27 @@ const resolver = new ENSContractResolver({
   batchSize: 50,
   rateLimit: {
     requestsPerSecond: 5,
-    burstLimit: 20
-  }
+    burstLimit: 20,
+  },
 });
 ```
 
 ## Performance Tuning
 
 ### Caching
+
 - Enable caching for frequently accessed names
 - Adjust `cacheExpiry` based on your update frequency needs
 - Monitor cache hit rates for optimization
 
 ### Rate Limiting
+
 - Configure `requestsPerSecond` based on your RPC provider limits
 - Use `burstLimit` for handling traffic spikes
 - Monitor metrics to identify bottlenecks
 
 ### Batch Processing
+
 - Use `resolveContractsBatch()` for multiple names
 - Adjust `batchSize` based on your performance requirements
 - Monitor `requestsPerSecond` metrics
@@ -356,7 +361,9 @@ if (result) {
 import { ethers } from 'ethers';
 import { ENSContractResolver } from 'ens-metadata-tools';
 
-const provider = new ethers.providers.JsonRpcProvider('https://mainnet.infura.io/v3/YOUR_PROJECT_ID');
+const provider = new ethers.providers.JsonRpcProvider(
+  'https://mainnet.infura.io/v3/YOUR_PROJECT_ID'
+);
 const resolver = new ENSContractResolver({ rpcUrl: provider.connection.url });
 
 // Use with ethers.js contracts
@@ -427,18 +434,22 @@ resolver.on('resolutionError', (data) => {
 ### Common Issues
 
 **"Resolver not found"**
+
 - Ensure the ENS name exists and has a resolver set
 - Check if the name is registered and not expired
 
 **"Contract verification failed"**
+
 - Some contracts may not be verified on block explorers
 - This is normal for private or newer contracts
 
 **"Rate limit exceeded"**
+
 - Configure appropriate rate limits in your config
 - Consider upgrading your RPC provider plan
 
 **"Cache not working"**
+
 - Ensure `enableCaching: true` in configuration
 - Check cache expiry settings
 
