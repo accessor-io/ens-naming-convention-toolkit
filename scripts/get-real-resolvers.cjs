@@ -26,8 +26,8 @@ async function fetchWithRetry(query, variables, retries = 3) {
         },
         body: JSON.stringify({
           query,
-          variables
-        })
+          variables,
+        }),
       });
 
       if (!response.ok) {
@@ -35,7 +35,7 @@ async function fetchWithRetry(query, variables, retries = 3) {
       }
 
       const data = await response.json();
-      
+
       if (data.errors) {
         throw new Error(`GraphQL errors: ${JSON.stringify(data.errors)}`);
       }
@@ -44,7 +44,7 @@ async function fetchWithRetry(query, variables, retries = 3) {
     } catch (error) {
       console.log(`Attempt ${i + 1} failed: ${error.message}`);
       if (i === retries - 1) throw error;
-      await new Promise(resolve => setTimeout(resolve, 1000 * (i + 1)));
+      await new Promise((resolve) => setTimeout(resolve, 1000 * (i + 1)));
     }
   }
 }
@@ -60,7 +60,7 @@ async function getRealResolverAddresses() {
   while (true) {
     const data = await fetchWithRetry(DOMAINS_WITH_RESOLVERS_QUERY, {
       first: batchSize,
-      skip
+      skip,
     });
 
     if (!data.data || !data.data.domains || data.data.domains.length === 0) {
@@ -74,13 +74,15 @@ async function getRealResolverAddresses() {
     }
 
     totalProcessed += data.data.domains.length;
-    console.log(`Processed ${totalProcessed} domains, found ${resolverAddresses.size} unique resolver addresses`);
+    console.log(
+      `Processed ${totalProcessed} domains, found ${resolverAddresses.size} unique resolver addresses`
+    );
 
     if (data.data.domains.length < batchSize) break;
     skip += batchSize;
 
     // Rate limiting
-    await new Promise(resolve => setTimeout(resolve, 200));
+    await new Promise((resolve) => setTimeout(resolve, 200));
   }
 
   return Array.from(resolverAddresses).sort();
@@ -89,33 +91,32 @@ async function getRealResolverAddresses() {
 async function main() {
   try {
     const addresses = await getRealResolverAddresses();
-    
-    console.log(`\n🎉 Found ${addresses.length} unique resolver contract addresses!`);
-    
+
+    console.log(`\nFound ${addresses.length} unique resolver contract addresses!`);
+
     // Save to file
     const fs = require('fs');
     let output = `# Real ENS Resolver Contract Addresses\n`;
     output += `# Total: ${addresses.length}\n`;
     output += `# Generated: ${new Date().toISOString()}\n`;
     output += `# These are actual resolver contracts, not resolved addresses\n\n`;
-    
+
     addresses.forEach((addr, index) => {
       output += `${index + 1}. ${addr}\n`;
     });
-    
+
     fs.writeFileSync('real-resolver-contracts.txt', output);
-    console.log(`\n💾 Saved to real-resolver-contracts.txt`);
-    
+    console.log(`\nSaved to real-resolver-contracts.txt`);
+
     // Show first 20 addresses
     console.log(`\nFirst 20 resolver contract addresses:`);
     addresses.slice(0, 20).forEach((addr, index) => {
       console.log(`${index + 1}. ${addr}`);
     });
-    
+
     if (addresses.length > 20) {
       console.log(`... and ${addresses.length - 20} more`);
     }
-    
   } catch (error) {
     console.error('Error:', error.message);
   }

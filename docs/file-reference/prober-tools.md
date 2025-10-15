@@ -4,9 +4,7 @@
 
 This document provides a technical analysis of the functions and functionality in the `tools/prober/` directory tools.
 
-## Multicall Prober
 
-### `tools/prober/probe-multicall.js`
 
 **Purpose**: Probe multiple contracts using multicall for efficient batch operations.
 
@@ -81,13 +79,10 @@ This document provides a technical analysis of the functions and functionality i
 
 ```bash
 # Single contract probe
-node tools/prober/probe-multicall.js 0x1f9840a85d5af5bf1d1762f925bdaddc4201f984 --type erc20
 
 # Multiple contract probe
-node tools/prober/probe-multicall.js 0x1f9840a85d5af5bf1d1762f925bdaddc4201f984 0x1234... --type erc20
 
 # Batch probe with output
-node tools/prober/probe-multicall.js 0x1f9840a85d5af5bf1d1762f925bdaddc4201f984 --type erc20 --output results.json
 ```
 
 **Expected Output**:
@@ -506,7 +501,6 @@ node tools/prober/lookup-resolver-names.js --batch resolvers.txt --output batch-
 
 ```bash
 # Probe → Analyze → Export pipeline
-node tools/prober/probe-multicall.js 0x1f9840a85d5af5bf1d1762f925bdaddc4201f984 --type erc20 | \
 node tools/prober/analyze-contract.js --standard ERC20 | \
 node tools/prober/export-data.js --format json --output final-results.json
 ```
@@ -515,8 +509,6 @@ node tools/prober/export-data.js --format json --output final-results.json
 
 ```bash
 # Parallel probing
-node tools/prober/probe-multicall.js 0x1f9840a85d5af5bf1d1762f925bdaddc4201f984 --type erc20 & \
-node tools/prober/probe-multicall.js 0x1234... --type erc721 & \
 wait
 ```
 
@@ -527,12 +519,10 @@ wait
 1. **Contract Not Found**: Contract does not exist at address
 2. **Network Issues**: Cannot connect to blockchain network
 3. **Function Not Found**: Function does not exist on contract
-4. **Multicall Failures**: Multicall contract interaction failures
 
 ### Error Recovery
 
 - Retry mechanisms for network failures
-- Fallback to individual calls if multicall fails
 - Graceful degradation for missing functions
 - Comprehensive error reporting
 
@@ -541,7 +531,6 @@ wait
 ### Optimization Strategies
 
 - Batch processing for multiple contracts
-- Multicall for efficient function calls
 - Caching for repeated operations
 - Parallel processing for independent operations
 

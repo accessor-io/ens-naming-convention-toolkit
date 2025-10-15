@@ -1,0 +1,110 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Category Schema for amm.cns.eth",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/definitions/parentSchema"
+    },
+    {
+      "type": "object",
+      "required": ["categoryRoot"],
+      "properties": {
+        "domainHierarchy": {
+          "type": "object",
+          "properties": {
+            "level": {
+              "type": "integer",
+              "const": 2
+            },
+            "domain": {
+              "type": "string",
+              "const": "amm.cns.eth"
+            },
+            "parent": {
+              "type": ["string", "null"]
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "traits": {
+          "type": "object",
+          "properties": {
+            "inheritedFrom": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "levelSpecific": {
+              "type": "object"
+            },
+            "overrides": {
+              "type": "object"
+            }
+          }
+        },
+        "deduplication": {
+          "type": "object",
+          "properties": {
+            "inheritedFields": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "overriddenFields": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "mergedFields": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "parentSchema": {
+      "type": "object",
+      "properties": {}
+    },
+    "levelSpecific": {
+      "type": "object",
+      "properties": {
+        "categoryRoot": {
+          "type": "string",
+          "pattern": "^amm.cns.eth$"
+        },
+        "categoryTraits": {
+          "type": "object",
+          "properties": {
+            "inheritedFrom": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "categorySpecific": {
+              "type": "object"
+            },
+            "overrides": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    }
+  }
+}

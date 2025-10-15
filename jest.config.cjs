@@ -2,31 +2,42 @@
 module.exports = {
   testEnvironment: 'node',
   testMatch: [
-    '**/test/**/*.test.js',
-    '**/test/**/*.test.mjs',
+    '**/tests/**/*.test.js',
+    '**/tests/**/*.test.mjs',
     '**/__tests__/**/*.js',
-    '**/__tests__/**/*.mjs'
+    '**/__tests__/**/*.mjs',
   ],
   collectCoverageFrom: [
-    'bin/**/*.js',
     'bin/**/*.mjs',
-    'prober/**/*.js',
-    'lib/**/*.js',
+    'tools/**/*.js',
+    'src/**/*.js',
     '!**/node_modules/**',
-    '!**/test/**'
+    '!**/tests/**',
   ],
   coverageDirectory: 'coverage',
   coverageReporters: ['text', 'lcov', 'html'],
-  setupFilesAfterEnv: ['<rootDir>/test/setup.js'],
+  coverageThreshold: {
+    global: {
+      lines: 80,
+      statements: 80,
+      branches: 70,
+      functions: 75,
+    },
+  },
+  setupFilesAfterEnv: ['<rootDir>/tests/unit/setup.js'],
   moduleFileExtensions: ['js', 'mjs', 'json'],
   transform: {
-    '^.+\\.(js|mjs)$': 'babel-jest'
+    '^.+\\.(js|mjs)$': 'babel-jest',
   },
-  transformIgnorePatterns: [
-    'node_modules/(?!(ethers|@ethersproject)/)'
-  ],
+  transformIgnorePatterns: ['node_modules/(?!(ethers|@ethersproject)/)'],
   testTimeout: 30000,
   moduleNameMapper: {
-    '^(\\.{1,2}/.*)\\.js$': '$1'
-  }
+    '^(\\.{1,2}/.*)\\.js$': '$1',
+  },
+  extensionsToTreatAsEsm: [],
+  globals: {
+    'ts-jest': {
+      useESM: true,
+    },
+  },
 };

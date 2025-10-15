@@ -1,0 +1,345 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Hierarchical ENS Metadata Schema",
+  "description": "Hierarchical schema system for ENS metadata with inheritance and deduplication",
+  "type": "object",
+  "definitions": {
+    "baseSchema": {
+      "type": "object",
+      "required": ["id", "org", "protocol", "category", "role", "version", "chainId", "addresses"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9.-]+$",
+          "description": "Canonical identifier"
+        },
+        "org": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+$",
+          "description": "Organization identifier"
+        },
+        "protocol": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+$",
+          "description": "Protocol identifier"
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "defi",
+            "dao",
+            "l2",
+            "infra",
+            "token",
+            "nft",
+            "gaming",
+            "social",
+            "identity",
+            "privacy",
+            "security",
+            "wallet",
+            "analytics",
+            "rwa",
+            "supply",
+            "health",
+            "finance",
+            "dev",
+            "art",
+            "interop"
+          ],
+          "description": "Primary category"
+        },
+        "subcategory": {
+          "type": "string",
+          "description": "Subcategory within the primary category"
+        },
+        "role": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+$",
+          "description": "Contract role"
+        },
+        "variant": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+$",
+          "description": "Contract variant"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^v[0-9]+(-[0-9]+)?(-[0-9]+)?$",
+          "description": "Version format: v{num}, v{num}-{num}, or v{num}-{num}-{num}"
+        },
+        "chainId": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Blockchain chain ID"
+        },
+        "addresses": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["chainId", "address"],
+            "properties": {
+              "chainId": {
+                "type": "integer",
+                "minimum": 1,
+                "description": "Blockchain chain ID"
+              },
+              "address": {
+                "type": "string",
+                "pattern": "^0x[a-fA-F0-9]{40}$",
+                "description": "Ethereum address (checksummed)"
+              },
+              "deployedBlock": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "Block number where contract was deployed"
+              },
+              "bytecodeHash": {
+                "type": "string",
+                "pattern": "^0x[a-fA-F0-9]{64}$",
+                "description": "Keccak256 hash of contract bytecode"
+              },
+              "implementation": {
+                "type": ["string", "null"],
+                "pattern": "^0x[a-fA-F0-9]{40}$",
+                "description": "Implementation contract address (for proxies)"
+              },
+              "implementationSlot": {
+                "type": "string",
+                "pattern": "^0x[a-fA-F0-9]{64}$",
+                "description": "Storage slot for implementation address (ERC-1967)"
+              }
+            }
+          }
+        }
+      }
+    },
+    "cnsRootSchema": {
+      "allOf": [
+        { "$ref": "#/definitions/baseSchema" },
+        {
+          "type": "object",
+          "required": ["ensRoot"],
+          "properties": {
+            "ensRoot": {
+              "type": "string",
+              "pattern": "^[a-z0-9.-]+\\.cns\\.eth$",
+              "description": "Root domain under cns.eth"
+            },
+            "domainHierarchy": {
+              "type": "object",
+              "properties": {
+                "level": { "type": "integer", "const": 0 },
+                "parent": { "type": "null" },
+                "children": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                }
+              }
+            },
+            "inheritedTraits": {
+              "type": "object",
+              "properties": {
+                "namingConventions": { "type": "object" },
+                "requiredFields": { "type": "array", "items": { "type": "string" } },
+                "optionalFields": { "type": "array", "items": { "type": "string" } },
+                "validationRules": { "type": "object" }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "projectSchema": {
+      "allOf": [
+        { "$ref": "#/definitions/baseSchema" },
+        {
+          "type": "object",
+          "required": ["ensRoot", "projectRoot"],
+          "properties": {
+            "ensRoot": {
+              "type": "string",
+              "pattern": "^[a-z0-9.-]+\\.cns\\.eth$",
+              "description": "Root domain under cns.eth"
+            },
+            "projectRoot": {
+              "type": "string",
+              "pattern": "^[a-z0-9.-]+\\.cns\\.eth$",
+              "description": "Project-specific root domain"
+            },
+            "domainHierarchy": {
+              "type": "object",
+              "properties": {
+                "level": { "type": "integer", "const": 1 },
+                "parent": { "type": "string" },
+                "children": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                }
+              }
+            },
+            "inheritedTraits": {
+              "type": "object",
+              "properties": {
+                "fromParent": { "type": "object" },
+                "projectSpecific": { "type": "object" },
+                "overrides": { "type": "object" }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "categorySchema": {
+      "allOf": [
+        { "$ref": "#/definitions/baseSchema" },
+        {
+          "type": "object",
+          "required": ["ensRoot", "projectRoot", "categoryRoot"],
+          "properties": {
+            "ensRoot": {
+              "type": "string",
+              "pattern": "^[a-z0-9.-]+\\.cns\\.eth$"
+            },
+            "projectRoot": {
+              "type": "string",
+              "pattern": "^[a-z0-9.-]+\\.cns\\.eth$"
+            },
+            "categoryRoot": {
+              "type": "string",
+              "pattern": "^[a-z0-9.-]+\\.cns\\.eth$",
+              "description": "Category-specific root domain"
+            },
+            "domainHierarchy": {
+              "type": "object",
+              "properties": {
+                "level": { "type": "integer", "const": 2 },
+                "parent": { "type": "string" },
+                "children": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                }
+              }
+            },
+            "categoryTraits": {
+              "type": "object",
+              "properties": {
+                "requiredSubcategories": { "type": "array", "items": { "type": "string" } },
+                "allowedRoles": { "type": "array", "items": { "type": "string" } },
+                "validationRules": { "type": "object" },
+                "inheritedFrom": { "type": "string" }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "subcategorySchema": {
+      "allOf": [
+        { "$ref": "#/definitions/baseSchema" },
+        {
+          "type": "object",
+          "required": ["ensRoot", "projectRoot", "categoryRoot", "subcategoryRoot"],
+          "properties": {
+            "ensRoot": {
+              "type": "string",
+              "pattern": "^[a-z0-9.-]+\\.cns\\.eth$"
+            },
+            "projectRoot": {
+              "type": "string",
+              "pattern": "^[a-z0-9.-]+\\.cns\\.eth$"
+            },
+            "categoryRoot": {
+              "type": "string",
+              "pattern": "^[a-z0-9.-]+\\.cns\\.eth$"
+            },
+            "subcategoryRoot": {
+              "type": "string",
+              "pattern": "^[a-z0-9.-]+\\.cns\\.eth$",
+              "description": "Subcategory-specific root domain"
+            },
+            "domainHierarchy": {
+              "type": "object",
+              "properties": {
+                "level": { "type": "integer", "const": 3 },
+                "parent": { "type": "string" },
+                "children": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                }
+              }
+            },
+            "subcategoryTraits": {
+              "type": "object",
+              "properties": {
+                "specificRoles": { "type": "array", "items": { "type": "string" } },
+                "contractTypes": { "type": "array", "items": { "type": "string" } },
+                "validationRules": { "type": "object" },
+                "inheritedFrom": { "type": "string" }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "contractSchema": {
+      "allOf": [
+        { "$ref": "#/definitions/baseSchema" },
+        {
+          "type": "object",
+          "required": ["ensRoot", "projectRoot", "categoryRoot", "subcategoryRoot", "contractRoot"],
+          "properties": {
+            "ensRoot": {
+              "type": "string",
+              "pattern": "^[a-z0-9.-]+\\.cns\\.eth$"
+            },
+            "projectRoot": {
+              "type": "string",
+              "pattern": "^[a-z0-9.-]+\\.cns\\.eth$"
+            },
+            "categoryRoot": {
+              "type": "string",
+              "pattern": "^[a-z0-9.-]+\\.cns\\.eth$"
+            },
+            "subcategoryRoot": {
+              "type": "string",
+              "pattern": "^[a-z0-9.-]+\\.cns\\.eth$"
+            },
+            "contractRoot": {
+              "type": "string",
+              "pattern": "^[a-z0-9.-]+\\.cns\\.eth$",
+              "description": "Contract-specific root domain"
+            },
+            "domainHierarchy": {
+              "type": "object",
+              "properties": {
+                "level": { "type": "integer", "const": 4 },
+                "parent": { "type": "string" },
+                "children": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                }
+              }
+            },
+            "contractTraits": {
+              "type": "object",
+              "properties": {
+                "specificFields": { "type": "object" },
+                "validationRules": { "type": "object" },
+                "inheritedFrom": { "type": "string" }
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "anyOf": [
+    { "$ref": "#/definitions/cnsRootSchema" },
+    { "$ref": "#/definitions/projectSchema" },
+    { "$ref": "#/definitions/categorySchema" },
+    { "$ref": "#/definitions/subcategorySchema" },
+    { "$ref": "#/definitions/contractSchema" }
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CNS Root Schema for eth",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/definitions/parentSchema"
+    },
+    {
+      "type": "object",
+      "required": ["ensRoot"],
+      "properties": {
+        "domainHierarchy": {
+          "type": "object",
+          "properties": {
+            "level": {
+              "type": "integer",
+              "const": 0
+            },
+            "domain": {
+              "type": "string",
+              "const": "eth"
+            },
+            "parent": {
+              "type": ["string", "null"]
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "traits": {
+          "type": "object",
+          "properties": {
+            "inheritedFrom": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "levelSpecific": {
+              "type": "object"
+            },
+            "overrides": {
+              "type": "object"
+            }
+          }
+        },
+        "deduplication": {
+          "type": "object",
+          "properties": {
+            "inheritedFields": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "overriddenFields": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "mergedFields": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "levelSpecific": {
+      "type": "object",
+      "properties": {
+        "cnsRoot": {
+          "type": "object",
+          "properties": {
+            "domain": {
+              "type": "string",
+              "const": "cns.eth"
+            },
+            "traits": {
+              "namingConventions": {
+                "separator": ".",
+                "case": "lowercase",
+                "allowedChars": "a-z0-9-"
+              },
+              "requiredFields": [
+                "id",
+                "org",
+                "protocol",
+                "category",
+                "role",
+                "version",
+                "chainId",
+                "addresses"
+              ],
+              "optionalFields": ["subcategory", "variant", "ensRoot", "subdomains"],
+              "validationRules": {
+                "domainPattern": "^[a-z0-9.-]+\\.cns\\.eth$",
+                "versionPattern": "^v[0-9]+(-[0-9]+)?(-[0-9]+)?$",
+                "addressPattern": "^0x[a-fA-F0-9]{40}$"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

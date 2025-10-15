@@ -2,7 +2,7 @@
 
 /**
  * ENS Resolver Cache Browser
- * 
+ *
  * Interactive browser for exploring the resolver-cache.json file
  * Provides search, filter, and detailed view capabilities
  */
@@ -36,13 +36,13 @@ class CacheBrowser {
   }
 
   async start() {
-    if (!await this.loadCache()) {
+    if (!(await this.loadCache())) {
       return;
     }
 
     this.rl = readline.createInterface({
       input: process.stdin,
-      output: process.stdout
+      output: process.stdout,
     });
 
     console.log('\n=== ENS Resolver Cache Browser ===');
@@ -129,7 +129,7 @@ class CacheBrowser {
               name: domain.name,
               owner: domain.owner?.id,
               resolver: domain.resolver?.addr?.id,
-              createdAt: domain.createdAt
+              createdAt: domain.createdAt,
             });
           }
         }
@@ -172,10 +172,10 @@ class CacheBrowser {
       const domainCount = entry.data?.domains?.length || 0;
       console.log(`${startIndex + index + 1}. Hash: ${hash}`);
       console.log(`   Domains: ${domainCount}`);
-      
+
       if (entry.data?.domains && entry.data.domains.length > 0) {
         const sampleDomains = entry.data.domains.slice(0, 3);
-        sampleDomains.forEach(domain => {
+        sampleDomains.forEach((domain) => {
           console.log(`   - ${domain.name || 'Unknown'}`);
         });
         if (entry.data.domains.length > 3) {
@@ -191,7 +191,7 @@ class CacheBrowser {
 
   showStats() {
     console.log('\n=== Cache Statistics ===');
-    
+
     const totalEntries = Object.keys(this.cacheData).length;
     let totalDomains = 0;
     let domainTypes = {};
@@ -201,16 +201,16 @@ class CacheBrowser {
     for (const entry of Object.values(this.cacheData)) {
       if (entry.data && entry.data.domains) {
         totalDomains += entry.data.domains.length;
-        
+
         for (const domain of entry.data.domains) {
           // Count domain types
           const domainType = domain.name ? domain.name.split('.').pop() : 'unknown';
           domainTypes[domainType] = (domainTypes[domainType] || 0) + 1;
-          
+
           // Count resolver types
           const resolver = domain.resolver?.addr?.id || 'none';
           resolverTypes[resolver] = (resolverTypes[resolver] || 0) + 1;
-          
+
           // Count owners
           const owner = domain.owner?.id || 'none';
           ownerCounts[owner] = (ownerCounts[owner] || 0) + 1;
@@ -224,7 +224,7 @@ class CacheBrowser {
 
     console.log('\nTop Domain Types:');
     Object.entries(domainTypes)
-      .sort(([,a], [,b]) => b - a)
+      .sort(([, a], [, b]) => b - a)
       .slice(0, 10)
       .forEach(([type, count]) => {
         console.log(`  .${type}: ${count} domains`);
@@ -232,7 +232,7 @@ class CacheBrowser {
 
     console.log('\nTop Resolvers:');
     Object.entries(resolverTypes)
-      .sort(([,a], [,b]) => b - a)
+      .sort(([, a], [, b]) => b - a)
       .slice(0, 10)
       .forEach(([resolver, count]) => {
         const display = resolver === 'none' ? 'No Resolver' : resolver;
@@ -241,7 +241,7 @@ class CacheBrowser {
 
     console.log('\nTop Owners:');
     Object.entries(ownerCounts)
-      .sort(([,a], [,b]) => b - a)
+      .sort(([, a], [, b]) => b - a)
       .slice(0, 10)
       .forEach(([owner, count]) => {
         const display = owner === 'none' ? 'No Owner' : owner;
@@ -291,7 +291,7 @@ class CacheBrowser {
               name: domain.name,
               owner: domain.owner?.id,
               resolver: domain.resolver?.addr?.id,
-              createdAt: domain.createdAt
+              createdAt: domain.createdAt,
             });
           }
         }
@@ -320,17 +320,17 @@ class CacheBrowser {
 
   exportData(format = 'json') {
     console.log(`\nExporting data in ${format.toUpperCase()} format...`);
-    
+
     try {
       const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
       const filename = `resolver-cache-export-${timestamp}.${format}`;
-      
+
       if (format.toLowerCase() === 'csv') {
         this.exportCSV(filename);
       } else {
         this.exportJSON(filename);
       }
-      
+
       console.log(`Data exported to: ${filename}`);
     } catch (error) {
       console.error('Export failed:', error.message);
@@ -343,15 +343,15 @@ class CacheBrowser {
     const exportData = {
       exportDate: new Date().toISOString(),
       totalEntries: Object.keys(this.cacheData).length,
-      data: this.cacheData
+      data: this.cacheData,
     };
-    
+
     fs.writeFileSync(filename, JSON.stringify(exportData, null, 2));
   }
 
   exportCSV(filename) {
     const csvRows = ['Hash,Domain Name,Owner,Resolver,Created At'];
-    
+
     for (const [hash, entry] of Object.entries(this.cacheData)) {
       if (entry.data && entry.data.domains) {
         for (const domain of entry.data.domains) {
@@ -360,13 +360,13 @@ class CacheBrowser {
             domain.name || '',
             domain.owner?.id || '',
             domain.resolver?.addr?.id || '',
-            new Date(parseInt(domain.createdAt) * 1000).toISOString()
+            new Date(parseInt(domain.createdAt) * 1000).toISOString(),
           ];
-          csvRows.push(row.map(field => `"${field}"`).join(','));
+          csvRows.push(row.map((field) => `"${field}"`).join(','));
         }
       }
     }
-    
+
     fs.writeFileSync(filename, csvRows.join('\n'));
   }
 }
@@ -374,7 +374,7 @@ class CacheBrowser {
 // CLI interface
 async function main() {
   const cachePath = path.join(__dirname, '../prober/resolver-cache.json');
-  
+
   if (!fs.existsSync(cachePath)) {
     console.error(`Cache file not found: ${cachePath}`);
     process.exit(1);
@@ -388,10 +388,10 @@ async function main() {
 if (process.argv.length > 2) {
   const command = process.argv[2];
   const args = process.argv.slice(3);
-  
+
   // Quick commands without interactive mode
   const browser = new CacheBrowser(path.join(__dirname, '../prober/resolver-cache.json'));
-  
+
   if (browser.loadCache()) {
     switch (command) {
       case 'search':

@@ -334,13 +334,6 @@ node tools/prober/contract-discovery.js --help
 node tools/prober/lookup-resolver-names.js --help
 ```
 
-### Probe Multicall
-
-```bash
-# Probe multicall
-node tools/prober/probe-multicall.js --help
-```
-
 ## Scripts
 
 ### Analyze Resolvers

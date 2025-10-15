@@ -12,7 +12,9 @@ const muted = chalk.hex('#adb5bd');
 function run(cmd, args = []) {
   return new Promise((resolve, reject) => {
     const child = spawn(cmd, args, { stdio: 'inherit', shell: true });
-    child.on('exit', code => code === 0 ? resolve() : reject(new Error(`${cmd} exited with code ${code}`)));
+    child.on('exit', (code) =>
+      code === 0 ? resolve() : reject(new Error(`${cmd} exited with code ${code}`))
+    );
   });
 }
 
@@ -20,14 +22,14 @@ function banner() {
   if (!process.stdout.isTTY) return;
   const lines = [
     `${accent('EVMD TOOLKIT')} ${muted('• ENS Ops, Fast')}`,
-    `${accentAlt('⊱')} ${muted('discover  •  analyze  •  orchestrate')} ${accentAlt('⊰')}`
+    `${accentAlt('⊱')} ${muted('discover  •  analyze  •  orchestrate')} ${accentAlt('⊰')}`,
   ];
   console.log('\n' + lines.join('\n') + '\n');
 }
 
 async function main() {
   const rl = createInterface({ input: process.stdin, output: process.stdout });
-  const ask = (q) => new Promise(res => rl.question(q, res));
+  const ask = (q) => new Promise((res) => rl.question(q, res));
 
   const menu = () => {
     const bullet = chalk.hex('#56CFE1')('◆');
@@ -39,7 +41,7 @@ async function main() {
       `${bullet} ${accent('3)')} ${primary('ENS Prober: analyze')} ${muted('• full resolver audit')}`,
       `${bullet} ${accent('4)')} ${primary('Subdomain Planner')} ${muted('• guided hierarchy')}`,
       `${bullet} ${accent('5)')} ${primary('Exit')} ${muted('• close toolkit')}`,
-      divider
+      divider,
     ].join('\n');
   };
 
@@ -67,9 +69,7 @@ async function main() {
   }
 }
 
-main().catch(err => {
+main().catch((err) => {
   console.error('Error:', err.message);
   process.exit(1);
 });
-
-

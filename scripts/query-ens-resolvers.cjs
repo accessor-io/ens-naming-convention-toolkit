@@ -37,8 +37,8 @@ async function fetchWithRetry(query, variables, retries = 3) {
         },
         body: JSON.stringify({
           query,
-          variables
-        })
+          variables,
+        }),
       });
 
       if (!response.ok) {
@@ -46,7 +46,7 @@ async function fetchWithRetry(query, variables, retries = 3) {
       }
 
       const data = await response.json();
-      
+
       if (data.errors) {
         throw new Error(`GraphQL errors: ${JSON.stringify(data.errors)}`);
       }
@@ -55,7 +55,7 @@ async function fetchWithRetry(query, variables, retries = 3) {
     } catch (error) {
       console.log(`Attempt ${i + 1} failed: ${error.message}`);
       if (i === retries - 1) throw error;
-      await new Promise(resolve => setTimeout(resolve, 1000 * (i + 1)));
+      await new Promise((resolve) => setTimeout(resolve, 1000 * (i + 1)));
     }
   }
 }
@@ -71,11 +71,11 @@ async function getAllResolverAddresses() {
   try {
     // Try direct resolver query first
     console.log('Trying direct resolver query...');
-    
+
     while (true) {
       const data = await fetchWithRetry(RESOLVER_QUERY, {
         first: batchSize,
-        skip
+        skip,
       });
 
       if (!data.data || !data.data.resolvers || data.data.resolvers.length === 0) {
@@ -89,23 +89,24 @@ async function getAllResolverAddresses() {
       }
 
       totalFetched += data.data.resolvers.length;
-      console.log(`Fetched ${totalFetched} resolvers, found ${resolverAddresses.size} unique addresses`);
+      console.log(
+        `Fetched ${totalFetched} resolvers, found ${resolverAddresses.size} unique addresses`
+      );
 
       if (data.data.resolvers.length < batchSize) break;
       skip += batchSize;
 
       // Rate limiting
-      await new Promise(resolve => setTimeout(resolve, 200));
+      await new Promise((resolve) => setTimeout(resolve, 200));
     }
 
     if (resolverAddresses.size === 0) {
       throw new Error('Direct query returned no results');
     }
-
   } catch (error) {
     console.log(`Direct query failed: ${error.message}`);
     console.log('Trying domain-based query...\n');
-    
+
     // Fallback to domain-based query
     resolverAddresses.clear();
     skip = 0;
@@ -114,7 +115,7 @@ async function getAllResolverAddresses() {
     while (true) {
       const data = await fetchWithRetry(DOMAIN_RESOLVER_QUERY, {
         first: batchSize,
-        skip
+        skip,
       });
 
       if (!data.data || !data.data.domains || data.data.domains.length === 0) {
@@ -128,13 +129,15 @@ async function getAllResolverAddresses() {
       }
 
       totalFetched += data.data.domains.length;
-      console.log(`Fetched ${totalFetched} domains, found ${resolverAddresses.size} unique resolver addresses`);
+      console.log(
+        `Fetched ${totalFetched} domains, found ${resolverAddresses.size} unique resolver addresses`
+      );
 
       if (data.data.domains.length < batchSize) break;
       skip += batchSize;
 
       // Rate limiting
-      await new Promise(resolve => setTimeout(resolve, 200));
+      await new Promise((resolve) => setTimeout(resolve, 200));
     }
   }
 
@@ -144,32 +147,31 @@ async function getAllResolverAddresses() {
 async function main() {
   try {
     const addresses = await getAllResolverAddresses();
-    
-    console.log(`\n🎉 Found ${addresses.length} unique resolver addresses!`);
-    
+
+    console.log(`\nFound ${addresses.length} unique resolver addresses!`);
+
     // Save to file
     const fs = require('fs');
     let output = `# ENS Resolver Addresses from Subgraph\n`;
     output += `# Total: ${addresses.length}\n`;
     output += `# Generated: ${new Date().toISOString()}\n\n`;
-    
+
     addresses.forEach((addr, index) => {
       output += `${index + 1}. ${addr}\n`;
     });
-    
+
     fs.writeFileSync('ens-resolver-addresses.txt', output);
-    console.log(`\n💾 Saved to ens-resolver-addresses.txt`);
-    
+    console.log(`\nSaved to ens-resolver-addresses.txt`);
+
     // Show first 20 addresses
     console.log(`\nFirst 20 addresses:`);
     addresses.slice(0, 20).forEach((addr, index) => {
       console.log(`${index + 1}. ${addr}`);
     });
-    
+
     if (addresses.length > 20) {
       console.log(`... and ${addresses.length - 20} more`);
     }
-    
   } catch (error) {
     console.error('Error:', error.message);
   }

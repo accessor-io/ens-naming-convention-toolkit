@@ -154,7 +154,6 @@ subdomain-planner --domain uniswap.eth --category defi --type amm --output unisw
       "factory": ["router", "quoter"],
       "router": ["factory", "quoter", "multicall"],
       "quoter": ["factory", "router"],
-      "multicall": ["router"]
     }
   }
 }
@@ -202,9 +201,6 @@ subdomain-planner --template defi-amm.json --variables uniswap-vars.json --outpu
         "description": "{{protocolName}} {{version}} quoter contract"
       },
       {
-        "label": "multicall",
-        "role": "multicall",
-        "description": "{{protocolName}} {{version}} multicall contract"
       }
     ]
   }

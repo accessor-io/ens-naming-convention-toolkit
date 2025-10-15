@@ -99,11 +99,8 @@ program
   .command('probe')
   .description('Probe ENS resolvers and contracts')
   .option('-a, --address <address>', 'Specific address to probe')
-  .option('-m, --multicall', 'Use multicall for batch probing')
   .option('-o, --output <file>', 'Output file path')
   .action(async (options) => {
-    const { default: MulticallProber } = await import('./tools/prober/probe-multicall.js');
-    const prober = new MulticallProber();
 
     if (!options.address) {
       console.error('Error: Address is required. Use --address <address>');

@@ -1,0 +1,470 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Schema Hierarchy Configuration",
+  "description": "Configuration for hierarchical schema generation and inheritance",
+  "type": "object",
+  "properties": {
+    "hierarchy": {
+      "type": "object",
+      "properties": {
+        "levels": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "level": { "type": "integer" },
+              "name": { "type": "string" },
+              "pattern": { "type": "string" },
+              "required": { "type": "array", "items": { "type": "string" } },
+              "inherits": { "type": "array", "items": { "type": "string" } }
+            }
+          },
+          "default": [
+            {
+              "level": 0,
+              "name": "CNS Root",
+              "pattern": "^cns\\.eth$",
+              "required": ["ensRoot"],
+              "inherits": []
+            },
+            {
+              "level": 1,
+              "name": "Project",
+              "pattern": "^[a-z0-9-]+\\.cns\\.eth$",
+              "required": ["projectRoot"],
+              "inherits": ["cns.eth"]
+            },
+            {
+              "level": 2,
+              "name": "Category",
+              "pattern": "^[a-z0-9-]+\\.[a-z0-9-]+\\.cns\\.eth$",
+              "required": ["categoryRoot"],
+              "inherits": ["project", "cns.eth"]
+            },
+            {
+              "level": 3,
+              "name": "Subcategory",
+              "pattern": "^[a-z0-9-]+\\.[a-z0-9-]+\\.[a-z0-9-]+\\.cns\\.eth$",
+              "required": ["subcategoryRoot"],
+              "inherits": ["category", "project", "cns.eth"]
+            },
+            {
+              "level": 4,
+              "name": "Contract",
+              "pattern": "^[a-z0-9-]+\\.[a-z0-9-]+\\.[a-z0-9-]+\\.[a-z0-9-]+\\.cns\\.eth$",
+              "required": ["contractRoot"],
+              "inherits": ["subcategory", "category", "project", "cns.eth"]
+            }
+          ]
+        }
+      }
+    },
+    "cnsRoot": {
+      "type": "object",
+      "properties": {
+        "domain": { "type": "string", "const": "cns.eth" },
+        "traits": {
+          "type": "object",
+          "properties": {
+            "namingConventions": {
+              "type": "object",
+              "properties": {
+                "separator": { "type": "string", "const": "." },
+                "case": { "type": "string", "const": "lowercase" },
+                "allowedChars": { "type": "string", "const": "a-z0-9-" }
+              }
+            },
+            "requiredFields": {
+              "type": "array",
+              "items": { "type": "string" },
+              "default": [
+                "id",
+                "org",
+                "protocol",
+                "category",
+                "role",
+                "version",
+                "chainId",
+                "addresses"
+              ]
+            },
+            "optionalFields": {
+              "type": "array",
+              "items": { "type": "string" },
+              "default": ["subcategory", "variant", "ensRoot", "subdomains"]
+            },
+            "validationRules": {
+              "type": "object",
+              "properties": {
+                "domainPattern": { "type": "string", "const": "^[a-z0-9.-]+\\.cns\\.eth$" },
+                "versionPattern": { "type": "string", "const": "^v[0-9]+(-[0-9]+)?(-[0-9]+)?$" },
+                "addressPattern": { "type": "string", "const": "^0x[a-fA-F0-9]{40}$" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "projects": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z0-9-]+$": {
+          "type": "object",
+          "properties": {
+            "domain": { "type": "string" },
+            "traits": {
+              "type": "object",
+              "properties": {
+                "inherits": { "type": "array", "items": { "type": "string" } },
+                "overrides": { "type": "object" },
+                "projectSpecific": {
+                  "type": "object",
+                  "properties": {
+                    "requiredFields": { "type": "array", "items": { "type": "string" } },
+                    "optionalFields": { "type": "array", "items": { "type": "string" } },
+                    "validationRules": { "type": "object" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "default": {
+        "uniswap": {
+          "domain": "uniswap.cns.eth",
+          "traits": {
+            "inherits": ["cns.eth"],
+            "overrides": {},
+            "projectSpecific": {
+              "requiredFields": ["protocol"],
+              "optionalFields": ["subcategory"],
+              "validationRules": {
+                "protocolPattern": "^uniswap$"
+              }
+            }
+          }
+        },
+        "ens": {
+          "domain": "ens.cns.eth",
+          "traits": {
+            "inherits": ["cns.eth"],
+            "overrides": {},
+            "projectSpecific": {
+              "requiredFields": ["protocol"],
+              "optionalFields": ["subcategory"],
+              "validationRules": {
+                "protocolPattern": "^ens$"
+              }
+            }
+          }
+        },
+        "maker": {
+          "domain": "maker.cns.eth",
+          "traits": {
+            "inherits": ["cns.eth"],
+            "overrides": {},
+            "projectSpecific": {
+              "requiredFields": ["protocol"],
+              "optionalFields": ["subcategory"],
+              "validationRules": {
+                "protocolPattern": "^maker$"
+              }
+            }
+          }
+        }
+      }
+    },
+    "categories": {
+      "type": "object",
+      "patternProperties": {
+        "^(defi|dao|l2|infra|token|nft|gaming|social|identity|privacy|security|wallet|analytics|rwa|supply|health|finance|dev|art|interop)$": {
+          "type": "object",
+          "properties": {
+            "domain": { "type": "string" },
+            "subcategories": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "domain": { "type": "string" },
+                  "traits": {
+                    "type": "object",
+                    "properties": {
+                      "requiredRoles": { "type": "array", "items": { "type": "string" } },
+                      "allowedRoles": { "type": "array", "items": { "type": "string" } },
+                      "contractTypes": { "type": "array", "items": { "type": "string" } },
+                      "validationRules": { "type": "object" }
+                    }
+                  }
+                }
+              }
+            },
+            "traits": {
+              "type": "object",
+              "properties": {
+                "inherits": { "type": "array", "items": { "type": "string" } },
+                "overrides": { "type": "object" },
+                "categorySpecific": {
+                  "type": "object",
+                  "properties": {
+                    "requiredFields": { "type": "array", "items": { "type": "string" } },
+                    "optionalFields": { "type": "array", "items": { "type": "string" } },
+                    "validationRules": { "type": "object" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "default": {
+        "defi": {
+          "domain": "defi.cns.eth",
+          "subcategories": [
+            {
+              "name": "amm",
+              "domain": "amm.defi.cns.eth",
+              "traits": {
+                "requiredRoles": ["router", "factory", "quoter"],
+                "allowedRoles": ["router", "factory", "quoter", "multicall", "positions"],
+                "contractTypes": ["swap", "liquidity", "pricing"],
+                "validationRules": {
+                  "routerPattern": "^router$",
+                  "factoryPattern": "^factory$"
+                }
+              }
+            },
+            {
+              "name": "lending",
+              "domain": "lending.defi.cns.eth",
+              "traits": {
+                "requiredRoles": ["pool", "oracle"],
+                "allowedRoles": ["pool", "oracle", "liquidator", "reserve"],
+                "contractTypes": ["lending", "borrowing", "collateral"],
+                "validationRules": {
+                  "poolPattern": "^pool$",
+                  "oraclePattern": "^oracle$"
+                }
+              }
+            }
+          ],
+          "traits": {
+            "inherits": ["project", "cns.eth"],
+            "overrides": {},
+            "categorySpecific": {
+              "requiredFields": ["category"],
+              "optionalFields": ["subcategory"],
+              "validationRules": {
+                "categoryPattern": "^defi$"
+              }
+            }
+          }
+        },
+        "dao": {
+          "domain": "dao.cns.eth",
+          "subcategories": [
+            {
+              "name": "governance",
+              "domain": "governance.dao.cns.eth",
+              "traits": {
+                "requiredRoles": ["governor", "token", "treasury"],
+                "allowedRoles": ["governor", "token", "treasury", "timelock", "delegate"],
+                "contractTypes": ["governance", "voting", "treasury"],
+                "validationRules": {
+                  "governorPattern": "^governor$",
+                  "tokenPattern": "^token$"
+                }
+              }
+            }
+          ],
+          "traits": {
+            "inherits": ["project", "cns.eth"],
+            "overrides": {},
+            "categorySpecific": {
+              "requiredFields": ["category"],
+              "optionalFields": ["subcategory"],
+              "validationRules": {
+                "categoryPattern": "^dao$"
+              }
+            }
+          }
+        }
+      }
+    },
+    "deduplication": {
+      "type": "object",
+      "properties": {
+        "rules": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "field": { "type": "string" },
+              "strategy": { "type": "string", "enum": ["inherit", "override", "merge", "replace"] },
+              "priority": { "type": "integer" },
+              "conditions": { "type": "object" }
+            }
+          },
+          "default": [
+            {
+              "field": "ensRoot",
+              "strategy": "inherit",
+              "priority": 1,
+              "conditions": { "level": { "min": 1 } }
+            },
+            {
+              "field": "projectRoot",
+              "strategy": "inherit",
+              "priority": 2,
+              "conditions": { "level": { "min": 2 } }
+            },
+            {
+              "field": "categoryRoot",
+              "strategy": "inherit",
+              "priority": 3,
+              "conditions": { "level": { "min": 3 } }
+            },
+            {
+              "field": "subcategoryRoot",
+              "strategy": "inherit",
+              "priority": 4,
+              "conditions": { "level": { "min": 4 } }
+            },
+            {
+              "field": "protocol",
+              "strategy": "override",
+              "priority": 1,
+              "conditions": { "level": { "min": 1 } }
+            },
+            {
+              "field": "category",
+              "strategy": "override",
+              "priority": 2,
+              "conditions": { "level": { "min": 2 } }
+            }
+          ]
+        },
+        "inheritance": {
+          "type": "object",
+          "properties": {
+            "enabled": { "type": "boolean", "default": true },
+            "maxDepth": { "type": "integer", "default": 5 },
+            "conflictResolution": {
+              "type": "string",
+              "enum": ["parent", "child", "merge", "error"],
+              "default": "child"
+            }
+          }
+        }
+      }
+    },
+    "edgeCaseHandling": {
+      "type": "object",
+      "properties": {
+        "circularInheritance": {
+          "type": "object",
+          "properties": {
+            "detection": { "type": "boolean", "default": true },
+            "maxDepth": { "type": "integer", "default": 10 },
+            "errorMessage": {
+              "type": "string",
+              "default": "Circular inheritance detected in hierarchy"
+            }
+          }
+        },
+        "crossChainContracts": {
+          "type": "object",
+          "properties": {
+            "allowMultipleChainIds": { "type": "boolean", "default": true },
+            "validateChainIdConsistency": { "type": "boolean", "default": true },
+            "supportedChainIds": {
+              "type": "array",
+              "items": { "type": "integer" },
+              "default": [1, 137, 56, 250, 43114, 42161, 10, 8453]
+            }
+          }
+        },
+        "proxyVariants": {
+          "type": "object",
+          "properties": {
+            "supportedTypes": {
+              "type": "array",
+              "items": { "type": "string" },
+              "default": ["transparent", "uups", "beacon", "diamond", "minimal", "immutable"]
+            },
+            "validateImplementationConsistency": { "type": "boolean", "default": true },
+            "requireImplementationSlot": { "type": "boolean", "default": false }
+          }
+        },
+        "deprecatedFields": {
+          "type": "object",
+          "properties": {
+            "migrationMap": {
+              "type": "object",
+              "properties": {
+                "domain": { "type": "string", "default": "category" }
+              }
+            },
+            "warnOnDeprecated": { "type": "boolean", "default": true },
+            "autoMigrate": { "type": "boolean", "default": false }
+          }
+        },
+        "versionConflicts": {
+          "type": "object",
+          "properties": {
+            "conflictResolution": {
+              "type": "string",
+              "enum": ["error", "warning", "child-wins", "parent-wins"],
+              "default": "child-wins"
+            },
+            "warnOnConflict": { "type": "boolean", "default": true }
+          }
+        },
+        "malformedAddresses": {
+          "type": "object",
+          "properties": {
+            "validateChecksum": { "type": "boolean", "default": true },
+            "allowLowerCase": { "type": "boolean", "default": false },
+            "errorOnInvalid": { "type": "boolean", "default": true }
+          }
+        },
+        "emptyMetadata": {
+          "type": "object",
+          "properties": {
+            "minRequiredFields": {
+              "type": "array",
+              "items": { "type": "string" },
+              "default": [
+                "id",
+                "org",
+                "protocol",
+                "category",
+                "role",
+                "version",
+                "chainId",
+                "addresses"
+              ]
+            },
+            "errorOnEmpty": { "type": "boolean", "default": true }
+          }
+        },
+        "nullUndefinedValues": {
+          "type": "object",
+          "properties": {
+            "handleNullValues": { "type": "boolean", "default": true },
+            "handleUndefinedValues": { "type": "boolean", "default": true },
+            "defaultValues": {
+              "type": "object",
+              "properties": {
+                "chainId": { "type": "integer", "default": 1 },
+                "version": { "type": "string", "default": "v1-0-0" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

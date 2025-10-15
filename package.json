@@ -4,21 +4,30 @@
   "description": "Comprehensive toolkit for ENS contract metadata management, security analysis, and subdomain planning",
   "main": "index.mjs",
   "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
   "bin": {
     "ens-metadata": "./bin/cli.mjs",
-    "ens-validator": "./bin/naming-validator.js",
+    "ens-validator": "./bin/naming-validator.mjs",
     "ens-cache-browser": "./bin/cache-browser.mjs",
-    "evmd": "./bin/evmd.js"
+    "evmd": "./bin/evmd.js",
+    "ens-contract": "./bin/ens-contract.mjs"
   },
   "scripts": {
     "start": "node index.mjs",
     "metadata": "node bin/metadata-generator.mjs",
-    "validate": "node bin/naming-validator.js",
-    "validate:metadata": "node bin/contract-naming-cli.js validate --dir data/metadata --schema data/metadata/schema.json || exit 1",
-    "lookup": "node prober/lookup-resolver-names.js",
+    "validate": "node bin/naming-validator.mjs",
+    "validate:metadata": "node bin/contract-naming-cli.js validate --dir data/metadata --schema config/schema.json || exit 1",
+    "validate:qa": "node bin/qa-report-generator.mjs --all",
+    "validate:schema": "node bin/schema-validator.mjs --batch metadata/",
+    "validate:cross-ref": "node bin/cross-reference-validator.mjs --batch metadata/",
+    "validate:all": "npm run validate:schema && npm run validate:cross-ref && npm run validate:qa",
+    "lookup": "node tools/prober/lookup-resolver-names.js",
     "plan": "node bin/subdomain-planner.mjs --interactive",
+    "ens": "node bin/ens-contract.mjs",
     "fill": "node bin/metadata-filler.mjs",
-    "security": "node bin/security-analyzer.js",
+    "security": "node bin/security-analyzer.mjs",
     "test": "jest",
     "test:coverage": "jest --coverage",
     "test:debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand",
@@ -28,7 +37,17 @@
     "demo": "node demo-zero-proxy.js",
     "example": "node examples/test-ens-proxy.js",
     "cache": "node bin/cache-browser.mjs",
-    "typecheck": "tsc -p ."
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --ext .js,.mjs,.ts,.tsx",
+    "lint:fix": "eslint . --ext .js,.mjs,.ts,.tsx --fix",
+    "format": "prettier -w .",
+    "format:check": "prettier --check .",
+    "build": "tsc",
+    "docs:cli": "node scripts/generate-cli-docs.mjs",
+    "docs:api": "typedoc --options typedoc.json",
+    "docs:generate": "node scripts/generate-docs.mjs",
+    "prepare": "husky install",
+    "release": "release-please release-pr --release-type node && release-please github-release"
   },
   "keywords": [
     "ens",
@@ -43,10 +62,10 @@
   "license": "MIT",
   "dependencies": {
     "@nomicfoundation/hardhat-chai-matchers": "^1.0.0",
-    "@nomiclabs/hardhat-ethers": "^2.2.3",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.0",
+    "@nomiclabs/hardhat-ethers": "^2.2.3",
     "@types/chai": "^5.2.2",
-    "chai": "^6.2.0",
+    "chai": "^4.5.0",
     "chalk": "^5.0.0",
     "commander": "^12.0.0",
     "ethers": "^5.7.2",
@@ -54,20 +73,31 @@
     "node-fetch": "^3.3.2"
   },
   "devDependencies": {
-    "@nomicfoundation/hardhat-toolbox": "^6.1.0",
-    "hardhat": "^3.0.6",
-    "nodemon": "^3.0.0",
-    "typescript": "^5.4.0",
-    "@types/node": "^18.19.0",
-    "jest": "^29.0.0",
-    "@types/jest": "^29.0.0",
     "@babel/core": "^7.0.0",
-    "@babel/preset-env": "^7.0.0",
     "@babel/plugin-transform-modules-commonjs": "^7.0.0",
-    "babel-jest": "^29.0.0"
+    "@babel/preset-env": "^7.0.0",
+    "@eslint/js": "^9.11.1",
+    "@nomicfoundation/hardhat-toolbox": "^6.1.0",
+    "@types/jest": "^29.0.0",
+    "@types/node": "^20.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "babel-jest": "^29.0.0",
+    "eslint": "^9.11.1",
+    "eslint-config-prettier": "^9.1.0",
+    "hardhat": "^3.0.6",
+    "husky": "^9.0.0",
+    "jest": "^29.0.0",
+    "lint-staged": "^15.2.0",
+    "nodemon": "^3.0.0",
+    "prettier": "^3.3.3",
+    "release-please": "^16.12.0",
+    "ts-node": "^10.9.0",
+    "typedoc": "^0.28.14",
+    "typescript": "^5.4.0"
   },
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=18.0.0"
   },
   "repository": {
     "type": "git",
@@ -76,5 +106,14 @@
   "bugs": {
     "url": "https://github.com/ens-contracts/metadata-tools/issues"
   },
-  "homepage": "https://github.com/ens-contracts/metadata-tools#readme"
+  "homepage": "https://github.com/ens-contracts/metadata-tools#readme",
+  "files": [
+    "bin/",
+    "src/",
+    "config/",
+    "metadata/",
+    "index.mjs",
+    "README.md",
+    "LICENSE"
+  ]
 }

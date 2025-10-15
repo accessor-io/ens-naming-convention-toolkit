@@ -38,8 +38,8 @@ const NAMING_CONVENTIONS = {
       timelock: ['timelock.<dao>.eth', 'executor.<dao>.eth'],
       treasury: 'treasury.<dao>.eth',
       operations: ['operations.<dao>.eth', 'wallet.<dao>.eth'],
-      voting: 'voting.<dao>.eth'
-    }
+      voting: 'voting.<dao>.eth',
+    },
   },
   defi: {
     categories: {
@@ -47,15 +47,15 @@ const NAMING_CONVENTIONS = {
       lending: '<protocol>.lending.eth',
       derivatives: '<protocol>.derivatives.eth',
       stablecoin: '<protocol>.stablecoin.eth',
-      yield: '<protocol>.yield.eth'
+      yield: '<protocol>.yield.eth',
     },
     subdomains: {
       router: 'router.<protocol>.amm.eth',
       factory: 'factory.<protocol>.amm.eth',
       pairs: 'pairs.<protocol>.amm.eth',
       pool: 'pool.<protocol>.lending.eth',
-      market: 'market.<protocol>.lending.eth'
-    }
+      market: 'market.<protocol>.lending.eth',
+    },
   },
   l2: {
     categories: {
@@ -63,76 +63,76 @@ const NAMING_CONVENTIONS = {
       sidechain: '<chain>.sidechain.eth',
       bridge: 'bridge.<protocol>.eth',
       sequencer: 'sequencer.<protocol>.eth',
-      da: 'da.<protocol>.eth'
-    }
+      da: 'da.<protocol>.eth',
+    },
   },
   tokens: {
     erc20: '<symbol>.token.eth',
     erc721: '<project>.nft.eth',
     erc1155: '<project>.multitoken.eth',
     rwa: '<asset>.rwa.eth',
-    governance: '<symbol>.gov.eth'
+    governance: '<symbol>.gov.eth',
   },
   infrastructure: {
     oracle: '<provider>.oracle.eth',
     factory: 'factory.<protocol>.eth',
     proxy: 'proxy.<contract>.eth',
     multisig: '<name>.multisig.eth',
-    smartaccount: '<name>.smartaccount.eth'
-  }
+    smartaccount: '<name>.smartaccount.eth',
+  },
 };
 
 // Metadata templates by category
 const METADATA_TEMPLATES = {
   dao: {
     governor: {
-      name: "DAO Governor",
-      description: "Governance contract for proposal creation and execution",
-      category: "governance",
-      license: "MIT",
-      proxy: "false"
+      name: 'DAO Governor',
+      description: 'Governance contract for proposal creation and execution',
+      category: 'governance',
+      license: 'MIT',
+      proxy: 'false',
     },
     token: {
-      name: "Governance Token",
-      description: "ERC-20 token for voting rights",
-      category: "erc20",
-      license: "MIT"
+      name: 'Governance Token',
+      description: 'ERC-20 token for voting rights',
+      category: 'erc20',
+      license: 'MIT',
     },
     treasury: {
-      name: "DAO Treasury",
-      description: "Fund storage and management contract",
-      category: "treasury",
-      license: "MIT"
-    }
+      name: 'DAO Treasury',
+      description: 'Fund storage and management contract',
+      category: 'treasury',
+      license: 'MIT',
+    },
   },
   defi: {
     amm: {
-      name: "AMM Protocol",
-      description: "Automated Market Maker decentralized exchange",
-      category: "defi",
-      license: "MIT"
+      name: 'AMM Protocol',
+      description: 'Automated Market Maker decentralized exchange',
+      category: 'defi',
+      license: 'MIT',
     },
     lending: {
-      name: "Lending Protocol",
-      description: "Money market and lending platform",
-      category: "defi",
-      license: "MIT"
-    }
+      name: 'Lending Protocol',
+      description: 'Money market and lending platform',
+      category: 'defi',
+      license: 'MIT',
+    },
   },
   tokens: {
     erc20: {
-      name: "Token",
-      description: "ERC-20 fungible token",
-      category: "erc20",
-      license: "MIT"
+      name: 'Token',
+      description: 'ERC-20 fungible token',
+      category: 'erc20',
+      license: 'MIT',
     },
     erc721: {
-      name: "NFT Collection",
-      description: "ERC-721 non-fungible token collection",
-      category: "erc721",
-      license: "MIT"
-    }
-  }
+      name: 'NFT Collection',
+      description: 'ERC-721 non-fungible token collection',
+      category: 'erc721',
+      license: 'MIT',
+    },
+  },
 };
 
 class ContractNamingTool {
@@ -153,19 +153,17 @@ class ContractNamingTool {
 
       Object.entries(this.conventions.dao.subdomains).forEach(([contract, pattern]) => {
         const patterns = Array.isArray(pattern) ? pattern : [pattern];
-        patterns.forEach(p => {
+        patterns.forEach((p) => {
           const subdomain = p.replace('<dao>', daoDomain);
           suggestions.push({
             contract,
             subdomain,
             category: 'dao',
-            description: this.getContractDescription(contract, 'dao')
+            description: this.getContractDescription(contract, 'dao'),
           });
         });
       });
-    }
-
-    else if (category === 'defi') {
+    } else if (category === 'defi') {
       const protocolDomain = `${protocol}.${category}.eth`;
 
       Object.entries(this.conventions.defi.subdomains).forEach(([contract, pattern]) => {
@@ -174,14 +172,12 @@ class ContractNamingTool {
           contract,
           subdomain,
           category: 'defi',
-          description: this.getContractDescription(contract, 'defi')
+          description: this.getContractDescription(contract, 'defi'),
         });
       });
-    }
-
-    else if (category === 'tokens') {
+    } else if (category === 'tokens') {
       const tokenTypes = ['erc20', 'erc721', 'erc1155', 'governance'];
-      tokenTypes.forEach(type => {
+      tokenTypes.forEach((type) => {
         const pattern = this.conventions.tokens[type];
         const subdomain = pattern
           .replace('<symbol>', protocol.toLowerCase())
@@ -192,14 +188,14 @@ class ContractNamingTool {
           contract: type,
           subdomain,
           category: 'tokens',
-          description: this.getContractDescription(type, 'tokens')
+          description: this.getContractDescription(type, 'tokens'),
         });
       });
     }
 
     if (verbose) {
       console.log('\nGenerated Subdomain Suggestions:');
-      console.log('=' .repeat(50));
+      console.log('='.repeat(50));
       suggestions.forEach((s, i) => {
         console.log(`${i + 1}. ${s.contract.padEnd(12)} → ${s.subdomain}`);
         console.log(`   ${s.description}`);
@@ -236,7 +232,7 @@ class ContractNamingTool {
 
       case 'defi':
         const validDefiCategories = ['amm', 'lending', 'derivatives', 'stablecoin', 'yield'];
-        if (!validDefiCategories.some(cat => name.includes(cat))) {
+        if (!validDefiCategories.some((cat) => name.includes(cat))) {
           warnings.push(`DeFi domains should include category: ${validDefiCategories.join(', ')}`);
         }
         break;
@@ -294,10 +290,12 @@ class ContractNamingTool {
       script.push(``);
     }
 
-    subdomains.forEach(subdomain => {
+    subdomains.forEach((subdomain) => {
       script.push(`# Register ${subdomain.contract} contract`);
       script.push(`ens-contract register ${subdomain.subdomain} --type ${subdomain.contract}`);
-      script.push(`ens-contract metadata ${subdomain.subdomain} --data '${JSON.stringify(this.generateMetadata(subdomain.contract, category), null, 2)}'`);
+      script.push(
+        `ens-contract metadata ${subdomain.subdomain} --data '${JSON.stringify(this.generateMetadata(subdomain.contract, category), null, 2)}'`
+      );
       script.push(``);
     });
 
@@ -312,20 +310,20 @@ class ContractNamingTool {
         timelock: 'Delay mechanism for proposal execution',
         treasury: 'Fund storage and management contract',
         operations: 'Main operational multi-signature wallet',
-        voting: 'Specialized voting mechanism contracts'
+        voting: 'Specialized voting mechanism contracts',
       },
       defi: {
         router: 'Main contract for token swaps and liquidity operations',
         factory: 'Contract deployment factory for pools/pairs',
         pool: 'Lending pool for asset deposits and borrowing',
-        market: 'Money market for lending and borrowing operations'
+        market: 'Money market for lending and borrowing operations',
       },
       tokens: {
         erc20: 'Fungible token contract',
         erc721: 'Non-fungible token collection',
         erc1155: 'Multi-token contract supporting both fungible and non-fungible tokens',
-        governance: 'Protocol governance token'
-      }
+        governance: 'Protocol governance token',
+      },
     };
 
     return descriptions[category]?.[contract] || 'Contract for protocol operations';
@@ -349,7 +347,7 @@ program
     const suggestions = tool.generateSubdomains(protocol, category, options);
 
     console.log(`\nSubdomain suggestions for ${protocol} (${category}):`);
-    console.log('=' .repeat(50));
+    console.log('='.repeat(50));
 
     suggestions.forEach((s, i) => {
       console.log(`${i + 1}. ${s.subdomain}`);
@@ -373,18 +371,18 @@ program
     const result = tool.validateNaming(domain, category);
 
     console.log(`\nValidation Results for: ${domain}`);
-    console.log('=' .repeat(40));
+    console.log('='.repeat(40));
 
     if (result.isValid) {
-      console.log('✅ Valid naming convention');
+      console.log('Valid naming convention');
     } else {
-      console.log('❌ Invalid naming convention');
-      result.issues.forEach(issue => console.log(`   • ${issue}`));
+      console.log('Invalid naming convention');
+      result.issues.forEach((issue) => console.log(`   • ${issue}`));
     }
 
     if (result.warnings.length > 0) {
       console.log('\nWarnings:');
-      result.warnings.forEach(warning => console.log(`   • ${warning}`));
+      result.warnings.forEach((warning) => console.log(`   • ${warning}`));
     }
   });
 
@@ -411,7 +409,7 @@ program
     const metadata = tool.generateMetadata(contractType, category, customFields);
 
     console.log(`\nGenerated Metadata Template:`);
-    console.log('=' .repeat(30));
+    console.log('='.repeat(30));
     console.log(JSON.stringify(metadata, null, 2));
 
     if (options.output) {
@@ -432,7 +430,7 @@ program
     const script = tool.generateRegistrationScript(protocol, category, subdomains);
 
     console.log(`\nGenerated Registration Script:`);
-    console.log('=' .repeat(35));
+    console.log('='.repeat(35));
     console.log(script);
 
     const filename = options.output || `${protocol}-${category}-registration.sh`;
@@ -444,22 +442,22 @@ program
   .command('categories')
   .description('List available categories and their conventions')
   .action(() => {
-    console.log(`\n📂 Available Categories:`);
-    console.log('=' .repeat(25));
+    console.log(`\nAvailable Categories:`);
+    console.log('='.repeat(25));
     CATEGORY_REGISTRY.roots.forEach((category) => {
       const config = NAMING_CONVENTIONS[category] || {};
-      console.log(`\n🔹 ${category.toUpperCase()}`);
+      console.log(`\n${category.toUpperCase()}`);
       console.log('-'.repeat(20));
 
       const subs = CATEGORY_REGISTRY.subcategories[category] || [];
       if (subs.length) {
         console.log('Subcategories (registry):');
-        subs.forEach(s => console.log(`  • ${s}`));
+        subs.forEach((s) => console.log(`  • ${s}`));
       }
 
       if (config.primaryDomains) {
         console.log('Primary domains:');
-        config.primaryDomains.forEach(domain => console.log(`  • ${domain}`));
+        config.primaryDomains.forEach((domain) => console.log(`  • ${domain}`));
       }
 
       if (config.categories) {
@@ -479,5 +477,15 @@ program
     });
   });
 
-program.parse();
-// ESM CLI: no CommonJS export
+// Check if this is being called directly
+if (import.meta.url === `file://${process.argv[1]}`) {
+  console.log('\nDEPRECATION WARNING:');
+  console.log('This CLI tool is deprecated. Please use "ens-naming" instead.');
+  console.log('Example: ens-naming wizard');
+  console.log('');
+
+  program.parse();
+} else {
+  // Export for backward compatibility
+  export default program;
+}
