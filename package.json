@@ -61,7 +61,6 @@
   "author": "ENS Contracts Team",
   "license": "MIT",
   "dependencies": {
-    "@nomicfoundation/hardhat-chai-matchers": "^1.0.0",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.0",
     "@nomiclabs/hardhat-ethers": "^2.2.3",
     "@types/chai": "^5.2.2",
@@ -79,6 +78,7 @@
     "@eslint/js": "^9.11.1",
     "@nomicfoundation/hardhat-toolbox": "^6.1.0",
     "@types/jest": "^29.0.0",
+    "@nomicfoundation/hardhat-chai-matchers": "^3.0.0",
     "@types/node": "^20.0.0",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
