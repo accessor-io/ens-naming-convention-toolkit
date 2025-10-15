@@ -2,79 +2,163 @@
 
 [![npm version](https://badge.fury.io/js/ens-metadata-tools.svg)](https://badge.fury.io/js/ens-metadata-tools)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![CI](https://github.com/ens-contracts/metadata-tools/workflows/CI/badge.svg)](https://github.com/ens-contracts/metadata-tools/actions)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.4+-blue.svg)](https://www.typescriptlang.org/)
+[![ENSIP-19](https://img.shields.io/badge/ENSIP--19-Compliant-green.svg)](docs/ENSIP-19.md)
 
-> Toolkit for ENS contract metadata management, security analysis, and subdomain planning
+> **ENSIP-19 Compliant Toolkit** for Ethereum smart contract metadata management, security analysis, and ENS subdomain planning
 
-## Features
+## Overview
 
-- **Metadata Generation**: Create standardized metadata templates for different contract categories
-- **Validation Suite**: Validate ENS naming conventions and metadata compliance
-- **Security Analysis**: Analyze ENS domain security posture and identify vulnerabilities
-- **Subdomain Planning**: Plan optimal subdomain hierarchies for protocols
-- **ENS Operations**: Direct ENS contract interactions and management
-- **TypeScript Support**: Full TypeScript implementation with type safety
-- **CI/CD Integration**: Automated testing, linting, and security checks
+The ENS Metadata Tools provide a comprehensive suite for managing Ethereum smart contract metadata according to the [ENSIP-19 specification](docs/ENSIP-19.md). This toolkit enables developers, protocol teams, and organizations to create, validate, and manage standardized contract metadata with cryptographic integrity verification.
+
+### Key Features
+
+- **🔐 ENSIP-19 Compliance**: Full implementation of the ENSIP-19 metadata standard
+- **📝 Metadata Generation**: Create standardized metadata with canonical ID grammar and SHA-256 hashing
+- **✅ Validation Suite**: Comprehensive validation against ENSIP-19 schema requirements
+- **🔍 Security Analysis**: Analyze ENS domain security posture and identify vulnerabilities
+- **🗺️ Subdomain Planning**: Plan optimal hierarchical subdomain structures
+- **⚡ ENS Operations**: Direct ENS contract interactions and management
+- **🛡️ Proxy Support**: Handle transparent, UUPS, beacon, diamond, and other proxy patterns
+- **🌐 Cross-Chain**: Support for multiple blockchain networks
+- **📊 CCIP Integration**: Off-chain metadata retrieval via Cross-Chain Interoperability Protocol
 
 ## Installation
 
-```bash
-# Global installation
-npm install -g ens-metadata-tools
+### Global Installation
 
-# Local development
-git clone https://github.com/ens-contracts/metadata-tools.git
-cd ens-metadata-tools
+```bash
+npm install -g ens-metadata-tools
+```
+
+### Local Development
+
+```bash
+git clone https://github.com/accessor-io/ens-naming-convention-toolkit.git
+cd ens-naming-convention-toolkit
 npm install
 ```
 
 ## Quick Start
 
+### Generate ENSIP-19 Compliant Metadata
+
 ```bash
-# Show help
-ens-metadata --help
+# Generate metadata for a DeFi AMM protocol
+ens-metadata metadata --category defi --type amm --name Uniswap --protocol-version v4-0-0 --output uniswap-metadata.json
 
-# Validate domain naming
-ens-validator uniswap.amm.eth defi --strict
+# Validate the generated metadata
+ens-metadata validate uniswap-metadata.json --strict
 
-# Generate metadata template
-metadata-generator --category defi --type amm --name Uniswap --version 3
+# Check ENSIP-19 compliance
+ens-metadata validate uniswap-metadata.json --schema data/metadata/schema.json
+```
 
-# Plan subdomain structure
-subdomain-planner --domain uniswap.eth --interactive
+### Example Generated Metadata
 
-# Analyze security
-security-analyzer --metadata contract.json --report security-report.json
+```json
+{
+  "id": "uniswap.uniswap.defi.amm.v4-0-0.1",
+  "org": "uniswap",
+  "protocol": "uniswap",
+  "category": "defi",
+  "role": "amm",
+  "version": "v4-0-0",
+  "chainId": 1,
+  "addresses": [
+    {
+      "chainId": 1,
+      "address": "0x0000000000000000000000000000000000000000"
+    }
+  ],
+  "metadataHash": "0xcd788df219a200c224a9f06a1f2738b04512be65a0219162f9ac4aa926da097f"
+}
 ```
 
 ## CLI Commands
 
-### Core Commands
+### Core Metadata Operations
 
-- `ens-metadata` - Main CLI entry point
-- `ens-validator` - Domain and metadata validation
-- `ens-contract` - ENS contract operations
-- `metadata-generator` - Generate metadata templates
-- `subdomain-planner` - Plan subdomain structures
-- `security-analyzer` - Security analysis and reporting
+```bash
+# Generate metadata for any protocol category
+ens-metadata metadata --category <category> --type <type> --name <name> [options]
 
-### Validation & QA
+# Validate metadata against ENSIP-19 schema
+ens-metadata validate <metadata-file> [options]
 
-- `validate` - Validate ENS naming conventions
-- `validate:qa` - Generate QA reports
-- `validate:schema` - Schema validation
-- `validate:cross-ref` - Cross-reference validation
+# Plan subdomain structure
+ens-metadata plan <domain> [options]
 
-### Development
+# Security analysis
+ens-metadata security <domain> [options]
 
-- `test` - Run test suite
-- `lint` - Code linting
-- `format` - Code formatting
-- `typecheck` - TypeScript type checking
-- `build` - Build project
+# Probe ENS resolvers
+ens-metadata probe [options]
 
-See [CLI Commands Reference](docs/CLI-COMMANDS.md) for detailed documentation.
+# Lookup ENS names
+ens-metadata lookup [options]
+```
+
+### Available Categories and Types
+
+| Category | Types | Description |
+|----------|-------|-------------|
+| **defi** | amm, lending, stablecoin | DeFi protocols |
+| **dao** | governor, treasury | DAO governance |
+| **infrastructure** | oracle, bridge | Infrastructure services |
+| **tokens** | erc20, erc721, governance | Token contracts |
+| **gaming** | nft, gambling | Gaming applications |
+| **social** | platform, messaging | Social platforms |
+| **rwa** | realestate, commodities | Real-world assets |
+| **privacy** | mixer, security | Privacy tools |
+| **developer** | framework, oracle | Dev tools |
+| **analytics** | indexer, dashboard | Analytics services |
+| **wallet** | infrastructure, payments | Wallet services |
+| **insurance** | protocol | Insurance protocols |
+| **art** | platform | Art platforms |
+| **supplychain** | tracking | Supply chain |
+| **healthcare** | medical | Healthcare systems |
+| **finance** | banking | Financial services |
+
+## ENSIP-19 Compliance
+
+This toolkit implements the complete ENSIP-19 specification:
+
+### Canonical ID Grammar
+
+```
+org.protocol.category.role[.variant].v{version}.{chainId}
+```
+
+**Example**: `uniswap.uniswap.defi.amm.v4-0-0.1`
+
+### Metadata Hash Generation
+
+- **Algorithm**: SHA-256
+- **Format**: Canonical JSON (sorted keys, no whitespace)
+- **Prefix**: `0x` for Ethereum compatibility
+- **Length**: 64 characters (32 bytes)
+
+### Required Fields
+
+- `id` - Canonical identifier
+- `org` - Organization identifier
+- `protocol` - Protocol identifier  
+- `category` - Primary category classification
+- `role` - Contract role/function
+- `version` - Version format (v{num}-{num}-{num})
+- `chainId` - Target blockchain network ID
+- `addresses` - Contract addresses array
+- `metadataHash` - SHA-256 hash of metadata
+
+### Hierarchical Schema System
+
+Supports 5-level domain hierarchy:
+- **Level 0**: CNS Root (`cns.eth`)
+- **Level 1**: Project (`{project}.cns.eth`)
+- **Level 2**: Category (`{category}.{project}.cns.eth`)
+- **Level 3**: Protocol (`{protocol}.{category}.{project}.cns.eth`)
+- **Level 4**: Variant (`{variant}.{protocol}.{category}.{project}.cns.eth`)
 
 ## Development
 
@@ -87,8 +171,8 @@ See [CLI Commands Reference](docs/CLI-COMMANDS.md) for detailed documentation.
 ### Setup
 
 ```bash
-git clone https://github.com/ens-contracts/metadata-tools.git
-cd ens-metadata-tools
+git clone https://github.com/accessor-io/ens-naming-convention-toolkit.git
+cd ens-naming-convention-toolkit
 npm install
 npm run prepare  # Setup git hooks
 ```
@@ -129,13 +213,62 @@ npm run docs:api
 
 ## Architecture
 
-The toolkit consists of several specialized modules:
+The toolkit consists of specialized modules:
 
-- **Metadata Generator** - Creates standardized protocol metadata
-- **Subdomain Planner** - Generates optimal subdomain hierarchies
-- **Security Analyzer** - Analyzes ENS domain security posture
-- **Validation Suite** - Comprehensive QA and compliance checking
-- **ENS Operations** - Direct ENS contract interactions
+### Core Modules
+
+- **Metadata Generator** (`bin/metadata-generator.mjs`) - Creates ENSIP-19 compliant metadata
+- **Schema Validator** (`bin/schema-validator.mjs`) - Validates against ENSIP-19 schema
+- **Subdomain Planner** (`bin/subdomain-planner.mjs`) - Generates optimal subdomain hierarchies
+- **Security Analyzer** (`bin/security-analyzer.mjs`) - Analyzes ENS domain security posture
+- **ENS Operations** (`bin/ens-contract.mjs`) - Direct ENS contract interactions
+
+### Validation Suite
+
+- **Naming Validator** (`bin/naming-validator.mjs`) - ENS naming convention validation
+- **Cross-Reference Validator** (`bin/cross-reference-validator.mjs`) - Cross-reference validation
+- **QA Report Generator** (`bin/qa-report-generator.mjs`) - Quality assurance reporting
+- **Edge Case Validator** (`bin/edge-case-validator.mjs`) - Edge case handling
+
+### Utility Tools
+
+- **Cache Browser** (`bin/cache-browser.mjs`) - Metadata cache management
+- **Metadata Filler** (`bin/metadata-filler.mjs`) - Template filling utilities
+- **Schema Generator** (`bin/schema-generator.mjs`) - Schema generation tools
+
+## Configuration
+
+### Schema Configuration
+
+The toolkit uses JSON Schema for validation located at `data/metadata/schema.json`:
+
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ENS Contract Metadata",
+  "type": "object",
+  "required": [
+    "id", "org", "protocol", "category", "role", 
+    "version", "chainId", "addresses", "metadataHash"
+  ]
+}
+```
+
+### QA Validation Rules
+
+Quality assurance rules are defined in `config/qa-validation-rules.json`:
+
+```json
+{
+  "standards": {
+    "1": {
+      "name": "Metadata Schema Validation",
+      "priority": "critical",
+      "validationLevel": "required"
+    }
+  }
+}
+```
 
 ## Contributing
 
@@ -150,23 +283,33 @@ The toolkit consists of several specialized modules:
 
 See [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) for detailed guidelines.
 
+## Documentation
+
+- [📚 Complete Documentation](docs/) - Comprehensive guides and references
+- [🚀 Getting Started](docs/Getting-Started.md) - Installation and setup guide
+- [⚡ CLI Commands](docs/CLI-COMMANDS.md) - Command reference
+- [🔧 API Documentation](docs/api/) - Programmatic usage
+- [📋 ENSIP-19 Specification](docs/ENSIP-19.md) - Complete specification
+- [🏗️ Architecture](docs/Architecture.md) - System architecture overview
+- [🔒 Security](docs/SECURITY.md) - Security considerations
+
+## Support
+
+- [🐛 Issues](https://github.com/accessor-io/ens-naming-convention-toolkit/issues)
+- [💬 Discussions](https://github.com/accessor-io/ens-naming-convention-toolkit/discussions)
+- [📖 Documentation](docs/)
+
 ## License
 
 MIT License - see [LICENSE](LICENSE) file for details.
 
-## Documentation
+## Acknowledgments
 
-- [Documentation](docs/) - Complete documentation and guides
-- [Getting Started](docs/Getting-Started.md) - Installation and setup
-- [CLI Commands](docs/commands/) - Command reference
-- [API Documentation](docs/API/) - Programmatic usage
+- [ENS (Ethereum Name Service)](https://ens.domains/) for the naming system
+- [ENSIP-19](docs/ENSIP-19.md) specification contributors
+- [Ethereum Foundation](https://ethereum.org/) for blockchain infrastructure
+- [OpenZeppelin](https://openzeppelin.com/) for smart contract standards
 
-## Support
+---
 
-- [Issues](https://github.com/ensdomains/ens-metadata-tools/issues)
-- [Discussions](https://github.com/ensdomains/ens-metadata-tools/discussions)
-
-```
-npm install
-npm test
-```
+**Built with ❤️ for the Ethereum ecosystem**
