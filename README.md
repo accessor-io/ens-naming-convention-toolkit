@@ -3,19 +3,19 @@
 [![npm version](https://badge.fury.io/js/ens-metadata-tools.svg)](https://badge.fury.io/js/ens-metadata-tools)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.4+-blue.svg)](https://www.typescriptlang.org/)
-[![ENSIP-19](https://img.shields.io/badge/ENSIP--19-Compliant-green.svg)](docs/ENSIP-19.md)
+[![ENSIP-X](https://img.shields.io/badge/ENSIP--19-Compliant-green.svg)](docs/ENSIP-X.md)
 
-> **ENSIP-19 Compliant Toolkit** for Ethereum smart contract metadata management, security analysis, and ENS subdomain planning
+> **ENSIP-X Compliant Toolkit** for Ethereum smart contract metadata management, security analysis, and ENS subdomain planning
 
 ## Overview
 
-The ENS Metadata Tools provide a comprehensive suite for managing Ethereum smart contract metadata according to the [ENSIP-19 specification](docs/ENSIP-19.md). This toolkit enables developers, protocol teams, and organizations to create, validate, and manage standardized contract metadata with cryptographic integrity verification.
+The ENS Metadata Tools provide a comprehensive suite for managing Ethereum smart contract metadata according to the [ENSIP-X specification](docs/ENSIP-X.md). This toolkit enables developers, protocol teams, and organizations to create, validate, and manage standardized contract metadata with cryptographic integrity verification.
 
 ### Key Features
 
-- **ENSIP-19 Compliance**: Full implementation of the ENSIP-19 metadata standard
+- **ENSIP-X Compliance**: Full implementation of the ENSIP-X metadata standard
 - **Metadata Generation**: Create standardized metadata with canonical ID grammar and SHA-256 hashing
-- **Validation Suite**: Comprehensive validation against ENSIP-19 schema requirements
+- **Validation Suite**: Comprehensive validation against ENSIP-X schema requirements
 - **Security Analysis**: Analyze ENS domain security posture and identify vulnerabilities
 - **Subdomain Planning**: Plan optimal hierarchical subdomain structures
 - **ENS Operations**: Direct ENS contract interactions and management
@@ -41,7 +41,7 @@ npm install
 
 ## Quick Start
 
-### Generate ENSIP-19 Compliant Metadata
+### Generate ENSIP-X Compliant Metadata
 
 ```bash
 # Generate metadata for a DeFi AMM protocol
@@ -50,7 +50,7 @@ ens-metadata-tools metadata --category defi --type amm --name Uniswap --protocol
 # Validate the generated metadata
 ens-metadata-tools validate uniswap-metadata.json --strict
 
-# Check ENSIP-19 compliance
+# Check ENSIP-X compliance
 ens-metadata-tools validate uniswap-metadata.json --schema data/metadata/schema.json
 ```
 
@@ -83,7 +83,7 @@ ens-metadata-tools validate uniswap-metadata.json --schema data/metadata/schema.
 # Generate metadata for any protocol category
 ens-metadata-tools metadata --category <category> --type <type> --name <name> [options]
 
-# Validate metadata against ENSIP-19 schema
+# Validate metadata against ENSIP-X schema
 ens-metadata-tools validate <metadata-file> [options]
 
 # Plan subdomain structure
@@ -132,9 +132,9 @@ ens-cache-browser [options]                     # Metadata cache management
 evmd [options]                                  # Ethereum metadata viewer
 ```
 
-## ENSIP-19 Compliance
+## ENSIP-X Compliance
 
-This toolkit implements the complete ENSIP-19 specification:
+This toolkit implements the complete ENSIP-X specification:
 
 ### Canonical ID Grammar
 
@@ -229,8 +229,8 @@ The toolkit consists of specialized modules:
 
 ### Core Modules
 
-- **Metadata Generator** (`bin/metadata-generator.mjs`) - Creates ENSIP-19 compliant metadata
-- **Schema Validator** (`bin/schema-validator.mjs`) - Validates against ENSIP-19 schema
+- **Metadata Generator** (`bin/metadata-generator.mjs`) - Creates ENSIP-X compliant metadata
+- **Schema Validator** (`bin/schema-validator.mjs`) - Validates against ENSIP-X schema
 - **Subdomain Planner** (`bin/subdomain-planner.mjs`) - Generates optimal subdomain hierarchies
 - **Security Analyzer** (`bin/security-analyzer.mjs`) - Analyzes ENS domain security posture
 - **ENS Operations** (`bin/ens-contract.mjs`) - Direct ENS contract interactions
@@ -301,7 +301,7 @@ See [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) for detailed guidelines.
 - [Getting Started](docs/Getting-Started.md) - Installation and setup guide
 - [CLI Commands](docs/CLI-COMMANDS.md) - Command reference
 - [API Documentation](docs/api/) - Programmatic usage
-- [ENSIP-19 Specification](docs/ENSIP-19.md) - Complete specification
+- [ENSIP-X Specification](docs/ENSIP-X.md) - Complete specification
 - [Architecture](docs/Architecture.md) - System architecture overview
 - [Security](docs/SECURITY.md) - Security considerations
 
@@ -318,7 +318,7 @@ MIT License - see [LICENSE](LICENSE) file for details.
 ## Acknowledgments
 
 - [ENS (Ethereum Name Service)](https://ens.domains/) for the naming system
-- [ENSIP-19](docs/ENSIP-19.md) specification contributors
+- [ENSIP-X](docs/ENSIP-X.md) specification contributors
 - [Ethereum Foundation](https://ethereum.org/) for blockchain infrastructure
 - [OpenZeppelin](https://openzeppelin.com/) for smart contract standards
 
